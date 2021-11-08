@@ -7,6 +7,8 @@ import useFullPageLoader from "../../../reducers/useFullPageLoader";
 import Search from './Search';
 import PaginationCom from './PaginationCom';
 import TableHeader from './Header'
+import Modal from 'react-modal'
+import Logo from '../../../images/background.png'
 function Transactions() {
     const [transactionData, setTransactionData] = useState([]);
     const [loader, showLoader, hideLoader] = useFullPageLoader();
@@ -14,6 +16,7 @@ function Transactions() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({ field: "", order: "" });
+    const [pictureModal, setpictureModal] = useState(false);
     const item_per_page = 10;
     const headers = [
         { name: "Last Name", field: "uLastName", sortable: true },
@@ -81,20 +84,34 @@ function Transactions() {
                         <th>uPhoneNumber</th>
                         <th>refNumber</th>
                         <th>typeTransaction</th>
-                        <th>PhotoUrl</th>
+                        <th>Photo</th>
                         <tbody>
-                            {transactionDataDisc.map(tr => (
-                                <tr>
-                                    <td>{tr.uLastName}</td>
-                                    <td>{tr.uFirstName}</td>
-                                    <td>{tr.uAddress}</td>
-                                    <td>{tr.uEmail}</td>
-                                    <td>{tr.uPhoneNumber}</td>
-                                    <td>{tr.refNumber}</td>
-                                    <td>{tr.typeTransaction}</td>
-                                    <td>{tr.PhotoUrl}</td>
-                                </tr>
-                            ))}
+                            <tr>
+                                <td>asd1'</td>
+                                <td>asd2</td>
+                                <td>asd3</td>
+                                <td>asd4</td>
+                                <td>asd5</td>
+                                <td>asd6</td>
+                                <td>asd7</td>
+                                <td><a onClick={pictureModal} className="visitor_link">Click</a></td>
+                                <Modal isOpen={pictureModal}
+                                    className="visitor_modalContainer"
+                                    shouldCloseOnOverlayClick={false}
+                                    onRequestClose={() => setpictureModal(false)}>
+                                    <div class='v_modal'>
+                                        <h2>Visitors Digital Pass</h2>
+                                        <div className="output-box">
+                                            <img src={Logo} alt="" />
+                                            <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
+                                            <a href={Logo} download="QRCode">
+                                                <button type="button">Download</button>
+                                                <button type="button" onClick={alert('okay na')}>Ok</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </Modal>
+                            </tr>
                         </tbody>
                     </thead>
                 </table>

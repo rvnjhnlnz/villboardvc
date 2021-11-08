@@ -195,10 +195,8 @@ function VisitorForm() {
             purpose: vPurpose,
         };
         const isValid = validate();
-        if (isValid) {
             setvModal(true);
             setWord(data);
-        }
     }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (decodedToken) {
