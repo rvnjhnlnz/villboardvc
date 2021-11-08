@@ -1,0 +1,278 @@
+.ut_container{
+  background-color: rosybrown;
+  height: 100%;
+  max-height: 1300px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: sans-serif;
+  justify-content: center;
+  background-image: url("../../../images/background1.jpg");
+  background-position: center;
+  background-size: cover;
+
+}
+.ut_logo{
+  background: url("../../../images/background.png");
+  width: 120px;
+  height: 100px;
+  margin: 0 auto;
+  background-repeat: no-repeat ;
+  object-fit: cover;
+  background-size: cover;
+  margin-top: 20px;
+}
+
+
+.ut_wrapper{
+  max-width: 600px;
+  width: 150%;
+  background: #fff;
+  margin: 30px auto;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+  position: relative;
+  top: 18px;
+}
+
+.ut_wrapper .title{
+  margin-top: 50px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: green;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+.ut_wrapper .v_form{
+  width: 80%;
+  margin: auto;
+}
+.ut_modal{
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: 300px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 5px;
+}
+.ut_modalContainer{
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  outline: none;
+}
+.ut_modal p{
+  font-size: 20px;
+}
+.ut_button{
+  background-color: green;  
+  border-radius: 5px;
+  color: white;
+  padding: .5em;
+  text-decoration: none;
+}
+.ut_wrapper .form .inputfield{
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.ut_wrapper .form .inputfield label{
+   width: 200px;
+   color: #757575;
+   margin-right: 10px;
+  font-size: 14px;
+}
+
+.ut_wrapper .form .inputfield .input,
+.ut_wrapper .form .inputfield .textarea,
+.ut_wrapper .form .inputfield select,
+.ut_wrapper .form .inputfield .uploadBtn{
+  width: 100%;
+  outline: none;
+  border: 1px solid #d5dbd9;
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.ut_wrapper .form .inputfield .textarea{
+  width: 100%;
+  height: 125px;
+  resize: none;
+}
+
+.ut_wrapper .form .inputfield .custom_select{
+  position: relative;
+  width: 100%;
+  height: 37px;
+}
+
+.ut_wrapper .form .inputfield .custom_select:before{
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  border: 8px solid;
+  border-color: #d5dbd9 transparent transparent transparent;
+  pointer-events: none;
+}
+
+.ut_wrapper .form .inputfield .custom_select select{
+  -webkit-appearance: none;
+  -moz-appearance:   none;
+  appearance:        none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1px solid #d5dbd9;
+  border-radius: 3px;
+}
+
+
+.ut_wrapper .form .inputfield .input:focus,
+.ut_wrapper .form .inputfield .textarea:focus,
+.ut_wrapper .form .inputfield .custom_select select:focus{
+  border: 1px solid #438a5e;
+}
+
+.ut_wrapper .form .inputfield p{
+   font-size: 14px;
+   color: #757575;
+}
+.ut_wrapper .form .inputfield .check{
+  width: 15px;
+  height: 15px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.ut_wrapper .form .inputfield .btn{
+  width: 50%;
+  position: relative;
+  left: 125px;
+  padding: 8px 10px;
+  font-size: 15px; 
+  border: 0px;
+  background:  #438a5e;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 50px;
+  box-shadow: 5px 5px 10px black;
+}
+
+.ut_wrapper .form .inputfield .btn:hover{
+  background: #d3b251;
+}
+
+.ut_wrapper .form .inputfield:last-child{
+  margin-bottom: 0;
+}
+
+@media (max-width:420px) {
+  .ut_wrapper .form .inputfield{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ut_wrapper .form .inputfield label{
+    margin-bottom: 5px;
+  }
+  .ut_wrapper .form .inputfield.terms{
+    flex-direction: row;
+  }
+  .u_wrapper .form p{
+      font-weight: bold;
+      font-size: 600px;
+  }
+  .inputfield_upload{
+    margin-left: 150px;
+  }
+}
+
+
+.upload_input-field , form .button{
+  margin: 25px 0;
+  position: relative;
+  height: 50px;
+  width: 100%;
+}
+.upload_input-field  input,
+.upload_input-field  select{
+  height: 100%;
+  width: 100%;
+  border: 1px solid silver;
+  padding-left: 15px;
+  outline: none;
+  font-size: 19px;
+  transition: .4s;
+}
+.upload_input-field  select{
+  -webkit-appearance: menulist-button;
+  
+}
+.upload_input-field  input:focus,
+.upload_input-field  select:focus{
+  border: 1px solid #1DA1F2;
+}
+.upload_input-field  .upload_label, span.show{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.upload_input-field .upload_label{
+  left: 15px;
+  pointer-events: none;
+  color: grey;
+  font-size: 18px;
+  transition: .4s;
+}
+.upload_input-field span.show{
+  right: 20px;
+  color: #111;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  visibility: hidden;
+  font-family: 'Open Sans', sans-serif;
+}
+.upload_input-field input:valid ~ span.show{
+  visibility: visible;
+}
+.upload_input-field input:focus ~ .upload_label,
+.upload_input-field input:valid ~ .upload_label,
+.upload_input-field select:valid ~ .upload_label,
+.upload_input-field select:focus ~ .upload_label{
+  transform: translateY(-33px);
+  background: white;
+  font-size: 16px;
+  color: green;
+}
+.form-control1{
+  padding: 8px;
+}
+.upload_submitBtn{
+  width: 50px;
+  height: 100%;
+  background: green;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.upload_submitBtn:hover{
+  background-color: orange;
+  color: white;
+}

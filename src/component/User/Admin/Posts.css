@@ -1,0 +1,32 @@
+.posts_main{
+    background: #f0f0f0;
+    min-height: calc(100vh - 900px);
+    display: flex;
+  justify-content: center;
+}
+.posts_slots{
+    width: 60rem;
+}
+.posts_table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.posts_table thead tr{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .posts_table thead td {
+    font-weight: 700;
+  }
+  
+  .posts_table td {
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    color: #222;
+    text-align: center;
+  }
+
+  .posts-decision span{
+    padding-right: 1rem;
+  }

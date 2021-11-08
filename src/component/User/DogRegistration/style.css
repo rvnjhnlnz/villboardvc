@@ -1,0 +1,172 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+.pet_container{
+  height: 100%;
+  max-height: 1300px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: sans-serif;
+  justify-content: center;
+  background-image: url("../../../images/background1.jpg");
+  background-position: center;
+  background-size: cover;
+
+}
+.pet_logo{
+  background: url("../../../images/background.png");
+  width: 120px;
+  height: 100px;
+  margin: 0 auto;
+  background-repeat: no-repeat ;
+  object-fit: cover;
+  background-size: cover;
+  margin-top: 20px;
+}
+
+
+.pet_wrapper{
+  max-width: 600px;
+  width: 150%;
+  background: #fff;
+  margin: 30px auto;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+  position: relative;
+  top: 18px;
+}
+
+.pet_wrapper .title{
+    
+  margin-top: 50px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: green;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+
+.pet_wrapper .pet_form{
+  width: 80%;
+  margin: auto;
+  
+}
+.re_modal{
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: 300px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 5px;
+}
+.r_modalContainer{
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  outline: none;
+}
+.re_modal p{
+  font-size: 20px;
+}
+
+
+.pet_input-field , form .button{
+  margin: 25px 0;
+  position: relative;
+  height: 50px;
+  width: 100%;
+}
+.pet_input-field  input,
+.pet_input-field  select{
+  height: 100%;
+  width: 100%;
+  border: 1px solid silver;
+  padding-left: 15px;
+  outline: none;
+  font-size: 19px;
+  transition: .4s;
+}
+.pet_input-field  input:focus,
+.pet_input-field  select:focus{
+  border: 1px solid #1DA1F2;
+}
+.pet_input-field  .pet_label, span.show{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.pet_input-field .pet_label{
+  left: 15px;
+  pointer-events: none;
+  color: grey;
+  font-size: 18px;
+  transition: .4s;
+}
+.pet_input-field span.show{
+  right: 20px;
+  color: #111;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  visibility: hidden;
+  font-family: 'Open Sans', sans-serif;
+}
+.pet_input-field input:valid ~ span.show{
+  visibility: visible;
+}
+.pet_input-field input:focus ~ .pet_label,
+.pet_input-field input:valid ~ .pet_label,
+.pet_input-field select:valid ~ .pet_label,
+.pet_input-field select:focus ~ .pet_label{
+  transform: translateY(-33px);
+  background: white;
+  font-size: 16px;
+  color: green;
+}
+.form-control1{
+  padding: 8px;
+}
+.pet_submitBtn{
+  width: 50px;
+  height: 100%;
+  background: green;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.pet_submitBtn:hover{
+  background-color: orange;
+  color: white;
+}
+
+@media (max-width:420px) {
+  .dr_wrapper .form .inputfield{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dr_wrapper .form .inputfield label{
+    margin-bottom: 5px;
+  }
+  .dr_wrapper .form .inputfield.terms{
+    flex-direction: row;
+  }
+  .dr_wrapper .form p{
+      font-weight: bold;
+      font-size: 600px;
+  }
+  .drop{
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+  }
+}
+
+

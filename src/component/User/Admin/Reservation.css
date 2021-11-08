@@ -1,0 +1,46 @@
+.reserve_main{
+  background: #f0f0f0;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  justify-content: center;
+}
+.admin_slots{
+  width: 60rem;
+}
+.admin_card{
+    margin-top: 10px;
+}
+.reserve_table{
+    border-collapse: collapse;
+    width: 100%;
+    
+}
+.reserve_table thead tr{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .reserve_table thead td {
+    font-weight: 700;
+  }
+  
+  .reserve_table td {
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    color: #222;
+    text-align: center;
+  }
+
+  .reserve-decision span{
+    padding-right: 1rem;
+  }
+
+  #nav-toggle:checked ~ .admin_slots{
+    margin-left: 100px;
+  }
+
+  @media screen and (max-width: 960px) {
+    .admin_slots{
+      width: 40rem;
+    }
+  }

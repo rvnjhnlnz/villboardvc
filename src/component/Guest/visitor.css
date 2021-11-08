@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+.v_container{
+  height: 100%;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  justify-content: center;
+  background-image: linear-gradient(rgba(193, 243, 206, 0.7), rgba(169, 252, 190, 0.8)),url("../../images/background1.jpg");
+  background-position: center;
+  background-size: cover;
+  
+}
+.v_container form{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/* Add padding to containers */
+.v_form {
+  padding: 16px;
+  background-color: white;
+  width: 900px;
+  display: block;
+  position: relative;
+}
+
+.v_form img{
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.v_form h2{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 30px;
+}
+/* Full-width input fields */
+
+.visitor_inputfield input{
+  height: 100%;
+  width: 100%;
+  border: 1px solid silver;
+  padding-left: 15px;
+  outline: none;
+  font-size: 19px;
+  transition: .4s;
+}
+.v_form input[type=text]:focus,.v_form input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+.v_form hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.submitBtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+.v_form a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+.v_terms .v_checkbox{
+  margin-right: 10px;
+}
+
+
+/* */
+.modalBackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(200, 200, 200);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  width: 500px;
+  height: 500px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.modalContainer .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.titleCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.modalContainer .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.modalContainer .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background-color: crimson;
+}
+.visitor_modalContainer{
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  outline: none;
+}
+.v_modal{
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: 500px;
+  margin: auto;
+  background-color: rgba(169, 252, 190, 0.8);
+  padding: 30px;
+}
+.output-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.output-box h2{
+  font-size: 15px;
+  margin-top: 10px;
+}
+.output-box button{
+  background-color: rgb(0, 109, 27);  
+  border-radius: 10px;
+  color: white;
+  padding: .5em;
+  text-decoration: none;
+  margin: auto;
+  float: right;
+  font-size: 20px;
+  margin: 20px;
+  width: 120px;
+}
+.output-box img{
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  max-height: 250px;
+}
+
+.visitor_logo img{
+  width: 100px;
+}
+
+.visitor_input-field , form .button{
+  margin: 25px 0;
+  position: relative;
+  height: 50px;
+  width: 100%;
+}
+.visitor_input-field  input{
+  height: 100%;
+  width: 100%;
+  border: 1px solid silver;
+  padding-left: 15px;
+  outline: none;
+  font-size: 19px;
+  transition: .4s;
+}
+.visitor_input-field  input:focus{
+  border: 1px solid #1DA1F2;
+}
+.visitor_input-field  .visit_label, span.show{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.visitor_input-field .visit_label{
+  left: 15px;
+  pointer-events: none;
+  color: grey;
+  font-size: 18px;
+  transition: .4s;
+}
+.visitor_input-field span.show{
+  right: 20px;
+  color: #111;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  visibility: hidden;
+  font-family: 'Open Sans', sans-serif;
+}
+.visitor_input-field input:valid ~ span.show{
+  visibility: visible;
+}
+.visitor_input-field input:focus ~ .visit_label,
+.visitor_input-field input:valid ~ .visit_label{
+  transform: translateY(-33px);
+  background: white;
+  font-size: 16px;
+  color: green;
+}
+.visitor_submitBtn{
+  width: 100%;
+  height: 100%;
+  background: green;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+.visitor_submitBtn:hover{
+  left: 0;
+}
+.visitor_link{
+  margin-left: 10px;
+}
+.vForm_modal{
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  max-height: 500px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+.vForm_closeModal{
+  background-color: #199319;
+  color: white;
+  padding: 15px 50px;
+  text-decoration: none;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 950px) {
+  .v_form {
+    width: 650px;
+  }
+  .v_form img{
+    width: 80px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .v_form {
+    width: 450px;
+  }
+  .v_form img{
+    width: 80px;
+  }
+  .vForm_modal{
+    max-width: 450px;
+    max-height: 500px;
+  }
+  .vForm_modal h3{
+    font-size: 20px;
+  }
+  .vForm_modal h4{
+    font-size: 17px;
+  }
+  .vForm_modal h5{
+    font-size: 15px;
+  }
+  .vForm_modal p{
+    font-size: 13px;
+  }
+  .v_modal{
+    max-width: 400px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .v_form {
+    width: 350px;
+  }
+  .v_form img{
+    width: 60px;
+  }
+
+  .vForm_modal{
+    max-width: 320px;
+    max-height: 350px;
+  }
+  .vForm_modal h3{
+    font-size: 18px;
+  }
+  .vForm_modal h4{
+    font-size: 15px;
+  }
+  .vForm_modal h5{
+    font-size: 13px;
+  }
+  .vForm_modal p{
+    font-size: 11px;
+  }
+  .v_modal{
+    max-width: 350px;
+  }
+  .output-box button{
+    width: 90px;
+    font-size: 15px;
+  }
+  
+}
+@media only screen and (max-width: 320px) {
+  .v_form {
+    width: 280px;
+  }
+  .v_form img{
+    width: 40px;
+  }
+  .vForm_modal{
+    max-width: 270px;
+    max-height: 350px;
+  }
+  .vForm_modal h3{
+    font-size: 16px;
+  }
+  .vForm_modal h4{
+    font-size: 13px;
+  }
+  .vForm_modal h5{
+    font-size: 11px;
+  }
+  .vForm_modal p{
+    font-size: 9px;
+  }
+  .v_modal{
+    max-width: 280px;
+  }
+  .output-box button{
+    width: 70px;
+    font-size: 11px;
+  }
+  .output-box img{
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
+    max-height: 200px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .v_form {
+    width: 250px;
+  }
+  .v_form img{
+    width: 30px;
+  }
+  .vForm_modal{
+    max-width: 250px;
+    max-height: 240px;
+  }
+  .vForm_modal h3{
+    font-size: 18px;
+  }
+  .vForm_modal h4{
+    font-size: 15px;
+  }
+  .vForm_modal h5{
+    font-size: 13px;
+  }
+  .vForm_modal p{
+    font-size: 11px;
+  }
+  .output-box button{
+    width: 60px;
+    font-size: 10px;
+  }
+  .output-box h2{
+    font-size: 10px;
+    margin-top: 10px;
+  }
+}

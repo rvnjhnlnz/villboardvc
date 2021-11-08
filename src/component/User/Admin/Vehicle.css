@@ -1,0 +1,32 @@
+.vehicle_main{
+    background: #f0f0f0;
+    min-height: calc(100vh - 900px);
+    display: flex;
+  justify-content: center;
+}
+.vehicle_slots{
+    width: 60rem;
+}
+.vehicle_table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.vehicle_table thead tr{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .vehicle_table thead td {
+    font-weight: 700;
+  }
+  
+  .vehicle_table td {
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    color: #222;
+    text-align: center;
+  }
+
+  .vehicle-decision span{
+    padding-right: 1rem;
+  }

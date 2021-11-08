@@ -1,0 +1,230 @@
+.r_wrapper{
+  height: 150vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: sans-serif;
+  justify-content: center;
+  background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,9,30,0.7)),url("../../images/./background1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.r_container{
+    position: relative;
+    width: 600px;
+    background: white;
+    padding: 40px;
+  }
+  .r_logo img{
+    width: 100px;
+  }
+  .register_input-field, form .button{
+    margin: 25px 0;
+    position: relative;
+    height: 50px;
+    width: 100%;
+  }
+  .register_input-field .form-control{
+      height: 100%;
+      width: 100%;
+      border: 1px solid silver;
+      padding-left: 15px;
+      outline: none;
+      font-size: 19px;
+      transition: .4s;
+  }
+  .register_input-field input:focus{
+    border: 1px solid #1DA1F2;
+  }
+  .register_input-field .r_label, span.show{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .register_input-field .r_label{
+    left: 15px;
+    pointer-events: none;
+    color: grey;
+    font-size: 18px;
+    transition: .4s;
+  }
+  span.show{
+    right: 20px;
+    color: #111;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    visibility: hidden;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .register_input-field input:valid ~ span.show{
+    visibility: visible;
+  }
+  .register_input-field input:focus ~ .r_label,
+  .register_input-field input:valid ~ .r_label{
+    transform: translateY(-33px);
+    background: white;
+    font-size: 16px;
+    color: green;
+  }
+  form .button{
+    margin-top: 30px;
+    overflow: hidden;
+    z-index: 111;
+  }
+
+  .button:hover .inner{
+    left: 0;
+  }
+  .register_submitBtn{
+    width: 100%;
+    height: 100%;
+    background: green;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    margin-top: 20px;
+  }
+  .register_submitBtn:hover{
+    left: 0;
+  }
+  .l_container .auth{
+    margin: 35px 0 20px 0;
+    font-size: 19px;
+    color: grey;
+  }
+  .links{
+    display: flex;
+    cursor: pointer;
+  }
+  .facebook, .google{
+    height: 40px;
+    width: 100%;
+    border: 1px solid silver;
+    border-radius: 3px;
+    margin: 0 10px;
+    transition: .4s;
+  }
+  .facebook:hover{
+    border: 1px solid #4267B2;
+  }
+  .google:hover{
+    border: 1px solid #dd4b39;
+  }
+  .facebook i, .facebook span{
+    color: #4267B2;
+  }
+  .google i, .google span{
+    color: #dd4b39;
+  }
+  .links i{
+    font-size: 23px;
+    line-height: 40px;
+    margin-left: -90px;
+  }
+  .links span{
+    position: absolute;
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 8px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .signup{
+    margin-top: 50px;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .signup a{
+    color: #3498db;
+    text-decoration: none;
+  }
+  .signup a:hover{
+    text-decoration: underline;
+  }
+  .register_input-field .submitButton{
+  background-color: #199319;
+  color: white;
+  padding: 15px 50px;
+  text-decoration: none;
+  
+  }
+.submitButton:hover{
+  color: white;
+  background-color: green;
+}
+.r_buttonX{
+  position: fixed;
+  left: 70%;
+  top: 10%;
+  color: #199319;
+}
+.r_btn{
+  width: 60%;
+   padding: 8px 10px;
+  font-size: 15px; 
+  border: 0px;
+  margin: auto;
+  background:  #438a5e;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 50px;
+  box-shadow: 5px 5px 10px black;
+}
+.register_modal{
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  max-height: 350px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  overflow-y: auto;
+  border-radius: 5px;
+  
+}
+.register_modal h3 {
+  text-align: center;
+}
+.register_modal p{
+  text-align: justify;
+}
+.register_modal h4{
+  font-size: 18px;
+}
+.register_modal h5{
+  font-size: 15px;
+}
+.r_input{
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+.register_terms{
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+.register_link{
+  text-decoration: underline;
+  color: green;
+}
+.register_check-field{
+  float: left;
+}
+
+.register_closeModal{
+  background-color: #199319;
+  color: white;
+  padding: 15px 50px;
+  text-decoration: none;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  }
+.register_closeModal:hover{
+  color: white;
+  background-color: green;
+}

@@ -1,0 +1,274 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+.dr_container{
+  height: 100%;
+  max-height: 1300px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: sans-serif;
+  justify-content: center;
+  background-image: url("../../../images/background1.jpg");
+  background-position: center;
+  background-size: cover;
+
+}
+.dr_logo{
+  background: url("../../../images/background.png");
+  width: 120px;
+  height: 100px;
+  margin: 0 auto;
+  background-repeat: no-repeat ;
+  object-fit: cover;
+  background-size: cover;
+  box-shadow: 0px 0px 2px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaa7, -8px -8px 15px #fff;
+  margin-top: 20px;
+}
+
+
+.dr_wrapper{
+  max-width: 600px;
+  width: 150%;
+  background: #fff;
+  margin: 30px auto;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+  position: relative;
+  top: 18px;
+}
+
+.dr_wrapper .title{
+    
+  margin-top: 50px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: green;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+
+.dr_wrapper .reserve_form{
+  width: 80%;
+  margin: auto;
+  
+}
+.re_modal{
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: 300px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 5px;
+}
+.r_modalContainer{
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  outline: none;
+}
+.re_modal p{
+  font-size: 20px;
+}
+.dr_wrapper .form .inputfield{
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.dr_wrapper .form .inputfield label{
+   width: 200px;
+   color: #757575;
+   margin-right: 10px;
+  font-size: 14px;
+}
+
+.dr_wrapper .form .inputfield .input,
+.dr_wrapper .form .inputfield .textarea,
+.dr_wrapper .form .inputfield select,
+.dr_wrapper .form .inputfield .reserve_Date,
+.dr_wrapper .form .inputfield .reserve_timeStarted,
+.dr_wrapper .form .inputfield .reserve_timeEnded{
+  width: 100%;
+  outline: none;
+  border: 1px solid #d5dbd9;
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  
+}
+
+.dr_wrapper .form .inputfield .textarea{
+  width: 100%;
+  height: 125px;
+  resize: none;
+}
+
+.dr_wrapper .form .inputfield .custom_select{
+  position: relative;
+  width: 100%;
+  height: 37px;
+}
+
+.dr_wrapper .form .inputfield .custom_select:before{
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  border: 8px solid;
+  border-color: #d5dbd9 transparent transparent transparent;
+  pointer-events: none;
+}
+
+.dr_wrapper .form .inputfield .custom_select select{
+  -webkit-appearance: none;
+  -moz-appearance:   none;
+  appearance:        none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1px solid #d5dbd9;
+  border-radius: 3px;
+}
+
+
+.dr_wrapper .form .inputfield .input:focus,
+.dr_wrapper .form .inputfield .textarea:focus,
+.dr_wrapper .form .inputfield .custom_select select:focus{
+  border: 1px solid #438a5e;
+}
+
+.dr_wrapper .form .inputfield p{
+   font-size: 14px;
+   color: #757575;
+}
+.dr_wrapper .form .inputfield .check{
+  width: 15px;
+  height: 15px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  background-color: #000000;
+}
+
+.dr_wrapper .form .inputfield .btn{
+  width: 100%;
+   padding: 8px 10px;
+  font-size: 15px; 
+  border: 0px;
+  background:  #438a5e;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 50px;
+  box-shadow: 5px 5px 10px black;
+}
+
+.dr_wrapper .form .inputfield .btn:hover{
+  background:#76dd61;
+}
+
+.dr_wrapper .form .inputfield:last-child{
+  margin-bottom: 0;
+}
+
+
+.reserve_input-field , form .button{
+  margin: 25px 0;
+  position: relative;
+  height: 50px;
+  width: 100%;
+}
+.reserve_input-field  input,
+.reserve_input-field  select{
+  height: 100%;
+  width: 100%;
+  border: 1px solid silver;
+  padding-left: 15px;
+  outline: none;
+  font-size: 19px;
+  transition: .4s;
+}
+.reserve_input-field  input:focus,
+.reserve_input-field  select:focus{
+  border: 1px solid #1DA1F2;
+}
+.reserve_input-field  .reserve_label, span.show{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.reserve_input-field .reserve_label{
+  left: 15px;
+  pointer-events: none;
+  color: grey;
+  font-size: 18px;
+  transition: .4s;
+}
+.reserve_input-field span.show{
+  right: 20px;
+  color: #111;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  visibility: hidden;
+  font-family: 'Open Sans', sans-serif;
+}
+.reserve_input-field input:valid ~ span.show{
+  visibility: visible;
+}
+.reserve_input-field input:focus ~ .reserve_label,
+.reserve_input-field input:valid ~ .reserve_label,
+.reserve_input-field select:valid ~ .reserve_label,
+.reserve_input-field select:focus ~ .reserve_label{
+  transform: translateY(-33px);
+  background: white;
+  font-size: 16px;
+  color: green;
+}
+.form-control1{
+  padding: 8px;
+}
+.reserve_submitBtn{
+  width: 50px;
+  height: 100%;
+  background: green;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+
+@media (max-width:420px) {
+  .dr_wrapper .form .inputfield{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dr_wrapper .form .inputfield label{
+    margin-bottom: 5px;
+  }
+  .dr_wrapper .form .inputfield.terms{
+    flex-direction: row;
+  }
+  .dr_wrapper .form p{
+      font-weight: bold;
+      font-size: 600px;
+  }
+  .drop{
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+  }
+}
+
+

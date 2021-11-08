@@ -1,0 +1,53 @@
+.vis_main{
+  background: #f0f0f0;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  justify-content: center;
+}
+.vis_slots{
+
+  margin-left: 30px;
+  
+}
+.vis_table{
+  border-collapse: collapse;
+  width: 100%;
+  overflow-x: scroll;
+}
+.vis_table th {
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.vis_table thead tr{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .vis_table thead td {
+    font-weight: 700;
+  }
+  
+  .vis_table td {
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    color: #222;
+    text-align: center;
+  }
+
+  .pending-decision span{
+    padding-right: 1rem;
+  }
+
+  .vis_paginationBtns{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+  }
+ 
+  .vis_inputs{
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+  }

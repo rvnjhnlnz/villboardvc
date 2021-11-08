@@ -1,0 +1,57 @@
+
+
+.ca_container{
+  height: 120vh;
+  font-family: sans-serif;
+  justify-content: center;
+  background-size: 100%;
+  background-image: url("../../../images/background1.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.ca_buttons{
+  display: flex;
+  justify-content: center;
+}
+
+.ca_buttons button{
+  margin: 30px 100px;
+  position: relative;
+  padding: 10px 30px;
+  color: #66CDAA;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 20px;
+  background-color: #306754;
+}
+.ca_buttons button:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  transition: 0.5;
+}
+.ca_buttons button:after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  transition: 0.5;
+}
+.ca_buttons button:hover{
+  background: #66CDAA;
+  color: #111;
+  box-shadow: 0 0 50px #66CDAA;
+}
+
+.ca_ccontainers{
+  width: 1100px;
+  height: 500px;
+  margin: auto;
+}

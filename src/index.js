@@ -2,16 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Dashboard from './component/User/Admin/Admin';
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import reducers from './reducers'
+import axios from 'axios'
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
+axios.defaults.baseURL = "https://villauth.herokuapp.com/"
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+ReactDOM.render(<React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+</React.StrictMode>
+, document.getElementById('root'));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
