@@ -25,7 +25,7 @@ function Transactions() {
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
     ];
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchTrans = async () => {
             showLoader();
             axios.post('postPayment')
@@ -37,7 +37,7 @@ function Transactions() {
                 })
         }
         fetchTrans();
-    }, []);
+    }, []);*/
     const transactionDataDisc = useMemo(() => {
         let computedTr = transactionData;
         if (search) {
