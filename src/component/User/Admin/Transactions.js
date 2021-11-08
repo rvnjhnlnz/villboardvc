@@ -85,7 +85,14 @@ function Transactions() {
                         <tbody>
                             {transactionDataDisc.map(tr => (
                                 <tr>
-                                    <td><img src ={tr.photoUrl}/></td>
+                                    <td>{tr.uLastName}</td>
+                                    <td>{tr.uFirstName}</td>
+                                    <td>{tr.uAddress}</td>
+                                    <td>{tr.uEmail}</td>
+                                    <td>{tr.uPhoneNumber}</td>
+                                    <td>{tr.refNumber}</td>
+                                    <td>{tr.typeTransaction}</td>
+                                    <td>{tr.PhotoUrl}</td>
                                 </tr>
                             ))}
                         </tbody>
