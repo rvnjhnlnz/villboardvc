@@ -38,7 +38,7 @@ function Transactions() {
         }
         const fetchTrans = async () => {
             axios.post('postPayment', {
-                headers: headers
+                headers: headers,
             })
                 .then((res) => {
                     console.log("RESPONSE RECEIVED: ", res);
@@ -108,8 +108,9 @@ function Transactions() {
                                                     <td>{tr.uPhoneNumber}</td>
                                                     <td>{tr.refNumber}</td>
                                                     <td>{tr.typeTransaction}</td>
-                                                    <td><a onClick={openModal} className="visitor_link">Click</a></td>
-                                                    <Modal isOpen={pictureModal}
+                                                    <td><a href = {tr.photoUrl}>Click to Download</a>
+                                                    </td>
+                                                    {/*<Modal isOpen={pictureModal}
                                                         className="visitor_modalContainer"
                                                         shouldCloseOnOverlayClick={false}
                                                         onRequestClose={() => setpictureModal(false)}>
@@ -124,7 +125,7 @@ function Transactions() {
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                    </Modal>
+                                                    </Modal>*/}
                                                 </tr>
                                             ))}
                                         </tbody>

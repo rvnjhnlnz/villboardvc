@@ -72,12 +72,10 @@ export default class UserHome extends Component {
                                         </h3>
                                     </div>
                                     <div className="home_headerdescription">
-                                        <p>
-                                            Ready for Reservations to use our Basketball court
-                                        </p>
+                                        <a href ={"https://villboard-main.s3.ap-southeast-1.amazonaws.com/4812b7c9-9c8d-4014-8b8d-1452e332f904.jpg"}>link</a>
                                     </div>
                                 </div>
-                                <img src={"https://villboard-main.s3.ap-southeast-1.amazonaws.com/f8dff87c-1a5a-451b-88bf-1661212381b7.jpg"} />
+                                <img src={"https://villboard-main.s3.ap-southeast-1.amazonaws.com/4812b7c9-9c8d-4014-8b8d-1452e332f904.jpg"} />
                             </div>
                         </div>
                     </div>
