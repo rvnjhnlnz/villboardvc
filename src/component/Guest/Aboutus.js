@@ -13,6 +13,9 @@ function Aboutus() {
               
                 <div class="row">
                     <div class="about-col">
+                        <img src={picture} />
+                    </div>
+                    <div class="about-col">
                         <h1>Villa Caceres</h1>
                         <p>Villa Caceres is a residential community developed by Moldex Realty Inc. in Brgy. Dila in Sta. Rosa, Laguna. This
                             house and lot community is therefore located at the heart of Laguna. This housing development is built in
@@ -23,12 +26,9 @@ function Aboutus() {
                             </p>
 
                     </div>
-                    <div class="about-col">
-                        <img src={picture} />
-                    </div>
                 </div>
                 <div class="row">
-                <div class="about-col">
+                    <div class="about-col">
                         <img src={picture} />
                     </div>
                     <div class="about-col">

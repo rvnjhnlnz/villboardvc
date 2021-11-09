@@ -77,7 +77,7 @@ export default class UserHome extends Component {
                                         </p>
                                     </div>
                                 </div>
-                                <img src={post} />
+                                <img src={"https://villboard-main.s3.ap-southeast-1.amazonaws.com/f8dff87c-1a5a-451b-88bf-1661212381b7.jpg"} />
                             </div>
                         </div>
                     </div>

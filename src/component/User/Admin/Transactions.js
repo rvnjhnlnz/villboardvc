@@ -28,19 +28,28 @@ function Transactions() {
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
     ];
-    /*useEffect(() => {
+    useEffect(() => {
+        const headers = {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,",
+            "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+        }
         const fetchTrans = async () => {
-            showLoader();
-            axios.post('postPayment')
-                .then(res => {
-                    console.log(res);
+            axios.post('postPayment', {
+                headers: headers
+            })
+                .then((res) => {
+                    console.log("RESPONSE RECEIVED: ", res);
                     setTransactionData(res.data)
-                }).catch(err => {
-                    console.log(err);
+                })
+                .catch((err) => {
+                    console.log("AXIOS ERROR: ", err);
                 })
         }
         fetchTrans();
-    }, []);*/
+    }, []);
     const transactionDataDisc = useMemo(() => {
         let computedTr = transactionData;
         if (search) {
@@ -66,6 +75,10 @@ function Transactions() {
         );
     }, [transactionData, currentPage, search, sorting]);
 
+    function openModal() {
+
+        setpictureModal(true);
+    }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -74,47 +87,95 @@ function Transactions() {
     }
     else {
         return (
-            <div>
-                <table class="transactions_table">
-                    <thead>
-                        <th>uLastName</th>
-                        <th>uFirstName</th>
-                        <th>uAddress</th>
-                        <th>uEmail</th>
-                        <th>uPhoneNumber</th>
-                        <th>refNumber</th>
-                        <th>typeTransaction</th>
-                        <th>Photo</th>
-                        <tbody>
-                            <tr>
-                                <td>asd1'</td>
-                                <td>asd2</td>
-                                <td>asd3</td>
-                                <td>asd4</td>
-                                <td>asd5</td>
-                                <td>asd6</td>
-                                <td>asd7</td>
-                                <td><a onClick={pictureModal} className="visitor_link">Click</a></td>
-                                <Modal isOpen={pictureModal}
-                                    className="visitor_modalContainer"
-                                    shouldCloseOnOverlayClick={false}
-                                    onRequestClose={() => setpictureModal(false)}>
-                                    <div class='v_modal'>
-                                        <h2>Visitors Digital Pass</h2>
-                                        <div className="output-box">
-                                            <img src={Logo} alt="" />
-                                            <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
-                                            <a href={Logo} download="QRCode">
-                                                <button type="button">Download</button>
-                                                <button type="button" onClick={alert('okay na')}>Ok</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </Modal>
-                            </tr>
-                        </tbody>
-                    </thead>
-                </table>
+            <div class="transactions_main">
+                <div class="admin_recent-grid">
+                    <div class="transactions_slots">
+                        <div class="admin_card">
+                            <div class="card-header">
+                                <h3>Pending Transactions</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="admin_table-responsive">
+                                    <table class="transactions_table">
+                                        <TableHeader headers={headers} onSorting={(field, order) => setSorting({ field, order })} />
+                                        <tbody>
+                                            {transactionDataDisc.map(tr => (
+                                                <tr>
+                                                    <td>{tr.uLastName}</td>
+                                                    <td>{tr.uFirstName}</td>
+                                                    <td>{tr.uAddress}</td>
+                                                    <td>{tr.uEmail}</td>
+                                                    <td>{tr.uPhoneNumber}</td>
+                                                    <td>{tr.refNumber}</td>
+                                                    <td>{tr.typeTransaction}</td>
+                                                    <td><a onClick={openModal} className="visitor_link">Click</a></td>
+                                                    <Modal isOpen={pictureModal}
+                                                        className="visitor_modalContainer"
+                                                        shouldCloseOnOverlayClick={false}
+                                                        onRequestClose={() => setpictureModal(false)}>
+                                                        <div class='v_modal'>
+                                                            <h2>Visitors Digital Pass</h2>
+                                                            <div className="output-box">
+                                                                <img src={tr.photoUrl} alt="" />
+                                                                <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
+                                                                <a>
+                                                                    <button type="button">Download</button>
+                                                                    <button type="button" onClick={() => setpictureModal(false)}>Ok</button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </Modal>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="admin_card">
+                            <div class="card-header">
+                                <h3>Transactions History</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="admin_table-responsive">
+                                    <table width="100%" class="transactions_table">
+                                        <thead>
+                                            <tr>
+                                                <td>Full Name</td>
+                                                <td>Address</td>
+                                                <td>Email Address</td>
+                                                <td>Phone Number</td>
+                                                <td>Reference Number</td>
+                                                <td>Type of Payment</td>
+                                                <td>Image</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Jasper Ian Escoto</td>
+                                                <td>20 A. Luna Street. </td>
+                                                <td>jasperianescoto@gmail.com</td>
+                                                <td>09959278654</td>
+                                                <td>63929213939495</td>
+                                                <td>G Cash</td>
+                                                <td><a href="">Click</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jasper Ian Escoto</td>
+                                                <td>20 A. Luna Street. </td>
+                                                <td>jasperianescoto</td>
+                                                <td>09959278654</td>
+                                                <td>63929213939495</td>
+                                                <td>G Cash</td>
+                                                <td><a href="">Click</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

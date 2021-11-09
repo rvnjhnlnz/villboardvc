@@ -42,28 +42,21 @@
 
 .about-col img{
    width: 100%;   
+   padding: 20px 0  25px;
 }
 
 .about-col h1{
    padding: 0;
    color: black;
    font-size: 20px;
-
 }
 
 .about-col h1{
- padding: 15px 0  25px;
- 
-   
+ padding: 1px 0  25px;
 }
 
-.red-btn{
-   border: 1px solid #f44336;
-   background: transparent;
-   color: #f44336;
-}
-
-.red-btn:hover{
-   color: #fff;
-   
-}
+@media only screen and (max-width: 600px) {
+   .about-col h1 {
+     background-color: lightblue;
+   }
+ }
