@@ -17,7 +17,7 @@ function UserHome() {
     const[posts, setPosts] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            axios.post('postVisitor')
+            axios.post('postAnnouncement')
                 .then(res => {
                     console.log(res);
                     setPosts(res.data);
@@ -142,74 +142,13 @@ function UserHome() {
             <div className="admin_home">
                 <div className="home_feed">
                     <div className="home_fHeader">
-                        <h3>Home</h3>
+                        <select className="form-control1">
+                            <option value="-">All Posts</option>
+                            <option value="Events">Events</option>
+                            <option value="Annoucements">Announcements</option>
+                        </select>
                     </div>
-                    <div className="home_post">
-                        <div className="home_avatar">
-                            <img src={avatar} />
-                        </div>
-                        <div className="home_pbody">
-                            <div className="home_pheader">
-                                <div className="home_pheadertext">
-                                    <h3>Arvin John Lanuza
-                                        <span className="home_headerspecial">
-                                            Admin
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div className="home_headerdescription">
-                                    <p>
-                                        Go to Admin Building to Vaccine
-                                        Schedule: 10am to 5pm
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="home_post">
-                        <div className="home_avatar">
-                            <img src={avatar} />
-                        </div>
-                        <div className="home_pbody">
-                            <div className="home_pheader">
-                                <div className="home_pheadertext">
-                                    <h3>Arvin John Lanuza
-                                        <span className="home_headerspecial">
-                                            Admin
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div className="home_headerdescription">
-                                    <p>
-                                        Go to Admin Building to Vaccine
-                                        Schedule: 10am to 5pm
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="home_post">
-                        <div className="home_avatar">
-                            <img src={avatar} />
-                        </div>
-                        <div className="home_pbody">
-                            <div className="home_pheader">
-                                <div className="home_pheadertext">
-                                    <h3>Arvin John Lanuza
-                                        <span className="home_headerspecial">
-                                            Admin
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div className="home_headerdescription">
-                                    <p>
-                                        Ready for Reservations to use our Basketball court
-                                    </p>
-                                </div>
-                            </div>
-                            <img src={post} />
-                        </div>
-                    </div>
+                    {displayPosts}
                 </div>
 
             </div>

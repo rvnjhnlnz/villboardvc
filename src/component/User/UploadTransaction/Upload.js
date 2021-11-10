@@ -6,13 +6,13 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import logo from '../../../images/background.png'
 import Modal from 'react-modal'
+import { decodeToken } from "react-jwt";
 function Upload() {
-
+    const decodedToken = decodeToken(localStorage.getItem('token'));
     const [ut_modalIsOpen, ut_setModalIsOpen] = useState(false);
     const [ut_firstname, setFirstName] = useState('');
     const [ut_lastname, setLastName] = useState('');
     const [ut_address, setAddress] = useState('');
-    const [ut_email, setEmail] = useState('');
     const [ut_phoneNumber, setPhoneNumber] = useState('');
     const [ut_refnumber, setRefnumber] = useState('');
     const [ut_typeTransaction, setTypeTransaction] = useState('Gcash');
@@ -68,19 +68,6 @@ function Upload() {
         }
 
 	
-        if (!ut_email) {
-            emError = 'Please Enter your Email Address'
-            isValid = false;
-            console.log('2')
-        }
-        else if (typeof ut_email!== "undefined") {
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            if (!pattern.test(ut_email) ) {
-                emError = 'Please enter valid email address.'
-                isValid = false;
-                console.log('Email');
-            }
-        }
 
         if (!ut_address) {
             adError = 'Please Enter your Address'
@@ -159,7 +146,7 @@ function Upload() {
         fd.append('uFirstName', ut_firstname);
         fd.append('uLastName', ut_lastname);
         fd.append('uAddress', ut_address);
-        fd.append('uEmail', ut_email);
+        fd.append('email', decodedToken.email);
         fd.append('uPhoneNumber', ut_phoneNumber);
         fd.append('refNumber', ut_refnumber);
         fd.append('typeTransaction', ut_typeTransaction);
@@ -206,14 +193,6 @@ function Upload() {
                             {ut_address_errormessage}
                         </div>
                         <label className="upload_label">Address</label>
-                    </div>
-                    <div className="upload_input-field">
-                        <input type="email" className="form-control"
-                            name="email" value={ut_email} onChange={(e) => setEmail(e.target.value)} />
-                        <div style={{ fontSize: 12, color: "red" }}>
-                            {ut_email_errormessage}
-                        </div>
-                        <label className="upload_label">Email</label>
                     </div>
                     <div className="upload_input-field">
                         <input type="number" className="form-control"
