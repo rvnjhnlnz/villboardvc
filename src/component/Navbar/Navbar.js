@@ -53,6 +53,9 @@ export default class Navbar extends Component {
                         <ul class="nav-links">
                             <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
                             <li>
+                                <img class="n_mobile-item" src={logo} />
+                            </li>
+                            <li>
                                 <a href="/" class="n_desktop-item">Home</a>
                                 <a href="/" class="n_mobile-item">Home</a>
                             </li>
@@ -65,8 +68,8 @@ export default class Navbar extends Component {
                                 <a href="/Contact-us" class="n_mobile-item">Contact</a>
                             </li>
                             <li>
-                                <a href="/Login" class="n_desktop-item">Sign In</a>
-                                <a href="/Login" class="n_mobile-item">Sign In</a>
+                                <a href="/Login" class="n_desktop-item">Login</a>
+                                <a href="/Login" class="n_mobile-item">Login</a>
                             </li>
                         </ul>
                         <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>

@@ -250,7 +250,6 @@ function Upload() {
                 <div className="upload_input-field">
                     <input type="submit" value='SUBMIT' className="upload_submitBtn" onClick={handleSubmit} />
                 </div>
-                
                 </form>
             </div>
         </div>

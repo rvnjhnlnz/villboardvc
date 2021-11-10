@@ -1,5 +1,5 @@
 .r_wrapper{
-  height: 150vh;
+  height: 170vh;
   display: flex;
   align-items: center;
   text-align: center;
@@ -11,20 +11,25 @@
 }
 .r_container{
     position: relative;
+    margin-top: 20px;
     width: 600px;
     background: white;
     padding: 40px;
+    height: 100%;
+    max-height: 1050px;
   }
   .r_logo img{
     width: 100px;
   }
+  
   .register_input-field, form .button{
     margin: 25px 0;
     position: relative;
     height: 50px;
     width: 100%;
   }
-  .register_input-field .form-control{
+  .register_input-field .form-control,
+  .register_input-field .form-control1{
       height: 100%;
       width: 100%;
       border: 1px solid silver;
@@ -32,6 +37,9 @@
       outline: none;
       font-size: 19px;
       transition: .4s;
+  }
+  .form-control1{
+    padding: 8px;
   }
   .register_input-field input:focus{
     border: 1px solid #1DA1F2;
@@ -210,6 +218,10 @@
 .register_link{
   text-decoration: underline;
   color: green;
+}
+.r_showpassword{
+  transform: scale(1.5);
+  margin-right: 10px;
 }
 .register_check-field{
   float: left;

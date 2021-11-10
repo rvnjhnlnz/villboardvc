@@ -163,15 +163,17 @@ function VisitorForm() {
             homeOwnerAddress: vHaddress,
             purpose: vPurpose,
         };
-
-        axios.post('addVisitor', data).then(res => {
-            console.log(res);
-            console.log(word);
-            alert("Visitor Form successful");
-            history.push("/");
-        }).catch(err => {
-            console.log(err);
-        });
+        const isValid = validate();
+        if(isValid){
+            axios.post('addVisitor', data).then(res => {
+                console.log(res);
+                console.log(word);
+                alert("Visitor Form successful");
+                history.push("/");
+            }).catch(err => {
+                console.log(err);
+            });
+        }
 
     }
     const isChecked = () => {

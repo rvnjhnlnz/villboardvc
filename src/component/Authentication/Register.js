@@ -7,6 +7,7 @@ import Modal from 'react-modal'
 import { signup } from '../../actions/auth'
 import ClearIcon from '@material-ui/icons/Clear';
 import Logo from '../../images/background.png'
+import eye from '../../images/eye.png'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 function Register() {
 
@@ -26,10 +27,13 @@ function Register() {
     const [pError, setpError] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
     const [cpError, setcpError] = useState('');
+    const [photo, setPhoto] = useState(null);
+    const [photoError, setphotoError] = useState('');
     const [checkedError, setcheckedError] = useState('');
     const [checked, setchecked] = useState(false);
     const [rModal, setrModal] = useState(false);
     const [termsChecked, settermsChecked] = useState(true);
+    const [passwordShown, setPasswordShown] = useState(false);
     const validate = () => {
         let eError, pError, fnError, mnError, lnError, aError, pnError, cpError, checkedError = "";
         let isValid = true;
@@ -156,11 +160,20 @@ function Register() {
         setrModal(false);
         settermsChecked(false);
     }
+    function handleFile(e) {
+        console.log(e.target.files);
+        console.log(e.target.files[0]);
+        setPhoto(e.target.files[0]);
+    }
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(passwordShown ? false : true);
+      };
     let history = useHistory();
     function handleSubmit(e) {
         e.preventDefault();
         const isValid = validate();
         const data = {
+            profilePicture: photo,
             firstName: firstName,
             middleInitial: middleInitial,
             lastName: lastName,
@@ -169,23 +182,31 @@ function Register() {
             email: email,
             password: password,
         }
+        const fd = new FormData();
+        fd.append('profilePicture', photo);
+        fd.append('firstName', firstName);
+        fd.append('middleInitial', middleInitial);
+        fd.append('lastName', lastName);
+        fd.append('address', address);
+        fd.append('phoneNumber', phoneNumber);
+        fd.append('email', email);
+        fd.append('password', password);
         if (isValid) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Register Successful!!',
-                confirmButtonText: 'Save',
-              }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    axios.post('addUser', data).then(res => {
-                        console.log(data);
+            axios.post('addUser', fd).then(res => {
+                console.log(res.data);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Register Successful!!',
+                    confirmButtonText: 'Save',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
                         history.push('/Login');
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                } 
-              })
-            
+                    } 
+                  })
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
     const isChecked = () => {
@@ -246,20 +267,36 @@ function Register() {
                             <label className="r_label">Email Address</label>
                         </div>
                         <div className="register_input-field">
-                            <input type="password" className="form-control"
+                            <input type={passwordShown ? "text" : "password"} className="form-control"
                                 onChange={(e) => setpassword(e.target.value)} />
+
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {pError}
                             </div>
                             <label className="r_label">Password</label>
                         </div>
                         <div className="register_input-field">
-                            <input type="password" className="form-control"
+                            <input type={passwordShown ? "text" : "password"} className="form-control"
                                 onChange={(e) => setconfirmPass(e.target.value)} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {cpError}
                             </div>
                             <label className="r_label">Confirm Password</label>
+                        </div>
+                        <div>
+                            <input type="checkbox"
+                                className="r_showpassword"
+                                onChange={togglePasswordVisiblity}
+                            />
+                            <span>Show Password</span>
+                        </div>
+                        <div className="register_input-field">
+                            <input type="file" className="form-control1"
+                                onChange={(e) => handleFile(e)}/>
+                            <div style={{ fontSize: 12, color: "red" }}>
+                                {photoError}
+                            </div>
+                            <label className="r_label">Upload File</label>
                         </div>
 
                         <div className="register_check-field">
