@@ -106,7 +106,7 @@ function Car() {
             console.log('1')
         }
         else if (typeof vehicleModel !== "undefined") {
-            var pattern = new RegExp(/[^A-Za-z0-9]+/);
+            var pattern = new RegExp(/[A-Za-z]+/);
             if (!pattern.test(vehicleModel)) {
 
                 cvmError = 'Please Enter valid model of your vehicle'
@@ -258,10 +258,10 @@ function Car() {
                         shouldCloseOnOverlayClick={false}
                         onRequestClose={() => setcModal(false)}>
                         <div class='v_modal'>
-                            <h2>Visitors Digital Pass</h2>
+                            <h2>Car QR Code</h2>
                             <div className="output-box">
                                 <img src={qrCode} alt="" />
-                                <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
+                                <h2>This is your qr for your car</h2>
                                 <a href={qrCode} download="QRCode">
                                     <button type="button">Download</button>
                                     <button type="button" onClick={handleSubmit}>Ok</button>
