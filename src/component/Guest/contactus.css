@@ -71,8 +71,7 @@
     cursor: pointer;
 }
 .con-submit:hover{
-    border: 1px solid #f44336;
-    background: #f44336;
+    background: orange;
     transition: .5s;
     color: white;
 }

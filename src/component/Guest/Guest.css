@@ -2,7 +2,7 @@
 .gFirst{
     min-height: 100vh;
     width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,9,30,0.7)),url("../../images/background.gif");
+    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,9,30,0.7)),url("../../images/background1.jpg");
     background-position: center;
     background-size: cover;
     position: relative;
@@ -63,8 +63,8 @@
     cursor: pointer;
 }
 .gVisitBtn:hover{
-    border: 1px solid #9ECF9D;
-    background: #9ECF9D;
+    background: orange;
+    color: white;
     transition: .5s;
 }
 @media (max-width: 900px) {
@@ -129,7 +129,8 @@
     transition: .5s;
 }
 .g3-layer:hover{
-    background: #9ECF9D;
+    background:orange;
+    color: white;
 }
 .g3-layer h3{
     margin-top: 10px;
@@ -230,8 +231,8 @@
     cursor: pointer;
 }
 .g5-Contact:hover{
-    border: 1px solid #9ECF9D;
-    background: #9ECF9D;
+    background: orange;
+    color: white;
     transition: .5s;
 }
 

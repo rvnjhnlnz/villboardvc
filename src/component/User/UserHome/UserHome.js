@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import './styles.css'
 import avatar from '../../../images/Avatar.jpg'
 import post from '../../../images/court.jpg'
@@ -10,12 +10,15 @@ function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
     const [caption, setCaption] = useState('');
-    const [postCategory, setpostCategory] = useState('');
+    const [postCategory, setpostCategory] = useState('Events');
     const [photoUrl, setphotoUrl] = useState(null);
     const [email, setEmail] = useState(decodedToken.email);
 
+    const[postFilter, setPostFilter] = useState('');
     const[posts, setPosts] = useState([]);
+
     useEffect(() => {
+        
         const fetchData = async () => {
             axios.post('postAnnouncement')
                 .then(res => {
@@ -52,8 +55,17 @@ function UserHome() {
             console.log(err);
         });
     }
-
-    const displayPosts = posts.map((obj) => {
+    function handleFilter(e) {
+        console.log(e.target.value);
+        setPostFilter(e.target.value);
+    }
+    const displayPosts = posts.filter((val) =>{
+        if(postFilter === ""){
+            return val
+        }else if(val.postCategory.toLowerCase().includes(postFilter.toLowerCase())){
+            return val;
+        }
+    }).map((obj) => {
         return <div className="home_post">
         <div className="home_avatar">
             <img src={avatar} />
@@ -83,8 +95,8 @@ function UserHome() {
             <div className="admin_home">
                 <div className="home_feed">
                     <div className="home_fHeader">
-                        <select className="form-control1">
-                            <option value="-">All Posts</option>
+                        <select className="form-control1" onChange = {(e) => handleFilter(e)}>
+                            <option value="">All Posts</option>
                             <option value="Events">Events</option>
                             <option value="Annoucements">Announcements</option>
                         </select>
@@ -142,8 +154,8 @@ function UserHome() {
             <div className="admin_home">
                 <div className="home_feed">
                     <div className="home_fHeader">
-                        <select className="form-control1">
-                            <option value="-">All Posts</option>
+                        <select className="form-control1" onChange = {(e) => handleFilter(e)}>
+                            <option value="">All Posts</option>
                             <option value="Events">Events</option>
                             <option value="Annoucements">Announcements</option>
                         </select>

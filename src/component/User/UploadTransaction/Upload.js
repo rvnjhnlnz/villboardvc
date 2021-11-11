@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import logo from '../../../images/background.png'
 import Modal from 'react-modal'
 import { decodeToken } from "react-jwt";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 function Upload() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [ut_modalIsOpen, ut_setModalIsOpen] = useState(false);
@@ -140,6 +141,7 @@ function Upload() {
         console.log(e.target.value);
         setTypeTransaction(e.target.value);
     }
+    let history = useHistory();
     function handleSubmit(event) {
         event.preventDefault();
         const fd = new FormData();
@@ -155,7 +157,16 @@ function Upload() {
         if(isValid){
         axios.post('addPayment', fd).then(res => {
             console.log(res);
-            alert("payment successful");
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully Submitted. Wait to validate your proof of payment',
+                confirmButtonText: 'Save',
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    history.push('/');
+                } 
+              })
         }).catch(err => {
             console.log(err);
         });
@@ -226,10 +237,10 @@ function Upload() {
                         </div>
                         <label className="upload_label">Upload File</label>
                     </div>
-                <div className="upload_input-field">
+                </form>
+                <div className="">
                     <input type="submit" value='SUBMIT' className="upload_submitBtn" onClick={handleSubmit} />
                 </div>
-                </form>
             </div>
         </div>
     )

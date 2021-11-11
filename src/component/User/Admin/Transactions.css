@@ -1,21 +1,30 @@
 .transactions_main{
-    background: #f0f0f0;
-    min-height: calc(100vh - 900px);
-    display: flex;
-    justify-content: center;
+  background: #f0f0f0;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  justify-content: center;
 }
 .transactions_slots{
-    width: 70rem;
+  width: 80rem;
+  margin-left: 30px;
+  
 }
 .transactions_table{
-    width: 100%;
-    overflow-x: auto;
+  border-collapse: collapse;
+  width: 100%;
+  overflow-x: scroll;
+}
+.transactions_table th {
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .transactions_table thead tr{
     border-top: 1px solid #f0f0f0;
     border-bottom: 2px solid #f0f0f0;
   }
-  
   .transactions_table thead td {
     font-weight: 700;
   }
@@ -27,21 +36,18 @@
     text-align: center;
   }
 
-  .transactions-decision{
-    display: flex;
-  flex-direction: row;
-  justify-content: center;
-  }
-  .transactions-decision span{
+  .pending-decision span{
     padding-right: 1rem;
   }
-  .tra_inputs{
-    display: flex;
-    flex-direction: row;
-    margin: 15px;
-  }
-  .tr_paginationBtns{
+
+  .tra_paginationBtns{
     margin: 20px;
     display: flex;
     justify-content: center;
+  }
+ 
+  .vis_inputs{
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
   }

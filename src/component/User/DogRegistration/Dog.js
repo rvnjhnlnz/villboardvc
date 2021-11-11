@@ -1,11 +1,13 @@
 import react from 'react';
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import './style.css'
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import logo from '../../../images/background.png'
 import { decodeToken, useJwt } from "react-jwt";
+import Modal from 'react-modal'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 function Dog() {
     const decodedToken = decodeToken(localStorage.getItem('token'))
 
@@ -16,7 +18,6 @@ function Dog() {
     const [pphoneNumber, setPhoneNumber] = useState('');
     const [ppetname, setpetname] = useState('');
     const [ppetbreed, setpetbreed] = useState('');
-    const [ppetgender, setpetgender] = useState('Male');
     const [ppemail, setppemail] = useState(decodedToken.email);
 
 
@@ -28,6 +29,14 @@ function Dog() {
     const [ppetname_errormessage, ppetname_Seterrormessage] = useState('');
     const [ppetbreed_errormessage, ppetbreed_Seterrormessage] = useState('');
 
+    const [word, setWord] = useState([]);
+    const [qrCode, setQrCode] = useState("");
+    const [dModal, setdModal] = useState("");
+
+    useEffect(() => {
+        setQrCode
+            (`http://api.qrserver.com/v1/create-qr-code/?data=${JSON.stringify(word)}`);
+    }, [JSON.stringify(word)]);
 
 
     const validate = () => {
@@ -138,7 +147,7 @@ function Dog() {
         }
         return isValid;
     }
-
+    let history = useHistory();
     function handleSubmit(event) {
         event.preventDefault();
         
@@ -151,18 +160,41 @@ function Dog() {
             petBreed: ppetbreed,
             email: ppemail,
         };
-        const isValid = validate();
-        if (isValid) {
             console.log(data);
             axios.post('addPet', data).then(res => {
                 console.log(res);
-                alert("pet successful");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Registered',
+                    confirmButtonText: 'Ok',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        history.push("/");
+                    } 
+                  })
             }).catch(err => {
                 console.log(err);
             });
+        
+    }
+    function openModal() {
+
+        const data = {
+            pFirstName: pfirstName,
+            pLastName: plastName,
+            pAddress: paddress,
+            pPhoneNumber: pphoneNumber,
+            petName: ppetname,
+            petBreed: ppetbreed,
+            email: ppemail,
+        };
+        const isValid = validate();
+        if(isValid){
+            setdModal(true);
+            setWord(data);
         }
     }
-
     return (
         <div class="pet_container">
             <div className="pet_wrapper">
@@ -224,11 +256,26 @@ function Dog() {
                         </div>
                         <label className="pet_label">Pet Breed</label>
                     </div>
-
-                    <div className="pet_input-field">
-                        <input type="submit" value='SUBMIT' className="pet_submitBtn" onClick={handleSubmit} />
-                    </div>
                 </form>
+                    <div className="">
+                        <input type="submit" value='SUBMIT' className="pet_submitBtn" onClick={openModal} />
+                    </div>
+                    <Modal isOpen={dModal}
+                        className="visitor_modalContainer"
+                        shouldCloseOnOverlayClick={false}
+                        onRequestClose={() => setdModal(false)}>
+                        <div class='v_modal'>
+                            <h2>Dog Qr Code</h2>
+                            <div className="output-box">
+                                <img src={qrCode} alt="" />
+                                <h2>This is your qr for your pet</h2>
+                                <a href={qrCode} download="QRCode">
+                                    <button type="button">Download</button>
+                                    <button type="button" onClick={handleSubmit}>Ok</button>
+                                </a>
+                            </div>
+                        </div>
+                    </Modal>
             </div>
         </div>
     )

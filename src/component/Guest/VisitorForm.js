@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Logo from '../../images/background.png'
 import { decodeToken, useJwt } from "react-jwt";
 import { Redirect } from 'react-router-dom';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 function VisitorForm() {
     /*const [temp, setTemp] = useState("");
     */
@@ -168,8 +169,17 @@ function VisitorForm() {
             axios.post('addVisitor', data).then(res => {
                 console.log(res);
                 console.log(word);
-                alert("Visitor Form successful");
-                history.push("/");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successful!! Please enjoy your stay!',
+                    confirmButtonText: 'Ok',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        history.push("/");
+                    } 
+                  })
+                
             }).catch(err => {
                 console.log(err);
             });
@@ -197,8 +207,10 @@ function VisitorForm() {
             purpose: vPurpose,
         };
         const isValid = validate();
+        if(isValid){
             setvModal(true);
             setWord(data);
+        }
     }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (decodedToken) {
@@ -276,7 +288,7 @@ function VisitorForm() {
                                     <h4>Terms and Conditions</h4>
                                     <h5>Last Updated: </h5>
                                     <p>Please read the terms and conditions before using our mobile application which is
-                                        Villboard app and our website <a href="">www.villboardapp.com</a> the application is operated by the
+                                        Villboard app and our website <a href="www.villboardvc.herokuapp.com">www.villboardvc.herokuapp.com</a> the application is operated by the
                                         Villa Cares – sta. rosa laguna your access to and
                                         use of the service is conditioned on your acceptance and compliance with these terms.
                                         These terms apply to all visitors, homeowners who access our mobile and web application.

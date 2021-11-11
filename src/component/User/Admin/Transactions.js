@@ -19,10 +19,10 @@ function Transactions() {
     const [pictureModal, setpictureModal] = useState(false);
     const item_per_page = 10;
     const headers = [
+        { name: "Status", field: "pPending", sortable: true },
         { name: "Last Name", field: "uLastName", sortable: true },
         { name: "First Name", field: "uFirstName", sortable: true },
         { name: "Address", field: "uAddress", sortable: true },
-        { name: "Email Address", field: "uEmail", sortable: true },
         { name: "Phone Number", field: "uPhoneNumber", sortable: true },
         { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
@@ -42,7 +42,7 @@ function Transactions() {
             })
                 .then((res) => {
                     console.log("RESPONSE RECEIVED: ", res);
-                    setTransactionData(res.data)
+                    setTransactionData(res.data);
                 })
                 .catch((err) => {
                     console.log("AXIOS ERROR: ", err);
@@ -75,10 +75,6 @@ function Transactions() {
         );
     }, [transactionData, currentPage, search, sorting]);
 
-    function openModal() {
-
-        setpictureModal(true);
-    }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -101,35 +97,27 @@ function Transactions() {
                                         <tbody>
                                             {transactionDataDisc.map(tr => (
                                                 <tr>
+                                                    <td>{tr.pPending}</td>
                                                     <td>{tr.uLastName}</td>
                                                     <td>{tr.uFirstName}</td>
                                                     <td>{tr.uAddress}</td>
-                                                    <td>{tr.uEmail}</td>
                                                     <td>{tr.uPhoneNumber}</td>
                                                     <td>{tr.refNumber}</td>
                                                     <td>{tr.typeTransaction}</td>
                                                     <td><a href = {tr.photoUrl}>Click to Download</a>
                                                     </td>
-                                                    {/*<Modal isOpen={pictureModal}
-                                                        className="visitor_modalContainer"
-                                                        shouldCloseOnOverlayClick={false}
-                                                        onRequestClose={() => setpictureModal(false)}>
-                                                        <div class='v_modal'>
-                                                            <h2>Visitors Digital Pass</h2>
-                                                            <div className="output-box">
-                                                                <img src={tr.photoUrl} alt="" />
-                                                                <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
-                                                                <a>
-                                                                    <button type="button">Download</button>
-                                                                    <button type="button" onClick={() => setpictureModal(false)}>Ok</button>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </Modal>*/}
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
+                                    <div className="tra_paginationBtns">
+                                        <PaginationCom
+                                            total={totalItems}
+                                            itemsPerPage={item_per_page}
+                                            currentPage={currentPage}
+                                            onPageChange={page => setCurrentPage(page)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

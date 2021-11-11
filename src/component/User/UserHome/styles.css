@@ -149,6 +149,7 @@
 }
 .home_pbody img{
     width: 450px;
+    height: 350px;
     object-fit: contain;
     border-radius: 20px;
 }

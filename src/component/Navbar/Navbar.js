@@ -154,12 +154,10 @@ export default class Navbar extends Component {
                                                     <li><a href="/UploadTransaction">Upload Transaction</a></li>
                                                     <li><a href="/Reservation">Reservation</a></li>
                                                     <li><a href="/Messages">Messages</a></li>
-                                                    <li><a href="/Events">Events</a></li>
                                                 </ul>
                                             </div>
                                             <div class="n_row">
                                                 <ul class="n_mega-links">
-                                                    <li><a href="/Budget">Budget Allocation</a></li>
                                                     <li><a href="/Guidelines">Guidelines</a></li>
                                                     <li><a href="/DogRegistration">Pet Registration</a></li>
                                                     <li><a href="/CarRegistration">Vehicle Registration</a></li>

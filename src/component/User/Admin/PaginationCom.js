@@ -35,7 +35,7 @@ const PaginationCom = ({
     if (totalPages === 0) return null;
 
     return (
-        <Pagination>
+        <Pagination className = "pagination">
             <Pagination.Prev
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}

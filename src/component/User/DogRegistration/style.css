@@ -170,3 +170,14 @@
 }
 
 
+.pet_submitBtn{
+  margin: 25px 0;
+  position: relative;
+  height: 50px;
+  width: 80%;
+  background: green;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}

@@ -14,10 +14,10 @@ import car1 from '../../../images/car.jpg'
 import qr from '../../../images/qrcode.png'
 import Modal from 'react-modal'
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 function Profile() {
-    const decodedToken = decodeToken(localStorage.getItem('token'))
-    let valid;
+    const decodedToken = decodeToken(localStorage.getItem('token'));
     //Modals
     const [ep_modalIsOpen, ep_setModalIsOpen] = useState(false);
     const [pass_modalIsOpen, pass_setModalIsOpen] = useState(false);
@@ -38,26 +38,47 @@ function Profile() {
     const [address, setAddress] = useState(decodedToken.address)
     const [phoneNumber, setphoneNumber] = useState(decodedToken.phoneNumber)
 
+    const[fFirstName, setfFirstName] = useState('');
+    const[fLastName, setfLastName] = useState('');
+    const[fEmail, setfEmail] = useState('');
+    const[fAddress, setfAddress] = useState('');
+    const[fPhonenumber, setfPhonenumber] = useState('');
+    const[fMember, setfMember] = useState('');
 
-    const [petData, setPetData] = useState([]);
+    const [petData, setPetData] = useState(decodedToken.petField);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            axios.post('postPet')
-                .then(res => {
-                    console.log(res);
-                    setPetData(res.data);
-                }).catch(err => {
-                    console.log(err);
-                })
-        };
-        fetchPosts();
-    }, []);
+    const [carData, setCarData] = useState(decodedToken.carField);
+
+    const [familyData, setfamilyData] = useState(decodedToken.familyField)
     const pet = petData.map((obj) => {
         return <div class="profilecard-single">
             <div>
                 <h1>{obj.petName}</h1>
                 <span>{obj.petBreed}</span>
+            </div>
+            <div>
+                <span class="las la-user"></span>
+            </div>
+        </div>
+    })
+    const car = carData.map((obj) => {
+        return <div class="profilecard-single">
+            <div>
+                <h1>{obj.vehicleModel}</h1>
+                <span>{obj.plateNumber}</span>
+            </div>
+            <div>
+                <span class="las la-user"></span>
+            </div>
+        </div>
+    })
+    const family = familyData.map((obj) => {
+        return <div class="profilecard-single">
+            <div>
+                <h1>{obj.aFirstName + ' '+ obj.aLastName}</h1>
+                <span>{obj.aEmail}</span>
+                <span>{obj.aPhoneNumber}</span>
+                <span>{obj.Member}</span>
             </div>
             <div>
                 <span class="las la-user"></span>
@@ -96,21 +117,7 @@ function Profile() {
         console.log(isValid)
         return isValid;
     }
-    function changefirstname() {
-        var newData = {
-            email: decodedToken.email,
-            newfirstname: firstName
-        }
-        const fnValid = validationFirstName();
-        if (fnValid) {
-            axios.post('changeFirstname', newData).then(res => {
-                console.log(res);
-                alert("update successful");
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }
+
     function validationMiddleinitial() {
         let isValid = true;
         if (!middleInitial) {
@@ -129,23 +136,7 @@ function Profile() {
         console.log(isValid)
         return isValid;
     }
-    function changeMiddleinitial() {
-        var newData = {
-            email: decodedToken.email,
-            newmiddleinitial: middleInitial
-        }
-        const miValid = validationMiddleinitial();
-        if (miValid) {
-            mi_Seterrormessage((prevState) => '');
-            axios.post('changeMiddleinitial', newData).then(res => {
-                console.log(res);
-                alert("update successful");
 
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }
     function validationLastName() {
         let isValid = true;
         if (!lastName) {
@@ -164,22 +155,7 @@ function Profile() {
         console.log(isValid)
         return isValid;
     }
-    function changeLastName() {
-        var newData = {
-            email: decodedToken.email,
-            newlastname: lastName
-        }
-        const lnValid = validationLastName();
-        if (lnValid) {
-            axios.post('changeLastname', newData).then(res => {
-                console.log(res);
-                alert("update successful");
 
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }
     function validationAddress() {
         let isValid = true;
         if (!address) {
@@ -198,23 +174,10 @@ function Profile() {
         console.log(isValid)
         return isValid;
     }
-    function changeAddress() {
-        var newData = {
-            email: decodedToken.email,
-            newaddress: address
-        }
-        const aValid = validationAddress();
-        if (aValid) {
-            axios.post('changeAddress', newData).then(res => {
-                console.log(res);
-                alert("update successful");
 
-            }).catch(err => {
-                console.log(err);
-            })
-        }
+    function sample() {
+        console.log(petData)
     }
-
     function validationPhoneNumber() {
         let isValid = true;
         if (!phoneNumber) {
@@ -233,7 +196,7 @@ function Profile() {
         console.log(isValid)
         return isValid;
     }
-
+    let history = useHistory();
     function changeProfile() {
         var updateFirstname = {
             email: decodedToken.email,
@@ -291,7 +254,34 @@ function Profile() {
             }).catch(err => {
                 console.log(err);
             })
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully edit your profile',
+                confirmButtonText: 'Ok',
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    history.push("/Profile");
+                } 
+              })
         }
+    }
+    function changeProfile() {
+        var data = {
+            aFirstName: fFirstName,
+            aLastName: fLastName,
+            aEmail: fEmail,
+            aAddress: fAddress,
+            aPhoneNumber: fPhonenumber,
+            Member: fMember,
+            email: decodedToken.email,
+        }
+        axios.post('addFamily', data).then(res => {
+            console.log(res);
+            console.log('success')
+        }).catch(err => {
+            console.log(err);
+        })
     }
     return (
         <div>
@@ -301,6 +291,9 @@ function Profile() {
             <div className="p_container">
                 <div className="p_wrapper">
                     <form className="p_form">
+                        <div class="ppicture_Container">
+                            <img src={decodedToken.photoUrlProfile} className="user_ppicture" alt="Avatar" />
+                        </div>
                         <div class="p_title">
                             <a onClick={() => ep_setModalIsOpen(true)} className="p_editprofile">Edit Profile</a>
                             <Modal isOpen={ep_modalIsOpen}
@@ -311,61 +304,63 @@ function Profile() {
                                 <div class='p_addmodal'>
                                     <div class="c_wrapper">
                                         <div className="c_logo"></div>
-                                        <div class="title">
-                                            Edit Profile
-                                        </div>
-                                        <div class="ownInfo">
-                                        </div>
-                                        <form className="form" onSubmit={() => house_setModalIsOpen(false)}>
-                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-                                                {fn_errormessage}
+                                        <form className="p_form">
+                                            <div class="ut_logo">
                                             </div>
-                                            <div class="inputfield">
-                                                <label>First Name</label>
+                                            <div class="title">
+                                                Edit Profile
+                                            </div>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control" defaultValue={decodedToken.firstName}
                                                     onChange={(e) => { setFirstName(e.target.value) }} name="firstName" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                {fn_errormessage}
+                                                </div>
+                                                <label className="profile_label">First Name</label>
                                             </div>
-                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-                                                {mi_errormessage}
-                                            </div>
-                                            <div class="inputfield">
-                                                <label>Middle Initial</label>
-                                                <input type="text" className="form-control" defaultValue={decodedToken.middleInitial}
+                                            <div className="profile_input-field">
+                                            <input type="text" className="form-control" defaultValue={decodedToken.middleInitial}
                                                     onChange={(e) => { setMiddleInitial(e.target.value) }} name="middleInitial" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    {mi_errormessage}
+                                                </div>
+                                                <label className="profile_label">Middle Initial</label>
                                             </div>
-                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-                                                {ln_errormessage}
-                                            </div>
-                                            <div class="inputfield">
-                                                <label>Last Name</label>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control" defaultValue={decodedToken.lastName}
                                                     onChange={(e) => { setLastName(e.target.value) }} name="lastName" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                {ln_errormessage}
+                                                </div>
+                                                <label className="profile_label">Last Name</label>
                                             </div>
-                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-                                                {a_errormessage}
+                                            <div className="profile_input-field">
+                                            <input type="text" className="form-control" defaultValue={decodedToken.address}
+                                                    onChange={(e) => { setAddress(e.target.value) }}  />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    {a_errormessage}
+                                                </div>
+                                                <label className="profile_label">Phone Number</label>
                                             </div>
-                                            <div class="inputfield">
-                                                <label>Address</label>
-                                                <input type="text" className="form-control" defaultValue={decodedToken.address}
-                                                    onChange={(e) => { setAddress(e.target.value) }} name="Relationship" />
-                                            </div>
-                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-                                                {p_errormessage}
-                                            </div>
-                                            <div class="inputfield">
-                                                <label>Phone Number</label>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control" defaultValue={decodedToken.phoneNumber}
                                                     onChange={(e) => { setphoneNumber(e.target.value) }} name="address" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    {p_errormessage}
+                                                </div>
+                                                <label className="profile_label">Reference Number</label>
                                             </div>
-                                            <div class="inputfield">
-                                                <label>Email Address</label>
-                                                <input type="email" className="form-control"
-                                                    disabled name="email" />
+                                            <div className="profile_input-field">
+                                            <input type="text" className="form-control" defaultValue={decodedToken.email}
+                                                     name="address" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    
+                                                </div>
+                                                <label className="profile_label">Email</label>
                                             </div>
-
                                         </form>
-                                        <div class="inputfield">
-                                            <input type="submit" value="Submit" class="btn" onClick={changeProfile} />
+                                        <div className="">
+                                            <input type="submit" value='SUBMIT' className="profile_submitBtn" onClick={changeProfile} />
                                         </div>
                                     </div>
                                 </div>
@@ -434,48 +429,64 @@ function Profile() {
                                 <div class='p_addmodal'>
                                     <div class="c_wrapper">
                                         <div className="c_logo"></div>
-                                        <div class="title">
-                                            Relative / Household
-                                        </div>
-                                        <form className="form" onSubmit={() => house_setModalIsOpen(false)}>
-                                            <div class="inputfield">
-                                                <label>First Name</label>
-                                                <input type="text" className="form-control"
-                                                    name="firstName" />
+                                        <form className="p_form">
+                                            <div class="ut_logo">
                                             </div>
+                                            <div class="title">
+                                                Add Family
+                                            </div>
+                                            <div className="profile_input-field">
+                                                <input type="text" className="form-control"
+                                                    onChange={(e) => { setfFirstName(e.target.value) }} name="firstName" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
 
-                                            <div class="inputfield">
-                                                <label>Last Name</label>
+                                                </div>
+                                                <label className="profile_label">First Name</label>
+                                            </div>
+                                            <div className="profile_input-field">
+                                            <input type="text" className="form-control"
+                                                    onChange={(e) => { setfLastName(e.target.value) }} name="LastName" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                   
+                                                </div>
+                                                <label className="profile_label">Last Name</label>
+                                            </div>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control"
-                                                    name="lastName" />
+                                                    onChange={(e) => { setfEmail(e.target.value) }} name="email" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                
+                                                </div>
+                                                <label className="profile_label">Email</label>
                                             </div>
-                                            <div class="inputfield">
-                                                <label>Phone Number</label>
+                                            <div className="profile_input-field">
+                                            <input type="text" className="form-control"
+                                                    onChange={(e) => { setfAddress(e.target.value) }}  />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    
+                                                </div>
+                                                <label className="profile_label">Address</label>
+                                            </div>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control"
-                                                    name="address" />
+                                                    onChange={(e) => { setfPhonenumber(e.target.value) }} name="phonenumber" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    
+                                                </div>
+                                                <label className="profile_label">Phone Number</label>
                                             </div>
-                                            <div class="inputfield">
-                                                <label>Email Address</label>
-                                                <input type="email" className="form-control"
-                                                    name="email" />
-                                            </div>
-                                            <div class="inputfield">
-                                                <label>Relationship</label>
+                                            <div className="profile_input-field">
                                                 <input type="text" className="form-control"
-                                                    name="Relationship" />
+                                                    onChange={(e) => { setfMember(e.target.value) }} name="address" />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                    
+                                                </div>
+                                                <label className="profile_label">Member</label>
                                             </div>
-                                            <div class="inputfield terms">
-                                                <label class="check">
-                                                    <input type="checkbox" required />
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                                <p><b>Agreed to terms and conditions</b></p>
-                                            </div>
-                                            <div class="inputfield">
-                                                <input type="submit" value="Submit" class="btn" />
-                                            </div>
-
                                         </form>
+                                        <div className="">
+                                            <input type="submit" value='SUBMIT' className="profile_submitBtn" onClick={changeProfile} />
+                                        </div>
                                     </div>
                                 </div>
                             </Modal>
@@ -483,6 +494,14 @@ function Profile() {
                         <div class="profile_cards">
                             <h3>Pets: </h3>
                             {pet}
+                        </div>
+                        <div class="profile_cards">
+                            <h3>Cars: </h3>
+                            {car}
+                        </div>
+                        <div class="profile_cards">
+                            <h3>Family: </h3>
+                            {family}
                         </div>
                     </form>
                 </div>

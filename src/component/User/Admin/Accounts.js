@@ -11,6 +11,7 @@ import Search from './Search';
 import useFullPageLoader from "../../../reducers/useFullPageLoader";
 import Swal from 'sweetalert2'
 import Modal from 'react-modal'
+import ClearIcon from '@material-ui/icons/Clear';
 function Accounts() {
     const [usersList, setUsersList] = useState([]);
     const [loader, showLoader, hideLoader] = useFullPageLoader();
@@ -19,9 +20,9 @@ function Accounts() {
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [editModal, set_editModal] = useState(false);
+
     const item_per_page = 10;
     const headers = [
-        { name: "", field: "", sortable: false },
         { name: "Role", field: "role", sortable: false },
         { name: "Last Name", field: "lastName", sortable: true },
         { name: "First Name", field: "firstName", sortable: true },
@@ -96,6 +97,13 @@ function Accounts() {
         })
     }
 
+    const[nEmail,setnEmail] = useState('');
+    const[nLastname,setnLastname] = useState('');
+    const[nFirstname,setnFirstname] = useState('');
+    const[nMiddleinitial,setnMiddleinitial] = useState('');
+    const[nPhonenumber,setnPhonenumber] = useState('');
+    const[nAddress,setnAddress] = useState('');
+
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -116,6 +124,89 @@ function Accounts() {
                                     setSearch(val);
                                     setCurrentPage(1);
                                 }} />
+                                <a onClick={() => set_editModal(true)} className = "acc_editAcc">Edit Account</a>
+                                <Modal isOpen={editModal}
+                                    className="acc_modalContainer"
+                                    shouldCloseOnOverlayClick={false}
+                                    onRequestClose={() => set_editModal(false)}>
+                                    
+                                    <div class='acc_modal'>
+                                    <div class = 'acc_xButton'>
+                                        <a class="acc_addbutton" onClick={() => set_editModal(false)}><ClearIcon fontSize='large'/></a>
+                                    </div>
+                                        <form className="acc_form">
+                                            <div class="ut_logo">
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="Email"  placeholder="Email you want to change data" 
+                                                    onChange={(e) => { setnEmail(e.target.value) }} />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">Email Address</label>
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="Last Name"  placeholder="" 
+                                                    onChange={(e) => { setnLastname(e.target.value) }} 
+                                                    />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">Last Name</label>
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="First Name"  placeholder="" 
+                                                    onChange={(e) => { setnFirstname(e.target.value) }} 
+                                                    />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">First Name</label>
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="First Name"  placeholder="" 
+                                                    onChange={(e) => { setnMiddleinitial(e.target.value) }} 
+                                                    />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">Middle Initial</label>
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="First Name"  placeholder="" 
+                                                    onChange={(e) => { setnPhonenumber(e.target.value) }} 
+                                                    />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">Phone number</label>
+                                            </div>
+
+                                            <div className="acc_input-field">
+                                                <input type="text" className="form-control"
+                                                    name="First Name"  placeholder="" 
+                                                    onChange={(e) => { setnAddress(e.target.value) }} 
+                                                    />
+                                                <div style={{ fontSize: 12, color: "red" }}>
+
+                                                </div>
+                                                <label className="acc_label">Address</label>
+                                            </div>
+                                            
+                                            <div className="image_container">
+                                            </div>
+                                            <div className="acc_input-field">
+                                                <input type="submit" value='SUBMIT' className="acc_submitBtn" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </Modal>
+                                <a href="">Delete Account</a>
                             </div>
                             <div class="card-body">
                                 <div class="admin_table-responsive">
@@ -124,79 +215,6 @@ function Accounts() {
                                         <tbody>
                                             {accountsData.map(acc => (
                                                 <tr>
-                                                    <td>
-                                                        <div className="acc_btns">
-                                                            <a onClick={() => set_editModal(true)}><i class="las la-edit"></i></a>
-                                                            <Modal isOpen={editModal}
-                                                                className="p_addmodalContainer"
-                                                                shouldCloseOnOverlayClick={false}
-                                                                onRequestClose={() => set_editModal(false)}>
-                                                                <a class="p_addbutton" onClick={() => set_editModal(false)}>X</a>
-                                                                <div class='p_addmodal'>
-                                                                    <div class="c_wrapper">
-                                                                        <div className="c_logo"></div>
-                                                                        <div class="title">
-                                                                            Edit Profile
-                                                                        </div>
-                                                                        <div class="ownInfo">
-                                                                        </div>
-                                                                        <form className="form">
-                                                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>First Name</label>
-                                                                                <input type="text" className="form-control" defaultValue={acc.firstName}
-                                                                                    name="firstName" />
-                                                                            </div>
-                                                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>Middle Initial</label>
-                                                                                <input type="text" className="form-control" defaultValue={acc.middleInitial}
-                                                                                    name="middleInitial" />
-                                                                            </div>
-                                                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>Last Name</label>
-                                                                                <input type="text" className="form-control" defaultValue={acc.lastName}
-                                                                                    name="lastName" />
-                                                                            </div>
-                                                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>Address</label>
-                                                                                <input type="text" className="form-control" defaultValue={acc.address}
-                                                                                    name="Relationship" />
-                                                                            </div>
-                                                                            <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
-
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>Phone Number</label>
-                                                                                <input type="text" className="form-control" defaultValue={acc.phoneNumber}
-                                                                                    name="address" />
-                                                                            </div>
-                                                                            <div class="inputfield">
-                                                                                <label>Email Address</label>
-                                                                                <input type="email" className="form-control" defaultValue={acc.email}
-                                                                                    name="email" />
-                                                                            </div>
-
-                                                                        </form>
-                                                                        <div class="inputfield">
-                                                                            <input type="submit" value="Submit" class="btn" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </Modal>
-                                                            <a onClick={sample}><i class="las la-times"></i></a>
-                                                        </div>
-                                                    </td>
                                                     <td>{acc.role}</td>
                                                     <td>{acc.lastName}</td>
                                                     <td>{acc.firstName}</td>

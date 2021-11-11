@@ -1,5 +1,7 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from 'axios'
 import { decodeToken, useJwt } from "react-jwt";
 import './style.css'
@@ -22,6 +24,16 @@ function Car() {
     const [cphoneNumber_errormessage, cphoneNumber_Seterrormessage] = useState('');
     const [vehicleModel_errormessage, vehicleModel_Seterrormessage] = useState('');
     const [plateNumber_errormessage, plateNumber_Seterrormessage] = useState('');
+
+    const [word, setWord] = useState([]);
+    const [qrCode, setQrCode] = useState("");
+    const [cModal, setcModal] = useState(false);
+    let history = useHistory();
+    useEffect(() => {
+        setQrCode
+            (`http://api.qrserver.com/v1/create-qr-code/?data=${JSON.stringify(word)}`);
+    }, [JSON.stringify(word)]);
+
 
     const validate = () => {
         let isValid = true;
@@ -142,15 +154,39 @@ function Car() {
             plateNumber: plateNumber,
             email: cpemail,
         };
-        const isValid = validate();
-        if (isValid) {
             console.log(data);
             axios.post('addCar', data).then(res => {
                 console.log(res);
-                alert("Car successful");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Registered',
+                    confirmButtonText: 'Ok',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        history.push("/");
+                    } 
+                  })
             }).catch(err => {
                 console.log(err);
             });
+        
+    }
+    function openModal() {
+
+        const data = {
+            cFirstName: cfirstName,
+            cLastName: clastName,
+            cAddress: caddress,
+            cPhoneNumber: cphoneNumber,
+            vehicleModel: vehicleModel,
+            plateNumber: plateNumber,
+            email: cpemail,
+        };
+        const isValid = validate();
+        if(isValid){
+            setcModal(true);
+            setWord(data);
         }
     }
     return (
@@ -213,10 +249,26 @@ function Car() {
                         </div>
                         <label className="car_label">Plate Number</label>
                     </div>
-                    <div className="car_input-field">
-                        <input type="submit" value='SUBMIT' className="car_submitBtn" onClick={handleSubmit} />
-                    </div>
                 </form>
+                    <div className="">
+                        <input type="submit" value='SUBMIT' className="car_submitBtn" onClick={openModal} />
+                    </div>
+                    <Modal isOpen={cModal}
+                        className="visitor_modalContainer"
+                        shouldCloseOnOverlayClick={false}
+                        onRequestClose={() => setcModal(false)}>
+                        <div class='v_modal'>
+                            <h2>Visitors Digital Pass</h2>
+                            <div className="output-box">
+                                <img src={qrCode} alt="" />
+                                <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
+                                <a href={qrCode} download="QRCode">
+                                    <button type="button">Download</button>
+                                    <button type="button" onClick={handleSubmit}>Ok</button>
+                                </a>
+                            </div>
+                        </div>
+                    </Modal>
             </div>
         </div>
     )

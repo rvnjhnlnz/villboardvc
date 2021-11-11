@@ -121,11 +121,26 @@ function Register() {
             isValid = false;
             console.log('P')
         }
-
+        else if (typeof password !== "undefined") {
+            var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
+            if (!pattern.test(password)) {
+                pError = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:"
+                isValid = false;
+                console.log('e1')
+            }
+        }
         if (!confirmPass) {
             cpError = "Please enter your password"
             isValid = false;
             console.log('P')
+        }
+        else if (typeof password !== "undefined") {
+            var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
+            if (!pattern.test(password)) {
+                cpError = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:"
+                isValid = false;
+                console.log('e1')
+            }
         }
         if (password !== confirmPass) {
             cpError = "Those Passwords didn't match. Try Again"
@@ -197,7 +212,7 @@ function Register() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Register Successful!!',
-                    confirmButtonText: 'Save',
+                    confirmButtonText: 'Ok',
                   }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {

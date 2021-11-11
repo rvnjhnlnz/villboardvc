@@ -5,11 +5,22 @@
   justify-content: center;
 }
 .vehicle_slots{
-    width: 60rem;
+    width: 80rem;
 }
 .vehicle_table{
-    border-collapse: collapse;
-    width: 100%;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+.vehicle_table th {
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .vehicle_table thead tr{
     border-top: 1px solid #f0f0f0;
@@ -30,3 +41,14 @@
   .vehicle-decision span{
     padding-right: 1rem;
   }
+  .car_inputs{
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+  }
+  .car_paginationBtns{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+  }
+ 

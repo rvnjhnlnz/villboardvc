@@ -146,7 +146,9 @@ header label span {
   font-size: 3rem;
   color: var(--main-color);
 }
-
+.pagination{
+  z-index: 0;
+}
 
 
 
