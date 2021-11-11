@@ -152,7 +152,7 @@ function UserHome() {
     else if (decodedToken.role === "homeowners") {
         return (
             <div className="admin_home">
-                <div className="home_feed">
+                <div className="homeowner_feed">
                     <div className="home_fHeader">
                         <select className="form-control1" onChange = {(e) => handleFilter(e)}>
                             <option value="">All Posts</option>

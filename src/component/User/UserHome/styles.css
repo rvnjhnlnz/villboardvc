@@ -60,9 +60,17 @@
 .home_feed{
     flex: 0.5;
     border-right: 1px solid var(--background);
-    min-width: 730px;
+    min-width: 690px;
     overflow-y: scroll;
-    margin-left: 50px;
+    margin-left: 100px;
+    height: 88vh;
+}
+.homeowner_feed{
+    flex: 0.5;
+    border-right: 1px solid var(--background);
+    min-width: 1100px;
+    overflow-y: scroll;
+    margin-left: 100px;
     height: 88vh;
 }
 .home_fHeader{
