@@ -26,7 +26,7 @@ function Car() {
     const [plateNumber_errormessage, plateNumber_Seterrormessage] = useState('');
 
     const [word, setWord] = useState([]);
-    const [qrCode, setQrCode] = useState("");
+    const [qrCode, setQrCode] = useState(null);
     const [cModal, setcModal] = useState(false);
     let history = useHistory();
     useEffect(() => {
@@ -144,6 +144,14 @@ function Car() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        const fd = new FormData();
+        fd.append('cFirstName', cfirstName);
+        fd.append('cLastName', clastName);
+        fd.append('cAddress', caddress);
+        fd.append('cPhoneNumber', cphoneNumber);
+        fd.append('vehicleModel', vehicleModel);
+        fd.append('plateNumber', plateNumber);
+        fd.append('email', cpemail);
         
         const data = {
             cFirstName: cfirstName,
@@ -154,7 +162,8 @@ function Car() {
             plateNumber: plateNumber,
             email: cpemail,
         };
-            console.log(data);
+        const isValid = validate();
+
             axios.post('addCar', data).then(res => {
                 console.log(res);
                 Swal.fire({
@@ -171,6 +180,7 @@ function Car() {
                 console.log(err);
             });
         
+        
     }
     function openModal() {
 
@@ -185,9 +195,11 @@ function Car() {
         };
         const isValid = validate();
         if(isValid){
+            
             setcModal(true);
             setWord(data);
         }
+        
     }
     return (
         <div class="car_container">

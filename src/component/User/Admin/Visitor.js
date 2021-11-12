@@ -17,6 +17,7 @@ function Visitor() {
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [editModal, set_editModal] = useState(false);
     const item_per_page = 10;
+    
     const headers = [
         { name: "Full Name", field: "fullName", sortable: true },
         { name: "Email", field: "emailV", sortable: true },

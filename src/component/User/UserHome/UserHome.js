@@ -6,6 +6,8 @@ import WhatsHappening from './WhatsHappening'
 import { decodeToken } from "react-jwt";
 import Modal from 'react-modal'
 import axios from 'axios'
+import Suggestion from '../Admin/Suggestions'
+import Visitor from '../Admin/Visitor'
 function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
@@ -152,7 +154,7 @@ function UserHome() {
     else if (decodedToken.role === "homeowners") {
         return (
             <div className="admin_home">
-                <div className="homeowner_feed">
+                <div className="home_feed">
                     <div className="home_fHeader">
                         <select className="form-control1" onChange = {(e) => handleFilter(e)}>
                             <option value="">All Posts</option>
@@ -162,7 +164,15 @@ function UserHome() {
                     </div>
                     {displayPosts}
                 </div>
-
+                <WhatsHappening />
+            </div>
+        )
+    }
+    else if (decodedToken.role === "security") {
+        return (
+            <div className="security_home">
+                <Suggestion/>
+                <Visitor/>
             </div>
         )
     }

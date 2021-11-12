@@ -64,7 +64,7 @@ function Suggestions() {
                     <div class="suggestions_slots">
                         <div class="admin_card">
                             <div class="card-header">
-                                <h3>Pending Transactions</h3>
+                                <h3>Suggestions</h3>
                             </div>
                             <div className="sug_inputs">
                                 <Search onSearch={(val) => {

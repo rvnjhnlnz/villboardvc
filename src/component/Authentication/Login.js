@@ -84,11 +84,15 @@ export default class Login extends Component {
         if (this.state.loggedIn) {
             const decodedToken = decodeToken(localStorage.getItem('token'))
             if(decodedToken.role == 'admin'){
-                console.log("ADMIN POTANGINA MO");
+                console.log("ADMIN ");
                 return <Redirect to={'/'}/>
             }
             else if(decodedToken.role == 'homeowners'){
-                console.log("Homeowners POTANGINA MO");
+                console.log("Homeowners");
+                return <Redirect to={'/'} />;
+            }
+            else if(decodedToken.role == 'security'){
+                console.log("security");
                 return <Redirect to={'/'} />;
             }
         }

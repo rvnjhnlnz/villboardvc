@@ -160,6 +160,8 @@ function Dog() {
             petBreed: ppetbreed,
             email: ppemail,
         };
+        const isValid = validate();
+        if (isValid) {
             console.log(data);
             axios.post('addPet', data).then(res => {
                 console.log(res);
@@ -176,7 +178,7 @@ function Dog() {
             }).catch(err => {
                 console.log(err);
             });
-        
+        }
     }
     function openModal() {
 
