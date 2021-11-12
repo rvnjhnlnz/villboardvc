@@ -53,6 +53,7 @@ function Profile() {
     const pet = petData.map((obj) => {
         return <div class="profilecard-single">
             <div>
+
                 <h1>{obj.petName}</h1>
                 <span>{obj.petBreed}</span>
             </div>
@@ -266,7 +267,7 @@ function Profile() {
               })
         }
     }
-    function changeProfile() {
+    function addFamily() {
         var data = {
             aFirstName: fFirstName,
             aLastName: fLastName,
@@ -485,7 +486,7 @@ function Profile() {
                                             </div>
                                         </form>
                                         <div className="">
-                                            <input type="submit" value='SUBMIT' className="profile_submitBtn" onClick={changeProfile} />
+                                            <input type="submit" value='SUBMIT' className="profile_submitBtn" onClick={addFamily} />
                                         </div>
                                     </div>
                                 </div>
