@@ -181,6 +181,34 @@ export default class Navbar extends Component {
                     </nav>
                 )
             }
+            else if (decodedToken.role == "security") {
+                return (
+                    <nav className = "user_nav">
+                        <div class="n_wrapper">
+                            <div class="n_logo">
+                                <img className="logo_pic" src={logo} />
+                                <a href="#">VILLBOARD</a>
+                            </div>
+                            <input type="radio" name="slider" id="menu-btn" />
+                            <input type="radio" name="slider" id="close-btn" />
+                            <ul class="nav-links">
+                                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                                <li><a href="/">Home</a></li>
+                                <li>
+                                    <a href="#" class="n_desktop-item">Hello, {decodedToken.firstName}</a>
+                                    <input type="checkbox" id="showDrop" />
+                                    <label for="showDrop" class="n_mobile-item">Hello, {decodedToken.firstName}</label>
+                                    <ul class="n_drop-menu">
+                                        <li><a href="/Profile">Profile</a></li>
+                                        <li><Link to="/" onClick={this.logout} className="btn_logout">Logout</Link></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+                        </div>
+                    </nav>
+                )
+            }
         }
     }
 }

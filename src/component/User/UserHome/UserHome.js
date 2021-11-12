@@ -17,11 +17,11 @@ function UserHome() {
     const [photoUrl, setphotoUrl] = useState(null);
     const [email, setEmail] = useState(decodedToken.email);
 
-    const[postFilter, setPostFilter] = useState('');
-    const[posts, setPosts] = useState([]);
+    const [postFilter, setPostFilter] = useState('');
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
             axios.post('postAnnouncement')
                 .then(res => {
@@ -49,7 +49,7 @@ function UserHome() {
         fd.append('postCaption', caption);
         fd.append('postCategory', postCategory);
         fd.append('postPicture', photoUrl);
-        fd.append('email',email)
+        fd.append('email', email)
 
         axios.post('addPost', fd).then(res => {
             console.log(res);
@@ -62,43 +62,43 @@ function UserHome() {
         console.log(e.target.value);
         setPostFilter(e.target.value);
     }
-    const displayPosts = posts.filter((val) =>{
-        if(postFilter === ""){
+    const displayPosts = posts.filter((val) => {
+        if (postFilter === "") {
             return val
-        }else if(val.postCategory.toLowerCase().includes(postFilter.toLowerCase())){
+        } else if (val.postCategory.toLowerCase().includes(postFilter.toLowerCase())) {
             return val;
         }
     }).map((obj) => {
         return <div className="home_post">
-        <div className="home_avatar">
-            <img src={avatar} />
-        </div>
-        <div className="home_pbody">
-            <div className="home_pheader">
-                <div className="home_pheadertext">
-                    <h3>
-                        <span className="home_headerspecial">
-                            Admin
-                        </span>
-                        <span className="home_headerspecial">
-                            {obj.postCategory}
-                        </span>
-                    </h3>
-                </div>
-                <div className="home_headerdescription">
-                    <p>{obj.postCaption}</p>
-                </div>
+            <div className="home_avatar">
+                <img src={avatar} />
             </div>
-            <img src={obj.photoUrl} />
+            <div className="home_pbody">
+                <div className="home_pheader">
+                    <div className="home_pheadertext">
+                        <h3>
+                            <span className="home_headerspecial">
+                                Admin
+                            </span>
+                            <span className="home_headerspecial">
+                                {obj.postCategory}
+                            </span>
+                        </h3>
+                    </div>
+                    <div className="home_headerdescription">
+                        <p>{obj.postCaption}</p>
+                    </div>
+                </div>
+                <img src={obj.photoUrl} />
+            </div>
         </div>
-    </div>
     })
     if (decodedToken.role === "admin") {
         return (
             <div className="admin_home">
                 <div className="home_feed">
                     <div className="home_fHeader">
-                        <select className="form-control1" onChange = {(e) => handleFilter(e)}>
+                        <select className="form-control1" onChange={(e) => handleFilter(e)}>
                             <option value="">All Posts</option>
                             <option value="Events">Events</option>
                             <option value="Annoucement">Announcement</option>
@@ -123,8 +123,8 @@ function UserHome() {
                                     </div>
                                     <div className="uh_input-field">
                                         <select onChange={(e) => { handleSelect(e) }} className="form-control">
-                                        <option value="Events">Events</option>
-                                        <option value="Announcement">Announcement</option>
+                                            <option value="Events">Events</option>
+                                            <option value="Announcement">Announcement</option>
                                         </select>
                                         <div style={{ fontSize: 12, color: "red" }}>
                                         </div>
@@ -157,7 +157,7 @@ function UserHome() {
             <div className="admin_home">
                 <div className="home_feed">
                     <div className="home_fHeader">
-                        <select className="form-control1" onChange = {(e) => handleFilter(e)}>
+                        <select className="form-control1" onChange={(e) => handleFilter(e)}>
                             <option value="">All Posts</option>
                             <option value="Events">Events</option>
                             <option value="Annoucements">Announcements</option>
@@ -167,6 +167,17 @@ function UserHome() {
                 </div>
                 <WhatsHappening />
             </div>
+        )
+    }
+    else if (decodedToken.role === "security") {
+        return(
+        <div className="admin_home">
+        <div>
+
+            <Suggestion/>
+            <Visitor/>
+        </div>
+        </div>
         )
     }
 }
