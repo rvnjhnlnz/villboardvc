@@ -124,7 +124,7 @@ function UserHome() {
                                     <div className="uh_input-field">
                                         <select onChange={(e) => { handleSelect(e) }} className="form-control">
                                         <option value="Events">Events</option>
-                                        <option value="Annoucement">Announcement</option>
+                                        <option value="Announcement">Announcement</option>
                                         </select>
                                         <div style={{ fontSize: 12, color: "red" }}>
                                         </div>
