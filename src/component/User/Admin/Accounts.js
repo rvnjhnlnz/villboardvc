@@ -80,22 +80,6 @@ function Accounts() {
         );
     }, [usersList, currentPage, search, sorting]);
 
-    function sample() {
-        Swal.fire({
-            title: 'Do you want to delete that account?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                Swal.fire('Deleted', '', 'success');
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
-    }
 
     const[nEmail,setnEmail] = useState('');
     const[nLastname,setnLastname] = useState('');
@@ -124,7 +108,7 @@ function Accounts() {
                                     setSearch(val);
                                     setCurrentPage(1);
                                 }} />
-                                <a onClick={() => set_editModal(true)} className = "acc_editAcc">Edit Account</a>
+                                {/*<a onClick={() => set_editModal(true)} className = "acc_editAcc">Edit Account</a>
                                 <Modal isOpen={editModal}
                                     className="acc_modalContainer"
                                     shouldCloseOnOverlayClick={false}
@@ -201,12 +185,12 @@ function Accounts() {
                                             <div className="image_container">
                                             </div>
                                             <div className="acc_input-field">
-                                                <input type="submit" value='SUBMIT' className="acc_submitBtn" />
+                                                <input type="submit" value='SUBMIT' className="acc_submitBtn" onClick={handleSubmit} />
                                             </div>
                                         </form>
                                     </div>
                                 </Modal>
-                                <a href="">Delete Account</a>
+                                <a href="">Delete Account</a>*/}
                             </div>
                             <div class="card-body">
                                 <div class="admin_table-responsive">

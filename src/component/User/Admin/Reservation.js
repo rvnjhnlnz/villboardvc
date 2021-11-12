@@ -118,33 +118,11 @@ function Reservation() {
                                 <div class="admin_table-responsive">
                                     <table width="100%" class="reserve_table">
                                         <thead>
-                                            <tr>
-                                                <td>Full Name</td>
-                                                <td>Date</td>
-                                                <td>Time Started</td>
-                                                <td>Time Ended</td>
-                                                <td>Phone Number</td>
-                                                <td>Status</td>
-                                            </tr>
+                                            
                                         </thead>
                                         <tbody>
-                                            <tr>
-    
-                                                <td>Jasper Ian Escoto</td>
-                                                <td>9/21/2021</td>
-                                                <td>10am</td>
-                                                <td>5pm</td>
-                                                <td>09957549278</td>
-                                                <td>Reserved</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jamewell Gonato</td>
-                                                <td>9/29/2021</td>
-                                                <td>10am</td>
-                                                <td>6pm</td>
-                                                <td>09292136357</td>
-                                                <td>Reserved</td>
-                                            </tr>
+                                            
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -160,33 +138,10 @@ function Reservation() {
                                     <table width="100%" class="reserve_table">
                                         <thead>
     
-                                            <tr>
-                                                <td>Full Name</td>
-                                                <td>Date</td>
-                                                <td>Time Started</td>
-                                                <td>Time Ended</td>
-                                                <td>Phone Number</td>
-                                                <td>Status</td>
-                                            </tr>
+                                            
                                         </thead>
                                         <tbody>
-                                            <tr>
-    
-                                                <td>Jasper Ian Escoto</td>
-                                                <td>9/21/2021</td>
-                                                <td>10am</td>
-                                                <td>5pm</td>
-                                                <td>09957549278</td>
-                                                <td>Reserved</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jamewell Gonato</td>
-                                                <td>9/29/2021</td>
-                                                <td>10am</td>
-                                                <td>6pm</td>
-                                                <td>09292136357</td>
-                                                <td>Reserved</td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -202,33 +157,10 @@ function Reservation() {
                                     <table width="100%" class="reserve_table">
                                         <thead>
     
-                                            <tr>
-                                                <td>Full Name</td>
-                                                <td>Date</td>
-                                                <td>Time Started</td>
-                                                <td>Time Ended</td>
-                                                <td>Phone Number</td>
-                                                <td>Status</td>
-                                            </tr>
+                                            
                                         </thead>
                                         <tbody>
-                                            <tr>
-    
-                                                <td>Jasper Ian Escoto</td>
-                                                <td>9/21/2021</td>
-                                                <td>10am</td>
-                                                <td>5pm</td>
-                                                <td>09957549278</td>
-                                                <td>Reserved</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jamewell Gonato</td>
-                                                <td>9/29/2021</td>
-                                                <td>10am</td>
-                                                <td>6pm</td>
-                                                <td>09292136357</td>
-                                                <td>Reserved</td>
-                                            </tr>
+                                           
                                         </tbody>
                                     </table>
                                 </div>

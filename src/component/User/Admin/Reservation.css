@@ -5,7 +5,7 @@
   justify-content: center;
 }
 .admin_slots{
-  width: 60rem;
+  width: 80rem;
 }
 .admin_card{
     margin-top: 10px;
@@ -14,6 +14,13 @@
     border-collapse: collapse;
     width: 100%;
     
+}
+.reserve_table th {
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .reserve_table thead tr{
     border-top: 1px solid #f0f0f0;
