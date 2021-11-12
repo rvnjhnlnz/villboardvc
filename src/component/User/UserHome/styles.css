@@ -92,15 +92,21 @@
     margin-right: 20px;
 }
 .home_submitBtn{
+    
     height: 100%;
     min-height: 5px;
     background-color: green;  
-  border-radius: 5px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin: auto;
-  float: right;
+    border-radius: 5px;
+    color: white;
+    padding: .5em;
+    text-decoration: none;
+    margin: auto;
+    float: right;
+  }
+  .uh_addbutton{
+      position: relative;
+      left: 350px;
+
   }
 .home_fHeader::-webkit-scrollbar{
     display: none;

@@ -9,7 +9,7 @@ function Chat() {
     const[name, setName] = useState('');
     const[suggestion,setSuggestions] = useState('');
     const[scModal,setscModal] = useState(false);
-    let history = useHistory();
+    let history = useHistory
     function handleSubmit (e) {
         e.preventDefault();
 

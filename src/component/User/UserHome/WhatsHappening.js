@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { decodeToken } from "react-jwt";
 function WhatsHappening() {
     //const [accountNum, setAccountData] = useState();
     const [suggestionNum, setSuggestionNum] = useState();
@@ -19,6 +20,8 @@ function WhatsHappening() {
                 console.log(err);
             })
     }, [])
+    const decodedToken = decodeToken(localStorage.getItem('token'));
+    if(decodedToken)
     return (
         <div className="home_news">
             <div className="home_fHeader">

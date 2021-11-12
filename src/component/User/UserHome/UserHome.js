@@ -8,6 +8,7 @@ import Modal from 'react-modal'
 import axios from 'axios'
 import Suggestion from '../Admin/Suggestions'
 import Visitor from '../Admin/Visitor'
+import ClearIcon from '@material-ui/icons/Clear';
 function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
@@ -100,14 +101,14 @@ function UserHome() {
                         <select className="form-control1" onChange = {(e) => handleFilter(e)}>
                             <option value="">All Posts</option>
                             <option value="Events">Events</option>
-                            <option value="Annoucements">Announcements</option>
+                            <option value="Annoucement">Announcement</option>
                         </select>
                         <button className="home_submitBtn" onClick={() => setOpenmodal(true)}>Add a Post</button>
                         <Modal isOpen={openModal}
                             className="uh_modalContainer"
                             shouldCloseOnOverlayClick={false}
                             onRequestClose={() => setOpenmodal(false)}>
-                            <a class="uh_addbutton" onClick={() => setOpenmodal(false)}>X</a>
+                            <a class="uh_addbutton" onClick={() => setOpenmodal(false)}><ClearIcon fontSize='large' /></a>
                             <div class='uh_modal'>
                                 <form className="uh_form">
                                     <div class="ut_logo">
@@ -123,11 +124,11 @@ function UserHome() {
                                     <div className="uh_input-field">
                                         <select onChange={(e) => { handleSelect(e) }} className="form-control">
                                         <option value="Events">Events</option>
-                                        <option value="Annoucements">Announcements</option>
+                                        <option value="Annoucement">Announcement</option>
                                         </select>
                                         <div style={{ fontSize: 12, color: "red" }}>
                                         </div>
-                                        <label className="upload_label">Mode of Payment</label>
+                                        <label className="upload_label">Category</label>
                                     </div>
                                     <div className="uh_input-field">
                                         <input type="file" className="form-controlfile" onChange={(e) => handleFile(e)} />
