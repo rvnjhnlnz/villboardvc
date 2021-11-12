@@ -91,10 +91,6 @@ export default class Login extends Component {
                 console.log("Homeowners");
                 return <Redirect to={'/'} />;
             }
-            else if(decodedToken.role == 'security'){
-                console.log("security");
-                return <Redirect to={'/'} />;
-            }
         }
 
         let error = '';

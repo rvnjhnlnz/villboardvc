@@ -168,14 +168,6 @@ function UserHome() {
             </div>
         )
     }
-    else if (decodedToken.role === "security") {
-        return (
-            <div className="security_home">
-                <Suggestion/>
-                <Visitor/>
-            </div>
-        )
-    }
 }
 
 export default UserHome
