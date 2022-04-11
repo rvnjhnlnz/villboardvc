@@ -28,12 +28,13 @@ import Visitor from './component/Guest/VisitorForm'
 import Dashboard from './component/User/Admin/Dashboard'
 import Chat from './component/User/ChatUser/Chat'
 import AdminReservation from './component/User/Admin/Reservation';
-import AdminAccounts from './component/User/Admin/Accounts';
+import AdminAccounts from './component/User/Admin/Account/Accounts';
 import PetAdmin from './component/User/Admin/Pet'
 import AdminSuggestion from './component/User/Admin/Suggestions'
 import AdminVisitor from './component/User/Admin/Visitor'
 import AdminVehicle from './component/User/Admin/Vehicle'
-import AdminTransaction from './component/User/Admin/Transactions'
+import AdminTransaction from './component/User/Admin/Transaction/Transactions'
+import 'bootstrap/dist/css/bootstrap.min.css';
 export default class App extends Component {
   state = {};
 

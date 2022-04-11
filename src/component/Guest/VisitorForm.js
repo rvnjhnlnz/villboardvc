@@ -43,7 +43,7 @@ function VisitorForm() {
 
     // Updating the input word when user
     // click on the generate button
-
+    
     const validate = () => {
         let isValid = true;
         let nError, eError, aError, hError, vaError, pError, checkedError = "";
@@ -54,12 +54,10 @@ function VisitorForm() {
             console.log('1')
         }
         else if (typeof vName !== "undefined") {
-            var pattern = new RegExp(/[A-Za-z]+/);
+            var pattern = new RegExp(/[^A-Za-z]+/gi);
             if (!pattern.test(vName)) {
-                
                 nError = 'Please Enter your valid full name'
                 isValid = false;
-                console.log('Fullname');
             }
         }
         if (!vEmail) {
@@ -226,7 +224,7 @@ function VisitorForm() {
                         <header className="visitor_logo"><img src={Logo} /></header>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vName} onChange={(e) => setvName(e.target.value)} />
+                                value={vName} onChange={(e) => setvName(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vName_errormessage}
                             </div>
@@ -250,7 +248,7 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value)} />
+                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHomeowner_errormessage}
                             </div>
@@ -266,7 +264,7 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vPurpose} onChange={(e) => setvPurpose(e.target.value)} />
+                                value={vPurpose} onChange={(e) => setvPurpose(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vPurpose_errormessage}
                             </div>

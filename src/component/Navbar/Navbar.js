@@ -11,8 +11,9 @@ import { AdminSidebarData } from './AdminSidebarData';
 import AdminSubMenu from './AdminSubMenu';
 import { IconContext } from 'react-icons/lib'
 import noimage from '../../images/noimage.png'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 /*Sample */
-export default class Navbar extends Component {
+export default class NavbarApp extends Component {
     state = {
         sidebar: false,
     };
@@ -41,7 +42,7 @@ export default class Navbar extends Component {
         const decodedToken = decodeToken(localStorage.getItem('token'))
         if (localStorage.getItem("token") === null) {
             return (
-                <nav className = "user_nav">
+                <nav className="user_nav">
                     <div class="n_wrapper">
 
                         <div class="n_logo">
@@ -79,60 +80,33 @@ export default class Navbar extends Component {
         } else {
             if (decodedToken.role == "admin") {
                 return (
-                    <nav className = "user_nav">
-                        <div class="n_wrapper">
-                            <div class="n_logo">
-                                <img className="logo_pic" src={logo} />
-                                <a href="#">VILLBOARD</a>
-                            </div>
-                            <input type="radio" name="slider" id="menu-btn" />
-                            <input type="radio" name="slider" id="close-btn" />
-                            <ul class="nav-links">
-                                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
-                                <li><a href="/">Home</a></li>
-                                <li>
-                                    <a href="#" class="n_desktop-item">Main Menu</a>
-                                    <input type="checkbox" id="showMega" />
-                                    <label for="showMega" class="n_mobile-item">Dashboard</label>
-                                    <div class="n_mega-box">
-                                        <div class="n_content">
-                                            <div class="n_row">
-                                                <ul class="n_mega-links">
-                                                    <li><a href="/Dashboard/AdminTransaction">Transactions</a></li>
-                                                    <li><a href="/Dashboard">Data</a></li>
-                                                    <li><a href="/Dashboard/Reservation">Reservation</a></li>
-                                                    <li><a href="/Dashboard/Accounts">Accounts</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="n_row">
-                                                <ul class="n_mega-links">
-                                                    <li><a href="/Dashboard/Pet">Pet</a></li>
-                                                    <li><a href="/Dashboard/Suggestion">Suggestions</a></li>
-                                                    <li><a href="/Dashboard/Visitor">Visitor</a></li>
-                                                    <li><a href="/Dashboard/Vehicle">Vehicle</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="#" class="n_desktop-item">Hello, {decodedToken.firstName}</a>
-                                    <input type="checkbox" id="showDrop" />
-                                    <label for="showDrop" class="n_mobile-item">Hello, {decodedToken.firstName}</label>
-                                    <ul class="n_drop-menu">
-                                        <li><a href="/Profile">Profile</a></li>
-                                        <li><Link to="/" onClick={this.logout} className="btn_logout">Logout</Link></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
-                        </div>
-                    </nav>
+                    <Navbar collapseOnSelect expand="lg" className='color-navAdmin' variant="dark">
+
+                        <Navbar.Brand href="#home" className='brand'><img src={logo} /></Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+
+                            <Nav className="justify-content-end" style={{ width: "95%" }}>
+                                <Nav.Link className = "nav-links1" href="/"><p>Home</p></Nav.Link>
+                                <Nav.Link className = "nav-links1" href="/" onClick={this.logout}><p>Logout</p></Nav.Link>
+                                <NavDropdown className = "nav-links1" title={<p>Dashboard</p>} id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="/Dashboard/Accounts">Accounts</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard">Data</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard/Reservation">Reservation</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard/Pet">Pet</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard/AdminTransaction">Transactions</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard/Visitor">Visitor</NavDropdown.Item>
+                                    <NavDropdown.Item href="/Dashboard/Vehicle">Vehicle</NavDropdown.Item>
+                                </NavDropdown>
+                                
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
                 )
             }
             else if (decodedToken.role == "homeowners") {
                 return (
-                    <nav className = "user_nav">
+                    <nav className="user_nav">
                         <div class="n_wrapper">
                             <div class="n_logo">
                                 <img className="logo_pic" src={logo} />
@@ -183,7 +157,7 @@ export default class Navbar extends Component {
             }
             else if (decodedToken.role == "security") {
                 return (
-                    <nav className = "user_nav">
+                    <nav className="user_nav">
                         <div class="n_wrapper">
                             <div class="n_logo">
                                 <img className="logo_pic" src={logo} />

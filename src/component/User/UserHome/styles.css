@@ -62,7 +62,6 @@
     border-right: 1px solid var(--background);
     min-width: 690px;
     overflow-y: scroll;
-    margin-left: 100px;
     height: 88vh;
 }
 .homeowner_feed{
@@ -196,7 +195,7 @@
 }
 
 .home_news{
-    width: 700px;
+    width: 650px;
     height: 89vh;
 }
 .home_card{
@@ -345,6 +344,39 @@
   .image_container img{
     width: 100%;
     max-width: 400px;
+}
+
+.admin_gridContainer{
+    display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;    
+}
+.grid-item{
+ margin: 15px;
+}
+.grid-card{
+    background-color: green;
+    border-radius: 15px;
+    color: white;
+}
+.grid-cardHeader{
+    font-size: 20px;
+}
+.grid-cardNumber{
+    font-size: 40px;
+}
+.grid-button{
+    justify-content: center;
+    display: flex;
+}
+.grid-cardButton{
+    background-color: darkgreen;
+    border: green;
+    width: 250px;
+}
+.grid-cardButton:hover{
+    background-color: green;
+
 }
 @media screen and (max-width: 1024px) {
     .home_sbOption h3{

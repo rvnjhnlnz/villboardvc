@@ -91,14 +91,14 @@ function Register() {
             }
         }
         if (!phoneNumber) {
-            pnError = "Please enter your Phone Number"
+            pnError = "Please enter your Phone Number (Starts with 09 or +639)"
             isValid = false;
             console.log('PN');
         }
         else if (typeof phoneNumber !== "undefined") {
             var pattern = new RegExp(/^(09|\+639)\d{9}$/);
             if (!pattern.test(phoneNumber)) {
-                pnError = "Please enter valid phone number"
+                pnError = "Please enter valid phone number consists of 11 digits (Starts with 09 or +639)"
                 isValid = false;
                 console.log('pn1')
             }
@@ -176,9 +176,16 @@ function Register() {
         settermsChecked(false);
     }
     function handleFile(e) {
-        console.log(e.target.files);
-        console.log(e.target.files[0]);
-        setPhoto(e.target.files[0]);
+        const filename = e.target.files[0].name;
+        var pattern = new RegExp(/(\.[^.]*)$/);
+        const extension = filename.split(pattern);
+        if(extension[1] == ".jpg" || extension[1].name == ".png" || extension[1] == ".jpeg"){
+            setPhoto(e.target.files[0]);
+            setphotoError('');
+        }
+        else{
+            setphotoError("Please upload image file. ex: .jpeg .png .jpg ")
+        }
     }
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -235,7 +242,7 @@ function Register() {
                     <form>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setFirstName(e.target.value)} />
+                                onChange={(e) => setFirstName(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {fnError}
                             </div>
@@ -243,7 +250,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setmiddleInitial(e.target.value)} />
+                                onChange={(e) => setmiddleInitial(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {mnError}
                             </div>
@@ -251,7 +258,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setlastName(e.target.value)} />
+                                onChange={(e) => setlastName(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {lnError}
                             </div>
@@ -266,8 +273,8 @@ function Register() {
                             <label className="r_label">Address</label>
                         </div>
                         <div className="register_input-field">
-                            <input type="number" className="form-control"
-                                onChange={(e) => setphoneNumber(e.target.value)} />
+                            <input type="text" className="form-control" value={phoneNumber}
+                                onChange={(e) => setphoneNumber(e.target.value.replace(/[^0-9+]+/,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {pnError}
                             </div>
@@ -307,7 +314,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="file" className="form-control1"
-                                onChange={(e) => handleFile(e)}/>
+                                onChange={(e) => handleFile(e)} accept= "image/png, image/jpeg"/>
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {photoError}
                             </div>

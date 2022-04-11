@@ -404,3 +404,30 @@
         align-items: center;
         justify-content: center
 }
+
+
+.brand img{
+  height: 50px;
+  margin-left: 20px;
+}
+
+.color-navAdmin{
+  background-color: rgb(0,128,0);
+}
+.nav-links1 {
+  display: inline-block;
+  height: 40px;
+  color: white; /*will change color of text within the element */
+  margin-right: 30px;
+  border-radius: 5px;
+}
+.nav-links1 p{
+  color: white;
+}
+.nav-links1:hover {
+  background-color:white;
+  border-radius: 5px; /*will change background-color of element on hover */
+}
+.nav-links1 p:hover {
+  color: green; /*will change background-color of element on hover */
+}

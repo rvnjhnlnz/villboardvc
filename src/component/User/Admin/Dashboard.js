@@ -82,7 +82,7 @@ function Dashboard() {
                 <h1>Data</h1>
                 <div class="admin_cards">
                     <div class="card-single">
-                    <div>
+                        <div>
                             <h1>10</h1>
                             <span>Accounts</span>
                         </div>
