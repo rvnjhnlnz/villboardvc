@@ -7,7 +7,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import logo from '../../../images/background.png'
 import Modal from 'react-modal'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from 'sweetalert2'
 function Reserve() {
     const [r_modalIsOpen, r_setModalIsOpen] = useState(false);
     const decodedToken = decodeToken(localStorage.getItem('token'))

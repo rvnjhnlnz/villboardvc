@@ -8,7 +8,7 @@ import { signup } from '../../actions/auth'
 import ClearIcon from '@material-ui/icons/Clear';
 import Logo from '../../images/background.png'
 import eye from '../../images/eye.png'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from 'sweetalert2'
 function Register() {
 
     const [firstName, setFirstName] = useState('');

@@ -6,74 +6,65 @@ import second from '../../images/third.jpg'
 import third from '../../images/6.jpg'
 import picture2 from '../../images/playground.jpg'
 import picture3 from '../../images/swimming.jpg'
+import one from '../../images/4.jpg'
+import two from '../../images/2.jpg'
 
 function Guest() {
 
     return (
-        <div>
-            <div className="gFirst">
-                <div className="gOuter">
-                    <div className="gText">
-                        <h1>Welcome to Villa Caceres</h1>
-                        <a href="/Visitor" className="gVisitBtn">Are you a visitor? Click Here</a>
+        <div class ="guest_page">
+            <header class="villa_header">
+                <div class="header-content">
+                    <h3>Welcome to </h3>
+                    <div class="line"></div>
+                    <h1>Villa Caceres</h1>
+                    <a href="#" class="gVisitBtn">Visitor Registration</a>
+                </div>
+            </header>
+            <section class="events">
+                <div class="title">
+                    <h1>Villa Caceres Facilities</h1>
+                    <div class="line"></div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, repellendus sapiente ipsa reprehenderit suscipit iusto odit corrupti, quam velit eligendi laboriosam aspernatur tempore quaerat voluptate.</p>
+                </div>
+                <div class="col image-col1">
+                    <div class="image-gallery">
+                        <img src={picture3} alt="" />
+                        <img src={picture1} alt="" />
+                        <img src={picture2} alt="" />
+                        <img src={first} alt="" />
                     </div>
                 </div>
-            </div>
-            {/*Second Content*/}
+            </section>
+            <section class="explore">
+                <div class="explore-content">
+                    <h1>About Villa Caceres</h1>
+                    <div class="line"></div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, repellendus sapiente ipsa reprehenderit suscipit iusto odit corrupti, quam velit eligendi laboriosam aspernatur tempore quaerat voluptate.</p>
+                </div>
+            </section>
 
-            {/*Third Content*/}
-            <div className="gThird">
-                <h1>Our Subdivision</h1>
-                <p>Villa Caceres is a residential community developed by Moldex Reality Inc. In Brgy. Dila in Sta. Rosa, Laguna</p>
+            <section class="tours">
+                <div class="row">
+                    <div class="col content-col">
+                        <h1>Villa Caceres Highlights</h1>
+                        <div class="line"></div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quo dignissimos eius quidem culpa, beatae quasi ea cum minima reiciendis ut molestiae consequuntur doloribus aperiam neque eaque, at placeat natus.</p>
 
-                <div className="g3-row">
-                    <div className="g3-col">
-                        <img src={first} />
-                        <div className="g3-layer">
-                            <h3>Clubhouse</h3>
-                        </div>
                     </div>
-                    <div className="g3-col">
-                        <img src={second} />
-                        <div className="g3-layer">
-                            <h3>House</h3>
-                        </div>
-                    </div>
-                    <div className="g3-col">
-                        <img src={third} />
-                        <div className="g3-layer">
-                            <h3>House</h3>
+                    <div class="col image-col">
+                        <div class="image-gallery">
+                            <img src={one} alt="" />
+                            <img src={picture1} alt="" />
+                            <img src={picture2} alt="" />
+                            <img src={two} alt="" />
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/*Fourth Content*/}
-            <div className="gFourth">
-                <h1>Our Facilities</h1>
-                <p>Villa Caceres is a residential Subdivision that promises a wide range of facilities and amenities for it's Home Owners </p>
-
-                <div className="g4-row">
-                    <div className="g4-col">
-                        <img src={picture1} />
-                        <h3>Basketball Court</h3>
-                    </div>
-                    <div className="g4-col">
-                        <img src={picture2} />
-                        <h3>Playground</h3>
-                    </div>
-                    <div className="g4-col">
-                        <img src={picture3} />
-                        <h3>Swimming Pool</h3>
-                    </div>
-                </div>
-            </div>
-
-            {/*Fifth Content*/}
-            <div className="gFifth">
-                <h1>Please send us a message by clicking this button. Thank you and have a good day!</h1>
-                <a href="/Contact-Us" className="g5-Contact">Contact Us</a>
-            </div>
+            </section>
+            <section class="footer">
+                <p> B305 L2 Villa Caceres Balibago Sta. Rosa, Laguna, 4026 Philippines | Phone: 800-123-456 | Email: villacaceres@gmail.com</p>
+            </section>
         </div>
     )
 }

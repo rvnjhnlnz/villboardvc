@@ -217,6 +217,7 @@ const Accounts = () => {
 
     const pheaders = [
         { name: "Status", field: "status", sortable: true },
+        { name: "Role", field: "role", sortable: true },
         { name: "Last Name", field: "lastName", sortable: true },
         { name: "First Name", field: "firstName", sortable: true },
         { name: "Middle Initial", field: "middleInitial", sortable: true },
@@ -287,10 +288,26 @@ const Accounts = () => {
                                 handleDisapproved={handleDeleteClick}
                             />
                         </Fragment>
+                    ))}*/
+                    /*accountD.reverse().map((acc) => (
+                        <tr>
+                            <td>NO DATA</td>
+                            <td>{acc.role}</td>
+                            <td>{acc.lastName}</td>
+                            <td>{acc.firstName}</td>
+                            <td>{acc.middleInitial}</td>
+                            <td>{acc.email}</td>
+                            <td>{acc.phoneNumber}</td>
+                            <td>{acc.address}</td>
+                            <td>
+                                <button type='button' className='genButton' >Accept</button>
+                                <button type='button' className='genButton' >X</button>
+                            </td>
+                        </tr>
                     ))}*/}
                 </tbody>
             </Table>
-            
+
         </form>
     </div>;
 };

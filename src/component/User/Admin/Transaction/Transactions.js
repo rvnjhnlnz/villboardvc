@@ -39,6 +39,8 @@ function Transactions() {
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
+    const pendingWord = "PENDING";
+    const approve = "APPROVED"
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [pictureModal, setpictureModal] = useState(false);
     const item_per_page = 10;
@@ -60,22 +62,28 @@ function Transactions() {
         { name: "Address", field: "uAddress", sortable: true },
         { name: "Phone Number", field: "uPhoneNumber", sortable: true },
         { name: "Reference Number", field: "refNumber", sortable: false },
-        { name: "Type of Transaction", field: "typeTransaction", sortable: false },
+        { name: "Type of Transaction", field: "typeTransaction", sortable: true },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
     ];
     const transactionDataDisc = useMemo(() => {
         let computedTr = transactionData;
-        if (search) {
+        if (approve) {
             computedTr = computedTr.filter(
                 tr =>
-                    tr.uLastName.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.uFirstName.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.uAddress.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.uEmail.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.uPhoneNumber.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.refNumber.toLowerCase().includes(search.toLowerCase()) ||
-                    tr.typeTransaction.toLowerCase().includes(search.toLowerCase())
+                    tr.pPending.toLowerCase().includes(approve.toLowerCase())
             )
+            if (search) {
+                computedTr = computedTr.filter(
+                    tr =>
+                        tr.uLastName.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.uFirstName.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.uAddress.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.uEmail.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.uPhoneNumber.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.refNumber.toLowerCase().includes(search.toLowerCase()) ||
+                        tr.typeTransaction.toLowerCase().includes(search.toLowerCase())
+                )
+            }
         }
         setTotalItems(computedTr.length);
         if (sorting.field) {
@@ -88,6 +96,24 @@ function Transactions() {
         );
     }, [transactionData, currentPage, search, sorting]);
 
+    const pendingTransaction = useMemo(() => {
+        let computedTr = transactionData;
+        if (pendingWord) {
+            computedTr = computedTr.filter(
+                tr =>
+                    tr.pPending.toLowerCase().includes(pendingWord.toLowerCase())
+            )
+        }
+        setTotalItems(computedTr.length);
+        if (sorting.field) {
+            const reversed = sorting.order === "asc" ? 1 : -1;
+            computedTr = computedTr.sort((a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field]));
+        }
+        return computedTr.slice(
+            (currentPage - 1) * item_per_page,
+            (currentPage - 1) * item_per_page + item_per_page
+        );
+    }, [transactionData, currentPage, search, sorting]);
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -110,7 +136,7 @@ function Transactions() {
                     <Table striped bordered hover responsive className='accounts_table'>
                         <TableHeader headers={pheaders} onSorting={(field, order) => setSorting({ field, order })} />
                         <tbody>
-                            {transactionDataDisc.map(tr => (
+                            {pendingTransaction.map(tr => (
                                 <tr>
                                     <td>{tr.pPending}</td>
                                     <td>{tr.uLastName}</td>
@@ -146,7 +172,19 @@ function Transactions() {
                     <Table striped bordered hover responsive className='accounts_table'>
                         <TableHeader headers={headers} onSorting={(field, order) => setSorting({ field, order })} />
                         <tbody>
-                            {}
+                            {transactionDataDisc.map(tr => (
+                                <tr>
+                                    <td>{tr.pPending}</td>
+                                    <td>{tr.uLastName}</td>
+                                    <td>{tr.uFirstName}</td>
+                                    <td>{tr.uAddress}</td>
+                                    <td>{tr.uPhoneNumber}</td>
+                                    <td>{tr.refNumber}</td>
+                                    <td>{tr.typeTransaction}</td>
+                                    <td><a href={tr.photoUrl}>Click to Download</a>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
 

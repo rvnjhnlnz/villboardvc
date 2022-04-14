@@ -89,9 +89,8 @@ export default class NavbarApp extends Component {
                             <Nav className="justify-content-end" style={{ width: "95%" }}>
                                 <Nav.Link className = "nav-links1" href="/"><p>Home</p></Nav.Link>
                                 <Nav.Link className = "nav-links1" href="/" onClick={this.logout}><p>Logout</p></Nav.Link>
-                                <NavDropdown className = "nav-links1" title={<p>Dashboard</p>} id="basic-nav-dropdown">
+                                <NavDropdown className = "nav-links1" title="Dashboard" id="basic-nav-dropdown">
                                     <NavDropdown.Item href="/Dashboard/Accounts">Accounts</NavDropdown.Item>
-                                    <NavDropdown.Item href="/Dashboard">Data</NavDropdown.Item>
                                     <NavDropdown.Item href="/Dashboard/Reservation">Reservation</NavDropdown.Item>
                                     <NavDropdown.Item href="/Dashboard/Pet">Pet</NavDropdown.Item>
                                     <NavDropdown.Item href="/Dashboard/AdminTransaction">Transactions</NavDropdown.Item>
