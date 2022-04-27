@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useMemo } from 'react'
 import './styles.css'
 import avatar from '../../../images/Avatar.jpg'
-import post from '../../../images/court.jpg'
+// import post from '../../../images/court.jpg'
 import WhatsHappening from './WhatsHappening'
 import { decodeToken } from "react-jwt";
 import Modal from 'react-modal'
@@ -15,7 +16,8 @@ function UserHome() {
     const [caption, setCaption] = useState('');
     const [postCategory, setpostCategory] = useState('Events');
     const [photoUrl, setphotoUrl] = useState(null);
-    const [email, setEmail] = useState(decodedToken.email);
+    // const [email, setEmail] = useState(decodedToken.email);
+    const email = decodedToken.email;
 
     const [postFilter, setPostFilter] = useState('');
     const [posts, setPosts] = useState([]);
@@ -63,15 +65,17 @@ function UserHome() {
         setPostFilter(e.target.value);
     }
     const displayPosts = posts.filter((val) => {
+        
         if (postFilter === "") {
             return val
         } else if (val.postCategory.toLowerCase().includes(postFilter.toLowerCase())) {
             return val;
         }
+        return val
     }).map((obj) => {
-        return <div className="home_post">
+        return <div className="home_post" key={obj._id}>
             <div className="home_avatar">
-                <img src={avatar} />
+                <img src={avatar} alt='Avatar'/>
             </div>
             <div className="home_pbody">
                 <div className="home_pheader">
@@ -89,7 +93,7 @@ function UserHome() {
                         <p>{obj.postCaption}</p>
                     </div>
                 </div>
-                <img src={obj.photoUrl} />
+                <img src={obj.photoUrl} alt='post'/>
             </div>
         </div>
     })

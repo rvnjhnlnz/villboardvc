@@ -3,12 +3,15 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import './styles.css'
 import { decodeToken, useJwt } from "react-jwt";
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
-import logo from '../../../images/background.png'
-import Modal from 'react-modal'
+// import { Link, useHistory, useLocation } from 'react-router-dom';
+// import { useDispatch } from 'react-redux'
+// import logo from '../../../images/background.png'
+// import Modal from 'react-modal'
 import Swal from 'sweetalert2'
-function Reserve() {
+import { DatePicker } from '@mui/x-date-pickers';
+// import { DatePicker } from '@mui/x-date-pickers';
+
+function Reserve({history}) {
     const [r_modalIsOpen, r_setModalIsOpen] = useState(false);
     const decodedToken = decodeToken(localStorage.getItem('token'))
     const[rFirstName, setrFirstName] = useState('');
@@ -29,7 +32,7 @@ function Reserve() {
         console.log(e.target.value);
         setrTime(e.target.value);
     }
-    let history = useHistory();
+    // let history = useHistory();
     function handleSubmit(){
         const data = {
             rFirstName: rFirstName,
@@ -81,9 +84,10 @@ function Reserve() {
                         <label className="reserve_label">Amenities</label>
                     </div>
                     <div className="reserve_input-field">
-                        <input type="date" className="form-control" name="number" id="date" placeholder="Date" 
+                        <DatePicker/>
+                        {/* <input type="date" className="form-control" name="number" id="date" placeholder="Date" 
                             onChange={(e) => setrDate(e.target.value)}
-                        />
+                        /> */}
                         <div style={{ fontSize: 12, color: "red" }}>
                             
                         </div>

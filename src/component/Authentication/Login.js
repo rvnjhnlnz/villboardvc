@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Login.css'
 import axios from 'axios'
-import { Link, useHistory, useLocation, Redirect } from 'react-router-dom';
+import {  Redirect } from 'react-router-dom';
 import Logo from '../../images/background.png'
-import { decodeToken, useJwt } from "react-jwt";
+import { decodeToken } from "react-jwt";
 
 
 export default class Login extends Component {
@@ -83,11 +83,11 @@ export default class Login extends Component {
     render() {
         if (this.state.loggedIn) {
             const decodedToken = decodeToken(localStorage.getItem('token'))
-            if(decodedToken.role == 'admin'){
+            if(decodedToken.role === 'admin'){
                 console.log("ADMIN ");
                 return <Redirect to={'/'}/>
             }
-            else if(decodedToken.role == 'homeowners'){
+            else if(decodedToken.role === 'homeowners'){
                 console.log("Homeowners");
                 return <Redirect to={'/'} />;
             } /*else if(decodedToken.role == 'security'){
@@ -110,10 +110,11 @@ export default class Login extends Component {
                 <div className="l_wrapper">
                     <div class="l_container">
                         {error}
-                        <header className = "l_logo"><img src = {Logo}/></header>
+                        <header className = "l_logo"><img src = {Logo} alt={'logo'}/></header>
                         <form onSubmit={this.handleSubmit}>
                             <div className="login_input-field">
                                 <input type="text"  className="form-control"
+                                    // eslint-disable-next-line react/no-direct-mutation-state
                                     onChange={e => this.state.email = e.target.value} />
                                 <div style={{ fontSize: 12, color: "red" }}>
                                     {this.state.emailError}
@@ -122,6 +123,7 @@ export default class Login extends Component {
                             </div>
                             <div className="login_input-field">
                                 <input type="password"  className="form-control"
+                                    // eslint-disable-next-line react/no-direct-mutation-state
                                     onChange={e => this.state.password = e.target.value} />
                                 <div style={{ fontSize: 12, color: "red" }}>
                                     {this.state.passwordError}

@@ -1,16 +1,22 @@
-import React from 'react';
+import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import React, { useState } from 'react';
+// import Confirmation from '../../../../util/confirmation';
 import './Accounts.css'
 const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick, handleEditFormSubmit }) => {
     const options = [
         {
-          label: "Admin",
-          value: "admin",
+            label: "Admin",
+            value: "admin",
         },
         {
-          label: "Homeowners",
-          value: "homeowners",
+            label: "Homeowners",
+            value: "homeowners",
         },
-      ];
+    ];
+
+    const [visible, setVisible] = useState(false)
+    const [selectVal, setSelectVal] = useState(editUserData?.role)
+
     return (
         <tr>
             <td>
@@ -19,9 +25,9 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                     <option value="homeowners">Homeowner</option>
                     <option value="Security">Security</option>
                 </select>*/}
-                <select value={editUserData.role}>
+                <select value={selectVal} onChange={(e)=>setSelectVal(e.target.value)}>
                     {options.map((option) => (
-                        <option value={option.value}>{option.label}</option>
+                        <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                 </select>
             </td>
@@ -54,7 +60,7 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                     placeholder="Enter your Middle Initial"
                     name="middleInitial"
                     onChange={handleEditUserChange}
-                    value={editUserData.middleInitial}
+                    value={editUserData.middleInitial.toUpperCase()}
                 >
                 </input>
             </td>
@@ -92,7 +98,19 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                 </input>
             </td>
             <td>
-                <button type="submit" className='genButton' onClick={handleEditFormSubmit}>Save</button>
+                <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+                    <CModalHeader onClose={() => setVisible(false)}>
+                        <CModalTitle>Confirm Edit</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>Are you sure you want to edit these details?</CModalBody>
+                    <CModalFooter>
+                        <CButton color="secondary" onClick={() => setVisible(false)}>
+                            No
+                        </CButton>
+                        <CButton style={{ backgroundColor: '#04AA6D', borderColor: '#04AA6D' }} onClick={handleEditFormSubmit}>Yes</CButton>
+                    </CModalFooter>
+                </CModal>
+                <button type="submit" className='genButton' onClick={(e) => { e.preventDefault(); setVisible(true) }}>Save</button>
                 <button type="submit" className='genButton' onClick={handleCancelClick}>Cancel</button>
             </td>
         </tr>
