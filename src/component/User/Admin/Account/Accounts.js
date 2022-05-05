@@ -206,9 +206,8 @@ const Accounts = () => {
 
     axios
       .post("http://localhost:5000/approveDeclineAccount", {
-        accountId: acc._id,
+        account: acc,
         verdict,
-        email: acc.email
       })
       .then((res) => {
         userLP.splice(index, 1);

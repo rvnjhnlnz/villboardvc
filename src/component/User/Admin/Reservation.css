@@ -51,3 +51,40 @@
       width: 40rem;
     }
   }
+
+  .login_input-field textarea{
+    border: 1px solid silver;
+    padding-top: 15px;
+    padding-left: 15px;
+    outline: none;
+    font-size: 19px;
+    transition: .4s;
+  }
+
+  .login_input-field textarea:focus{
+    border: 1px solid green;
+  }
+
+  .login_input-field .l_label, span.show{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .login_input-field .l_label{
+    left: 15px;
+    pointer-events: none;
+    color: grey;
+    font-size: 18px;
+    transition: .4s;
+  }
+
+  .login_input-field textarea:valid ~ span.show{
+    visibility: visible;
+  }
+  .login_input-field textarea:focus ~ .l_label,
+  .login_input-field textarea:valid ~ .l_label{
+    transform: translateY(-33px);
+    background: white;
+    font-size: 16px;
+    color: green;
+  }

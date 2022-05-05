@@ -136,7 +136,7 @@ function Reservation() {
     );
   }, [reservation, currentPage, search, sorting]);
 
-  const handleAcceptDecline = (res, header) => {
+  const handleAcceptDecline = (res, header, reason) => {
     // event.preventDefault();
     const userLP = [...pendingReservation]; //pedning
 
@@ -150,7 +150,7 @@ function Reservation() {
       .post("http://localhost:5000/approveDeclineReservation", {
         reserveItem: res,
         verdict,
-        // email: res.user_reservation.email
+        reason
       })
       .then((res) => {
         userLP.splice(index, 1);
