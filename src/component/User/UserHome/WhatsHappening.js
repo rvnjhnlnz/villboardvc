@@ -15,14 +15,14 @@ function WhatsHappening() {
     // const item_per_page = 10;
     useEffect(() => {
         const cleanup = () => {
-            axios.get('http://localhost:5000/getPendingAccounts')
+            axios.get('getPendingAccounts')
                 .then(res => {
                     console.log(res);
                     setAccountData(res.data)
                 }).catch(err => {
                     console.log(err);
                 })
-            axios.get('http://localhost:5000/getPendingReservations')
+            axios.get('getPendingReservations')
                 .then(res => {
                     setReservationData(res.data);
                 }).catch(err => {
@@ -30,7 +30,6 @@ function WhatsHappening() {
                 })
             axios.post('postPayment')
                 .then(res => {
-
                     setPaymentData(res.data);
                 }).catch(err => {
                     console.log(err);

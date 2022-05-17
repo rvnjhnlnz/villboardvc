@@ -46,7 +46,7 @@ function Reserve({ history }) {
             userId: decodedToken._id
         }
         console.log(data)
-        axios.post('http://localhost:5000/addReservation', data).then(res => {
+        axios.post('addReservation', data).then(res => {
             console.log(res);
             Swal.fire({
                 icon: 'success',

@@ -18,7 +18,7 @@ function Reservation() {
   useEffect(() => {
     const fetchPosts = async () => {
       axios
-        .post("http://localhost:5000/postReservation")
+        .post("postReservation")
         .then((res) => {
           console.log(res);
           const notpending = res.data.filter(
@@ -147,7 +147,7 @@ function Reservation() {
     else verdict = "declined";
 
     axios
-      .post("http://localhost:5000/approveDeclineReservation", {
+      .post("approveDeclineReservation", {
         reserveItem: res,
         verdict,
         reason

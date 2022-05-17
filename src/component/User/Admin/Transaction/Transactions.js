@@ -23,7 +23,7 @@ function Transactions() {
             "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
         }
         const fetchTrans = async () => {
-            axios.post('http://localhost:5000/postPayment', {
+            axios.post('postPayment', {
                 headers: headers,
             })
                 .then((res) => {
@@ -151,7 +151,7 @@ function Transactions() {
         else verdict = "declined";
     
         axios
-          .post("http://localhost:5000/approveDeclineTransaction", {
+          .post("approveDeclineTransaction", {
             transItem: res,
             verdict,
             reason: ""

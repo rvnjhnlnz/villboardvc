@@ -162,7 +162,7 @@ function Upload() {
         }
 
         if (isValid) {
-            axios.post('http://localhost:5000/addPayment', fd).then(res => {
+            axios.post('addPayment', fd).then(res => {
                 console.log(res);
                 Swal.fire({
                     icon: 'success',

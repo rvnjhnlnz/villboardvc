@@ -205,7 +205,7 @@ const Accounts = () => {
     else verdict = "declined";
 
     axios
-      .post("http://localhost:5000/approveDeclineAccount", {
+      .post("approveDeclineAccount", {
         account: acc,
         verdict,
       })
