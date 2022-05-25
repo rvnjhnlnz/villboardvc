@@ -5,7 +5,6 @@ import App from './App';
 import Dashboard from './component/User/Admin/Admin';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
 import reducers from './reducers'
 import axios from 'axios'
 import { BrowserRouter } from 'react-router-dom';

@@ -18,7 +18,7 @@ function Guest() {
                     <h3>Welcome to </h3>
                     <div class="line"></div>
                     <h1>Villa Caceres</h1>
-                    <a href="#" class="gVisitBtn">Visitor Registration</a>
+                    <a href="/Visitor" class="gVisitBtn">Visitor Registration</a>
                 </div>
             </header>
             <section class="events">

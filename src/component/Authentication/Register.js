@@ -9,6 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Logo from '../../images/background.png'
 import eye from '../../images/eye.png'
 import Swal from 'sweetalert2'
+import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 function Register() {
 
     const [firstName, setFirstName] = useState('');
@@ -34,8 +35,11 @@ function Register() {
     const [rModal, setrModal] = useState(false);
     const [termsChecked, settermsChecked] = useState(true);
     const [passwordShown, setPasswordShown] = useState(false);
+
+    const [visible, setVisible] = useState(false);
+
     const validate = () => {
-        let eError, pError, fnError, mnError, lnError, aError, pnError, cpError, checkedError = "";
+        let eError, pError, fnError, mnError, lnError, aError, pnError, cpError, photoerror, checkedError = "";
         let isValid = true;
 
         if (!firstName) {
@@ -57,9 +61,9 @@ function Register() {
             console.log('MI');
         }
         else if (typeof middleInitial !== "undefined") {
-            var pattern = new RegExp(/^[a-zA-Z]{1}$/);
+            var pattern = new RegExp(/^[a-zA-Z]{0,3}$/);
             if (!pattern.test(middleInitial)) {
-                mnError = "Please enter your first letter of your middle name"
+                mnError = "Please enter your first letter of your middle name (Maximum 2 letters)"
                 isValid = false;
                 console.log('mn1')
             }
@@ -124,7 +128,7 @@ function Register() {
         else if (typeof password !== "undefined") {
             var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
             if (!pattern.test(password)) {
-                pError = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:"
+                pError = "Minimum 8 characters, at least 1 letter, and 1 number:"
                 isValid = false;
                 console.log('e1')
             }
@@ -137,7 +141,7 @@ function Register() {
         else if (typeof password !== "undefined") {
             var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
             if (!pattern.test(password)) {
-                cpError = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:"
+                cpError = "Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number:"
                 isValid = false;
                 console.log('e1')
             }
@@ -146,12 +150,16 @@ function Register() {
             cpError = "Those Passwords didn't match. Try Again"
             isValid = false;
         }
+        if(photo === null){
+            photoerror = "Please upload image file. "
+            isValid = false;
+        }
         if (!checked) {
             checkedError = "Please read the terms and conditions to enable and check the checkbox"
             isValid = false;
             console.log('C')
         }
-        if (fnError || mnError || lnError || aError || pnError || eError || pError || cpError || checkedError) {
+        if (fnError || mnError || lnError || aError || pnError || eError || pError || cpError || photoerror || checkedError) {
             setfnError(fnError)
             setmnError(mnError)
             setlnError(lnError)
@@ -160,6 +168,7 @@ function Register() {
             seteError(eError)
             setpError(pError)
             setcpError(cpError)
+            setphotoError(photoerror)
             setcheckedError(checkedError)
             return isValid;
         }
@@ -170,26 +179,27 @@ function Register() {
         setrModal(true);
     }
 
-    function closeModal(e) {
+    function close(e) {
         e.preventDefault()
-        setrModal(false);
+        setVisible(false);
         settermsChecked(false);
     }
     function handleFile(e) {
         const filename = e.target.files[0].name;
         var pattern = new RegExp(/(\.[^.]*)$/);
         const extension = filename.split(pattern);
-        if(extension[1] == ".jpg" || extension[1].name == ".png" || extension[1] == ".jpeg"){
+        console.log(extension)
+        if (extension[1] == ".jpg" || extension[1] == ".png" || extension[1] == ".jpeg") {
             setPhoto(e.target.files[0]);
             setphotoError('');
         }
-        else{
+        else {
             setphotoError("Please upload image file. ex: .jpeg .png .jpg ")
         }
     }
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
-      };
+    };
     let history = useHistory();
     function handleSubmit(e) {
         e.preventDefault();
@@ -218,18 +228,19 @@ function Register() {
                 console.log(res.data);
                 Swal.fire({
                     icon: 'success',
-                    title: 'Register Successful!!',
+                    title: "Register Successful! \n Please wait for the admin's approval",
                     confirmButtonText: 'Ok',
-                  }).then((result) => {
+                }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         history.push('/Login');
-                    } 
-                  })
+                    }
+                })
             }).catch(err => {
                 console.log(err);
             });
         }
+        
     }
     const isChecked = () => {
         setchecked(true);
@@ -242,7 +253,7 @@ function Register() {
                     <form>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setFirstName(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
+                            value={firstName} onChange={(e) => setFirstName(e.target.value.replace(/[^A-Za-z\s]+/gi,""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {fnError}
                             </div>
@@ -250,7 +261,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setmiddleInitial(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
+                              value={middleInitial} onChange={(e) => setmiddleInitial(e.target.value.replace(/[^A-Za-z\s]+/gi, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {mnError}
                             </div>
@@ -258,7 +269,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setlastName(e.target.value.replace(/[^A-Za-z]+/gi,""))} />
+                             value={lastName}   onChange={(e) => setlastName(e.target.value.replace(/[^A-Za-z.\s]+/gi, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {lnError}
                             </div>
@@ -266,15 +277,15 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setaddress(e.target.value)} />
+                              value={address}  onChange={(e) => setaddress(e.target.value.replace(/[^A-Za-z0-9.,\s]+/gi, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {aError}
                             </div>
                             <label className="r_label">Address</label>
                         </div>
                         <div className="register_input-field">
-                            <input type="text" className="form-control" value={phoneNumber}
-                                onChange={(e) => setphoneNumber(e.target.value.replace(/[^0-9+]+/,""))} />
+                            <input type="text" className="form-control" 
+                             value={phoneNumber} onChange={(e) => setphoneNumber(e.target.value.replace(/[^0-9+]+/, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {pnError}
                             </div>
@@ -282,7 +293,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                                onChange={(e) => setemail(e.target.value)} />
+                              value={email}  onChange={(e) => setemail(e.target.value.replace(/[^A-Z-a-z_.@-]+/, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {eError}
                             </div>
@@ -290,7 +301,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type={passwordShown ? "text" : "password"} className="form-control"
-                                onChange={(e) => setpassword(e.target.value)} />
+                             value={password}   onChange={(e) => setpassword(e.target.value.replace(/[^A-Z-a-z0-9!@#_.]+/, ""))} />
 
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {pError}
@@ -299,7 +310,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type={passwordShown ? "text" : "password"} className="form-control"
-                                onChange={(e) => setconfirmPass(e.target.value)} />
+                               value={confirmPass} onChange={(e) => setconfirmPass(e.target.value.replace(/[^A-Z-a-z0-9!@#_.]+/, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {cpError}
                             </div>
@@ -314,7 +325,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="file" className="form-control1"
-                                onChange={(e) => handleFile(e)} accept= "image/png, image/jpeg"/>
+                                onChange={(e) => handleFile(e)} accept="image/png, image/jpeg" />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {photoError}
                             </div>
@@ -327,15 +338,13 @@ function Register() {
                                 disabled={termsChecked}
                                 onChange={isChecked}
                             />
-                            <a onClick={openModal} className="register_link">Terms and Conditions</a>
-                            <Modal isOpen={rModal}
-                                className="r_modalContainer"
-                                shouldCloseOnOverlayClick={false}
-                                onRequestClose={!rModal}>
-                                <div class='register_modal'>
-                                    <h3>Villa Caceres</h3>
-                                    <h4>Terms and Conditions</h4>
-                                    <h5>Last Updated: </h5>
+                            <a onClick={() => setVisible(!visible)} className="register_link">Terms and Conditions</a>
+                            <>
+                                <CModal scrollable visible={visible} onClose={() => setVisible(false)}>
+                                    <CModalHeader>
+                                        <CModalTitle>Terms and Conditions</CModalTitle>
+                                    </CModalHeader>
+                                    <CModalBody>
                                     <p>Please read the terms and conditions before using our mobile application which is
                                         Villboard app and our website <a href="">www.villboardapp.com</a> the application is operated by the
                                         Villa Cares – sta. rosa laguna your access to and
@@ -400,9 +409,12 @@ function Register() {
                                         purposes set out above. The Company may also disclose your Personal Information under any of the following
                                         circumstances: (i) required by law or by court decisions/processes; (ii) for information, update and marketing
                                         purposes; and (iii) for research purposes.</p>
-                                    <a onClick={closeModal} className="register_closeModal">Accept</a>
-                                </div>
-                            </Modal>
+                                    </CModalBody>
+                                    <CModalFooter>
+                                        <CButton color="success" onClick={close}>Agree</CButton>
+                                    </CModalFooter>
+                                </CModal>
+                            </>
                         </div>
                         <br />
                         <div style={{ fontSize: 12, color: "red" }}>

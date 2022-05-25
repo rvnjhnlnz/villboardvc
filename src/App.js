@@ -38,28 +38,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default class App extends Component {
   state = {};
 
-  componentDidMount() {
-    const config = {
-        headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,",
-            "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-        }
-    };
-    axios.get('getinfo', config).then(
-      res => {
-        this.setUser(res.data);
-        localStorage.setItem('profile', res.data);
-        console.log(res.data.decodedtoken);
-      },
-      err => {
-        console.log(err);
-      }
-    )
-  }
+  // componentDidMount() {
+  //   const config = {
+  //       headers: {
+  //           Authorization: 'Bearer ' + localStorage.getItem('token'),
+  //           'Content-Type': 'application/json',
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Access-Control-Allow-Credentials": "true",
+  //           "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,",
+  //           "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  //       }
+  //   };
+  //   if(localStorage.getItem('token')){
+  //     axios.get('getinfo', config).then(
+  //       res => {
+  //         this.setUser(res.data);
+  //         localStorage.setItem('profile', res.data);
+  //         console.log(res.data.decodedtoken);
+  //       },
+  //       err => {
+  //         console.log(err);
+  //       }
+  //     )
+  //   }
+  // }
 
   setUser = user => {
     this.setState({

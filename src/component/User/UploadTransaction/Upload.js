@@ -15,7 +15,6 @@ function Upload() {
     const [ut_lastname, setLastName] = useState('');
     const [ut_address, setAddress] = useState('');
     const [ut_phoneNumber, setPhoneNumber] = useState('');
-    const [ut_refnumber, setRefnumber] = useState('');
     const [ut_typeTransaction, setTypeTransaction] = useState('Gcash');
     const [ut_proofPayment, setProofPayment] = useState(null);
 
@@ -35,7 +34,7 @@ function Upload() {
 
     const validate = () => {
         let isValid = true;
-        let fnError, lnError, adError, emError, pnError, rfError, ttError, ppError = "";
+        let fnError, lnError, adError, emError, pnError, ttError, ppError = "";
 
         if (!ut_firstname) {
             
@@ -98,32 +97,17 @@ function Upload() {
                 console.log('pn1')
             }
         }
-        
-       if (!ut_refnumber) {
-            rfError = "Please enter valid Reference Number"
-            isValid = false;
-            console.log('PN');
-        }
-        else if (typeof ut_refnumber !== "undefined") {
-            var pattern = new RegExp(/\d+/);
-            if (!pattern.test(ut_refnumber)) {
-                pnError = "Please enter valid reference number"
-                isValid = false;
-                console.log('Invalid Reference Number')
-            }
-        }
 	if(ut_proofPayment == null){
 		ppError = "No file Found"
                 isValid = false;
                 console.log('No file Found')
 	} 
-        if (fnError || lnError || adError || emError  || pnError || rfError || ttError || ppError) {
+        if (fnError || lnError || adError || emError  || pnError || ttError || ppError) {
             ut_firstname_Seterrormessage(fnError);
 	        ut_lastname_Seterrormessage(lnError);
             ut_address_Seterrormessage(adError);
             ut_email_Seterrormessage(emError);
             ut_phoneNumber_Seterrormessage(pnError);
-            ut_refnumber_Seterrormessage(rfError);
             ut_typeTransaction_Seterrormessage(ttError);
             ut_proofPayment_Seterrormessage(ppError);
             return isValid;
@@ -150,7 +134,6 @@ function Upload() {
         fd.append('uAddress', ut_address);
         fd.append('email', decodedToken.email);
         fd.append('uPhoneNumber', ut_phoneNumber);
-        fd.append('refNumber', ut_refnumber);
         fd.append('typeTransaction', ut_typeTransaction);
         fd.append('proofPayment', ut_proofPayment);
         const isValid = validate();
@@ -213,14 +196,7 @@ function Upload() {
                         </div>
                         <label className="upload_label">Phone Number</label>
                     </div>
-                    <div className="upload_input-field">
-                        <input type="number" className="form-control"
-                            name="refNumber" value={ut_refnumber} onChange={(e) => setRefnumber(e.target.value)} />
-                        <div style={{ fontSize: 12, color: "red" }}>
-                            {ut_refnumber_errormessage}
-                        </div>
-                        <label className="upload_label">Reference Number</label>
-                    </div>
+
                     <div className="upload_input-field">
                         <select onChange={(e) => { handleSelect(e) }} className="form-control">
                             <option value="Gcash">Gcash</option>
