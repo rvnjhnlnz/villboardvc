@@ -94,7 +94,7 @@ function Reservation() {
     { name: "Venue", field: "venue", sortable: true },
     { name: "Reservation\nTime", field: "reservationTime", sortable: true },
     { name: "Reservation\nDate", field: "reservationDate", sortable: true },
-    { name: "Timestamp", field: "timestamp", sortable: true },
+    { name: "Timestamp", field: "timestamp", sortable: false },
     { name: "Reason", field: "reason", sortable: true },
   ];
   const pheaders = [
@@ -155,7 +155,7 @@ function Reservation() {
           acc.venue.toLowerCase().includes(search.toLowerCase()) ||
           acc.reservationTime.toLowerCase().includes(search.toLowerCase()) ||
           acc.reservationDate.toLowerCase().includes(search.toLowerCase())
-        // acc.timestamp.toLowerCase().includes(search.toLowerCase())
+          //acc.timestamp.toLowerCase().includes(search.toLowerCase())
       );
     }
     // }
@@ -169,7 +169,7 @@ function Reservation() {
     return reserve.slice(
       (currentPage - 1) * item_per_page,
       (currentPage - 1) * item_per_page + item_per_page
-    );
+    ).reverse();
   }, [reservation, currentPage, search, sorting]);
 
   const handleAcceptDecline = (res, header, reason) => {

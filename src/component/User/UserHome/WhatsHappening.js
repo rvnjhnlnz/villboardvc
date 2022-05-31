@@ -75,9 +75,9 @@ function WhatsHappening() {
                 </div>
                 <div className="admin_gridContainer">
                     <div className="grid-item">
-                        <Card style={{ width: '15rem', height: '15rem' }} className="grid-card">
+                        <Card className="grid-card">
                             <Card.Body>
-                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending Transactions</Card.Title>
+                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br/> Transactions</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
                                     {payment !== null ? payment?.length : <CSpinner/>}
                                 </Card.Text>
@@ -88,7 +88,7 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card style={{ width: '15rem', height: '15rem' }} className="grid-card">
+                        <Card  className="grid-card">
                             <Card.Body>
                                 <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br />Accounts</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
@@ -101,9 +101,9 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card style={{ width: '15rem', height: '15rem' }} className="grid-card">
+                        <Card  className="grid-card">
                             <Card.Body>
-                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending Reservations</Card.Title>
+                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br/>  Reservations</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
                                     {reservation !== null ? reservation.length : <CSpinner/>}
                                 </Card.Text>
@@ -114,7 +114,7 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card style={{ width: '15rem', height: '15rem' }} className="grid-card">
+                        <Card  className="grid-card">
                             <Card.Body>
                                 <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br /> Visitors</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">

@@ -291,7 +291,7 @@ const Accounts = () => {
         (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
       );
     }
-    return account.slice(
+    return account.reverse().slice(
       (currentPage - 1) * item_per_page,
       (currentPage - 1) * item_per_page + item_per_page
     );
@@ -364,7 +364,7 @@ const Accounts = () => {
             onSorting={(field, order) => setSorting({ field, order })}
           />
           <tbody>
-            {accountD.reverse().map((acc) => (
+            {accountD.map((acc) => (
               <Fragment key={acc._id}>
                 {editContactId === acc._id ? (
                   <AccountEditable

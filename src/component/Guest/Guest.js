@@ -40,7 +40,20 @@ function Guest() {
                 <div class="explore-content">
                     <h1>About Villa Caceres</h1>
                     <div class="line"></div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, repellendus sapiente ipsa reprehenderit suscipit iusto odit corrupti, quam velit eligendi laboriosam aspernatur tempore quaerat voluptate.</p>
+                    <p>Villa Caceres is a residential community developed by Moldex Realty Inc. in Brgy. Dila in Sta. Rosa, Laguna. This
+                            house and lot community is therefore located at the heart of Laguna. This housing development is built in
+                            partnership by Armed Forces of the Philippines Retirement Separation Benefits System with that of Moldex Realty
+                            Inc. This partnership community takes inspiration from Spain in order to transform you to a Spanish Mediterranean
+                            feel with its beautifully designed homes. The entire development spans a total land area of 53 hectares. It is the
+                            perfect nesting place for those who want to experience an idyllic lifestyle.
+                            </p>
+                            <div class="line"></div>
+                    <p>The inspiration from Spain is specifically traced to the city of Caceres, to which the housing development is named
+                        after. This is a first-class and exclusive residential subdivision that makes for a favorable investment due to its great
+                        location and the peaceful neighborhood it is a part of. All of these factors combine to bring an idyllic community
+                        combined with the suburban conveniences. There is also a commercial complex located within the subdivision
+                        premises that would be perfect for those who seek commercial investments, too.
+                            </p>
                 </div>
             </section>
 

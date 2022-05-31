@@ -340,7 +340,7 @@
 .guest_page .explore {
     width: 100%;
     height: 100vh;
-    background-image: url('../../images/more.jpg');
+    background-image: linear-gradient(rgba(74, 170, 45, 0.7), rgba(4, 30, 4, 0.7)), url('../../images/more.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
