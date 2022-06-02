@@ -194,7 +194,7 @@ function UserHome() {
                                             label="Example textarea"
                                             rows="3"
                                             text="Must be 8-20 words long."
-                                            value={caption} onChange={(e) => setCaption(e.target.value.replace(/[^A-Z-a-z0-9!?"':;@#_.&*()=-]+/, ""))}
+                                            value={caption} onChange={(e) => setCaption(e.target.value.replace(/[^A-Z-a-z0-9\s!?"':;@#_.&*()=-]+/, ""))}
                                         ></CFormTextarea>
                                         <div style={{ fontSize: 12, color: "red" }}>
                                             {caption_errormessage}
