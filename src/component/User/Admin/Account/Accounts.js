@@ -291,7 +291,7 @@ const Accounts = () => {
         (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
       );
     }
-    return account.reverse().slice(
+    return account.slice(
       (currentPage - 1) * item_per_page,
       (currentPage - 1) * item_per_page + item_per_page
     );
