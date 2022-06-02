@@ -293,7 +293,7 @@ function Register() {
                         </div>
                         <div className="register_input-field">
                             <input type="text" className="form-control"
-                              value={email}  onChange={(e) => setemail(e.target.value.replace(/[^A-Z-a-z_.@-]+/, ""))} />
+                              value={email}  onChange={(e) => setemail(e.target.value.replace(/[^A-Z-a-z0-9_.@-]+/, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {eError}
                             </div>

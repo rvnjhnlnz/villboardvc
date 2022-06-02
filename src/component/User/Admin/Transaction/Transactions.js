@@ -10,44 +10,10 @@ import TableHeader from '../Header'
 // import Modal from 'react-modal'
 import Table from 'react-bootstrap/Table'
 import TransactionPending from './TransactionPending';
-import ReactExport from 'react-data-export'
-import moment from 'moment'
 
-
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 function Transactions() {
     const [transactionData, setTransactionData] = useState([]);
-    const [pendingTrans, setPendingTrans] = useState([]);
-
-    const current = new Date();
-    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-    const Dataset = [{
-        columns: [
-            { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Reference Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Type of Transaction", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Proof of Payment", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        ],
-        data: transactionData.map((data) => [
-            {value: data.pPending, style: {font: {sz: "14"}}},
-            {value: data.uLastName, style: {font: {sz: "14"}}},
-            {value: data.uFirstName, style: {font: {sz: "14"}}},
-            {value: data.uAddress, style: {font: {sz: "14"}}},
-            {value: data.uPhoneNumber, style: {font: {sz: "14"}}},
-            {value: data.refNumber, style: {font: {sz: "14"}}},
-            {value: data.typeTransaction, style: {font: {sz: "14"}}},
-            {value: moment(data.updatedAt).format('lll'), style: {font: {sz: "14"}}},
-            {value: data.photoUrl, style: {font: {sz: "14"}}},
-        ])
-    }
-    ]
-
+    const [pendingTrans, setPendingTrans] = useState([])
     useEffect(() => {
         const headers = {
             'Content-Type': 'application/json',
@@ -95,6 +61,7 @@ function Transactions() {
         { name: "First Name", field: "uFirstName", sortable: true },
         { name: "Address", field: "uAddress", sortable: true },
         { name: "Phone Number", field: "uPhoneNumber", sortable: true },
+        { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
         { name: "Actions", field: "", sortable: false },
@@ -176,30 +143,30 @@ function Transactions() {
     const handleAcceptDecline = (res, header, reason) => {
         // event.preventDefault();
         const transPending = [...pendingTrans]; //pedning
-
+    
         const index = pendingTrans.findIndex((ac) => ac._id === res._id);
         var verdict = "declined";
-
+    
         if (header === "Confirm Accept") verdict = "approved";
         else verdict = "declined";
-
+    
         axios
-            .post("approveDeclineTransaction", {
-                transItem: res,
-                verdict,
-                reason: ""
-            })
-            .then((res) => {
-                transPending.splice(index, 1);
-                setPendingTrans(transPending);
-                console.log(res.data);
-                //   if (verdict === 'approved') {
-                const transL = [...transactionData, res.data]; // existing
-                setTransactionData(transL);
-                //   }
-            })
-            .catch((err) => console.log(err));
-    };
+          .post("approveDeclineTransaction", {
+            transItem: res,
+            verdict,
+            reason: ""
+          })
+          .then((res) => {
+            transPending.splice(index, 1);
+            setPendingTrans(transPending);
+            console.log(res.data);
+            //   if (verdict === 'approved') {
+            const transL = [...transactionData, res.data]; // existing
+            setTransactionData(transL);
+            //   }
+          })
+          .catch((err) => console.log(err));
+      };
 
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
@@ -225,7 +192,7 @@ function Transactions() {
                         <TableHeader headers={pheaders} onSorting={(field, order) => setSorting({ field, order })} />
                         <tbody>
                             {pendingTransaction.map(tr => (
-                                <TransactionPending key={tr._id} tr={tr} handleAcceptDecline={handleAcceptDecline} />
+                                <TransactionPending key={tr._id} tr={tr} handleAcceptDecline={handleAcceptDecline}/>
                             ))}
                         </tbody>
                     </Table>
@@ -246,13 +213,6 @@ function Transactions() {
                         setSearch(val);
                         setCurrentPage(1);
                     }} />
-                    {transactionData.length !== 0 ? (
-                         <ExcelFile 
-                         filename= {"Transactions("+date+")"}
-                         element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
-                             <ExcelSheet dataSet={Dataset} name="Homeowner Transactions"/>
-                         </ExcelFile>
-                    ): null}  
                 </div>
                 <form>
 

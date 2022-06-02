@@ -239,3 +239,11 @@
   color: white;
   background-color: green;
 }
+
+
+
+@media only screen and (min-width: 1366px) {
+  .r_wrapper{
+    height: 100%;
+  }
+}

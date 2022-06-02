@@ -16,6 +16,7 @@ const TransactionPending = ({ tr, handleAcceptDecline }) => {
             <td>{tr.uFirstName}</td>
             <td>{tr.uAddress}</td>
             <td>{tr.uPhoneNumber}</td>
+            <td>{tr.refNumber}</td>
             <td>{tr.typeTransaction}</td>
             <td><a href={tr.photoUrl}>Click to Download</a>
             </td>

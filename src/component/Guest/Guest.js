@@ -21,18 +21,20 @@ function Guest() {
                     <a href="/Visitor" class="gVisitBtn">Visitor Registration</a>
                 </div>
             </header>
-            <section class="events">
-                <div class="title">
-                    <h1>Villa Caceres Facilities</h1>
-                    <div class="line"></div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, repellendus sapiente ipsa reprehenderit suscipit iusto odit corrupti, quam velit eligendi laboriosam aspernatur tempore quaerat voluptate.</p>
-                </div>
-                <div class="col image-col1">
-                    <div class="image-gallery">
-                        <img src={picture3} alt="" />
-                        <img src={picture1} alt="" />
-                        <img src={picture2} alt="" />
-                        <img src={first} alt="" />
+            <section class="tours">
+                <div class="row">
+                    <div class="col image-col">
+                        <div class="image-gallery">
+                            <img src={one} alt="" />
+                            <img src={picture1} alt="" />
+                            <img src={picture2} alt="" />
+                            <img src={two} alt="" />
+                        </div>
+                    </div>
+                    <div class="col content-col">
+                        <h1>Villa Caceres Highlights</h1>
+                        <div class="line"></div>
+                        <p>Our residential real estate companies provide your family with a variety of future houses built for a large market segment. There are a variety of property kinds available, each suited to particular desires and lifestyles.</p>
                     </div>
                 </div>
             </section>
@@ -62,7 +64,7 @@ function Guest() {
                     <div class="col content-col">
                         <h1>Villa Caceres Highlights</h1>
                         <div class="line"></div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quo dignissimos eius quidem culpa, beatae quasi ea cum minima reiciendis ut molestiae consequuntur doloribus aperiam neque eaque, at placeat natus.</p>
+                        <p>Our residential real estate companies provide your family with a variety of future houses built for a large market segment. There are a variety of property kinds available, each suited to particular desires and lifestyles.</p>
 
                     </div>
                     <div class="col image-col">
@@ -71,6 +73,7 @@ function Guest() {
                             <img src={picture1} alt="" />
                             <img src={picture2} alt="" />
                             <img src={two} alt="" />
+                            
                         </div>
                     </div>
                 </div>

@@ -336,7 +336,6 @@
 .guest_page .events .ctn {
     margin-top: 30px;
 }
-
 .guest_page .explore {
     width: 100%;
     height: 100vh;
@@ -363,6 +362,7 @@
 }
 .guest_page .explore-content p {
     color: rgb(221, 221, 221);
+    font-size: 2.2vmin;
 }
 .guest_page .explore-content .ctn {
     margin-top: 40px;
@@ -378,10 +378,10 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    align-items: center;
+    justify-content: center;
 }
 .guest_page .image-gallery img {
-    max-width: 300px;
+    max-width: 275px;
     margin: 10px;
 }
 .content-col h1{
@@ -461,3 +461,12 @@
     color: orange;
     cursor: pointer;
 }
+
+
+
+.guest_page .image-gallery img {
+    max-width: 275px;
+    margin: 10px;
+}
+
+  

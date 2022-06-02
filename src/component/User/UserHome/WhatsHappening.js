@@ -88,7 +88,7 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card  className="grid-card">
+                        <Card className="grid-card">
                             <Card.Body>
                                 <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br />Accounts</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
