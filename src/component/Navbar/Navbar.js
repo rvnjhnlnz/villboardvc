@@ -61,10 +61,10 @@ export default class NavbarApp extends Component {
                                 <a href="/" className="n_desktop-item">Home</a>
                                 <a href="/" className="n_mobile-item">Home</a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a href="/Contact-us" className="n_desktop-item">Contact</a>
                                 <a href="/Contact-us" className="n_mobile-item">Contact</a>
-                            </li>
+                            </li> */}
                             <li>
                                 <a href="/Login" className="n_desktop-item">Login</a>
                                 <a href="/Login" className="n_mobile-item">Login</a>

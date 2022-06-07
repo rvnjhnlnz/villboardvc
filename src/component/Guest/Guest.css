@@ -469,4 +469,43 @@
     margin: 10px;
 }
 
-  
+
+@media screen and (max-width: 1250px) {
+    .guest_page .explore-content p {
+        color: rgb(221, 221, 221);
+        font-size: 1.9vmin;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .guest_page .explore-content p {
+        color: rgb(221, 221, 221);
+        font-size: 1.7vmin;
+    }
+    .explore-content h1 {
+        font-size: 5vmin;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .guest_page .explore-content p {
+        color: rgb(221, 221, 221);
+        font-size: 2.2vmin;
+    }
+
+}
+
+@media screen and (max-width: 576px) {
+    .guest_page .explore-content p {
+        color: rgb(221, 221, 221);
+        font-size: 2.3vmin;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .guest_page .explore-content p {
+        color: rgb(221, 221, 221);
+        font-size: 2.7vmin;
+    }
+}

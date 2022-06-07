@@ -25,6 +25,7 @@ import Reservation from './component/User/Reservation/Reserve'
 import Events from './component/User/Upevents/Events'
 import ContactAdmin from './component/User/ContactAdmin/Contact'
 import Visitor from './component/Guest/VisitorForm'
+import Thankyou from './component/Guest/Thankyou'
 import Dashboard from './component/User/Admin/Dashboard'
 import Chat from './component/User/ChatUser/Chat'
 import AdminReservation from './component/User/Admin/Reservation';
@@ -90,6 +91,7 @@ export default class App extends Component {
           <Route path='/Events' exact component={Events} />
           <Route path='/ContactAdmin' exact component={ContactAdmin} />
           <Route path='/Visitor' exact component={Visitor} />
+          <Route path='/Thankyou' exact component={Thankyou} />
           <Route path='/Messages' exact component={Chat} />
 
           <Route path ='/Dashboard/AdminTransaction' exact component={AdminTransaction}/>

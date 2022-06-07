@@ -32,10 +32,12 @@ function Transactions() {
                         (acc) => acc.pPending.toLowerCase() !== "pending"
                     );
                     setTransactionData(notpending);
+                    console.log(notpending);
                     const pending = res.data.filter(
                         (acc) => acc.pPending.toLowerCase() === "pending"
                     );
                     setPendingTrans(pending);
+                    
                 })
                 .catch((err) => {
                     console.log("AXIOS ERROR: ", err);

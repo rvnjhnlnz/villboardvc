@@ -97,32 +97,36 @@ function UserHome() {
     }
     function handleSubmit(event) {
         event.preventDefault();
+        const fd = new FormData();
+        fd.append('postCaption', caption);
+        fd.append('postCategory', postCategory);
+        fd.append('postPicture', photoUrl);
+        fd.append('email', email)
+
+        
         const isValid = validate();
+        
         if (isValid) {
             setVisible(false);
-            console.log('successfull')
+            
+            axios.post('addPost', fd).then(res => {
+                console.log('successfull');
+                console.log(res);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Your post is been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }).catch(err => {
+                console.log(err);
+            });
             setCaption('');
             setphotoUrl(null);
             caption_Seterrormessage('');
-            Swal.fire({
-                icon: 'success',
-                title: 'Your post is been saved',
-                showConfirmButton: false,
-                timer: 1500
-              })
+            
         }
-        // const fd = new FormData();
-        // fd.append('postCaption', caption);
-        // fd.append('postCategory', postCategory);
-        // fd.append('postPicture', photoUrl);
-        // fd.append('email', email)
-
-        // axios.post('addPost', fd).then(res => {
-        //     console.log(res);
-        //     alert("Post successful");
-        // }).catch(err => {
-        //     console.log(err);
-        // });
+        
     }
     function close(){
         setCaption('');

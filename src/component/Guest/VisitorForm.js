@@ -5,14 +5,15 @@ import './visitor.css'
 import { useHistory } from "react-router-dom";
 import Logo from '../../images/background.png'
 import { decodeToken, useJwt } from "react-jwt";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+
+
+import { decode as base64_decode, encode as base64_encode } from 'base-64';
 function VisitorForm() {
     /*const [temp, setTemp] = useState("");
     */
-    const [word, setWord] = useState([]);
-    const [qrCode, setQrCode] = useState("");
 
     const [vName, setvName] = useState("");
     const [vEmail, setvEmail] = useState("");
@@ -40,6 +41,9 @@ function VisitorForm() {
 
     const [visible, setVisible] = useState(false);
 
+
+
+
     let history = useHistory();
     // Changing the URL only when the user
     // changes the input
@@ -47,6 +51,76 @@ function VisitorForm() {
     // Updating the input word when user
     // click on the generate button
 
+    //testing
+    const [visible2, setVisible2] = useState(false);
+    const [word, setWord] = useState("");
+    const [qrCode, setQrCode] = useState("");
+    
+    useEffect(() => {
+        setQrCode
+            (`http://api.qrserver.com/v1/create-qr-code/?data=${JSON.stringify(word)}`);
+    }, [JSON.stringify(word)]);
+
+    const location = useLocation();
+
+    const useQueryString = () => {
+        const location = useLocation();
+        return new URLSearchParams(location.search);
+    }
+    const queryString = useQueryString();
+    const randomNumber = Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000;
+    const [referenceNumber, setNum] = useState(randomNumber.toString());
+
+    function randomNumberInRange(min, max) {
+        // 👇️ get number between min (inclusive) and max (inclusive)
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const click = () => {
+        setNum(randomNumberInRange(1000000, 9999999));
+    };
+
+    function toQrCode(){
+        const data = {
+            fullName: vName,
+            emailV: vEmail,
+            address: vAddress,
+            personVisit: vHomeowner,
+            vHPhoneNumber: vHPhoneNumber,
+            vHEmail: vHEmail,
+            homeOwnerAddress: vHaddress,
+            purpose: vPurpose,
+            refNumber: referenceNumber,
+        };
+        console.log(data);
+        const isValid = validate();
+        if(isValid){
+            setVisible2(!visible2)
+        console.log(referenceNumber);
+        let encoded = base64_encode(`${referenceNumber}`);
+        console.log(encoded)
+        setWord(`http://localhost:3000/Thankyou/?refNum=${encoded}`);
+            axios.post('addVisitor', data).then(res => {
+                console.log(res);
+                console.log(word);
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
+                //     confirmButtonText: 'Ok',
+                // }).then((result) => {
+                //     /* Read more about isConfirmed, isDenied below */
+                //     if (result.isConfirmed) {
+                //         history.push("/");
+                //     }
+                // })
+
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }
+
+    //
     const validate = () => {
         let isValid = true;
         let nError, eError, aError, hError, vaError, vheError, vhpError, pError, checkedError = "";
@@ -183,40 +257,16 @@ function VisitorForm() {
     }
 
     function handleSubmit(e) {
-
-        e.preventDefault();
-        const data = {
-            fullName: vName,
-            emailV: vEmail,
-            address: vAddress,
-            personVisit: vHomeowner,
-            homeOwnerAddress: vHaddress,
-            vHPhoneNumber: vHPhoneNumber,
-            vHEmail: vHEmail,
-            purpose: vPurpose,
-        };
-        const isValid = validate();
-        if (isValid) {
-            axios.post('addVisitor', data).then(res => {
-                console.log(res);
-                console.log(word);
-                Swal.fire({
-                    icon: 'success',
-                    title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        history.push("/");
-                    }
-                })
-
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-
-
+        Swal.fire({
+                icon: 'success',
+                title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    history.push("/");
+                }
+            })
     }
     const isChecked = () => {
         setChecked(true);
@@ -407,7 +457,28 @@ function VisitorForm() {
                         </div>
                     </form>
                     <div className="visitor_input-field">
-                        <input type="submit" value='SUBMIT' className="visitor_submitBtn" onClick={handleSubmit} />
+                        {/*testing */}
+                        <input type="submit" value='SUBMIT' className="visitor_submitBtn" onClick={toQrCode} />
+                        <CModal scrollable visible={visible2} onClose={() => setVisible2(false)}>
+                            <CModalHeader>
+                                <CModalTitle>Terms and Conditions</CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+                                <h2>Visitors Digital Pass</h2>
+                                <div className="output-box">
+                                    <img src={qrCode} alt="" />
+                                    <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
+                                    <a href={qrCode} download="QRCode">
+                                        <button type="button">Download</button>
+                                        <button type="button" >Ok</button>
+                                    </a>
+                                </div>
+                            </CModalBody>
+                            <CModalFooter>
+                                <CButton color="success" onClick={close}>Agree</CButton>
+                            </CModalFooter>
+                        </CModal>
+                        {/*testing */}
                     </div>
 
                 </div>
