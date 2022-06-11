@@ -38,19 +38,12 @@ function Visitor() {
         { name: "Email", field: "emailV", sortable: true },
         { name: "Address", field: "address", sortable: true },
         { name: "Person to Visit", field: "personVisit", sortable: true },
+        { name: "Homeowner's Contact Number", field: "contactHomeOwner", sortable: true },
+        { name: "Homeowner's Email", field: "emailHomeOwner", sortable: true },
         { name: "Homeowner's Address", field: "homeOwnerAddress", sortable: true },
         { name: "Purpose", field: "purpose", sortable: true },
         { name: "Timestamp", field: "Timestamp", sortable: false },
-    ];
-    const pheaders = [
-        { name: "Status", field: "rPending", sortable: true },
-        { name: "Full Name", field: "fullName", sortable: true },
-        { name: "Email", field: "emailV", sortable: true },
-        { name: "Address", field: "address", sortable: true },
-        { name: "Person to Visit", field: "personVisit", sortable: true },
-        { name: "Homeowner's Address", field: "homeOwnerAddress", sortable: true },
-        { name: "Purpose", field: "purpose", sortable: true },
-        { name: "Timestamp", field: "Timestamp", sortable: false },
+        { name: "Reference Number", field: "ReferenceNumber", sortable: true },
     ];
     const current = new Date();
     const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
@@ -92,55 +85,28 @@ function Visitor() {
         fetchPosts();
     }, []);
 
-    const pvisitorD = useMemo(() => {
-        let visitor = visitorData;
-    
-        if (searchP) {
-            visitor = visitor.filter(
-            (acc) =>
-            acc.fullName.toLowerCase().includes(search.toLowerCase()) ||
-            acc.emailV.toLowerCase().includes(search.toLowerCase()) ||
-            acc.address.toLowerCase().includes(search.toLowerCase()) ||
-            acc.personVisit.toLowerCase().includes(search.toLowerCase()) ||
-            acc.homeOwnerAddress.toLowerCase().includes(search.toLowerCase()) ||
-            acc.purpose.toLowerCase().includes(search.toLowerCase())
-          );
-        }
-    
-        setTotalItemsPending(visitor.length);
-        console.log(visitor.length);
-        if (sortingPending.field) {
-          const reversed = sortingPending.order === "asc" ? 1 : -1;
-          visitor = visitor.sort(
-            (a, b) =>
-              reversed *
-              a[sortingPending.field].localeCompare(b[sortingPending.field])
-          );
-        }
-        return visitor.slice(
-          (currentPagePending - 1) * item_per_page,
-          (currentPagePending - 1) * item_per_page + item_per_page
-        );
-      }, [pendingVisitor, searchP, sortingPending, currentPagePending]);
-
 
     const visitorD = useMemo(() => {
         let visitor = visitorData;
         if (search) {
             visitor = visitor.filter(
-                acc =>
-                    acc.fullName.toLowerCase().includes(search.toLowerCase()) ||
-                    acc.emailV.toLowerCase().includes(search.toLowerCase()) ||
-                    acc.address.toLowerCase().includes(search.toLowerCase()) ||
-                    acc.personVisit.toLowerCase().includes(search.toLowerCase()) ||
-                    acc.homeOwnerAddress.toLowerCase().includes(search.toLowerCase()) ||
-                    acc.purpose.toLowerCase().includes(search.toLowerCase())
-            )
-        }
+              (acc) =>
+                acc.fullName.toLowerCase().includes(search.toLowerCase()) ||
+                acc.emailV.toLowerCase().includes(search.toLowerCase()) ||
+                acc.address.toLowerCase().includes(search.toLowerCase()) ||
+                acc.personVisit.toLowerCase().includes(search.toLowerCase()) ||
+                acc.contactHomeOwner.toLowerCase().includes(search.toLowerCase()) ||
+                acc.emailHomeOwner.toLowerCase().includes(search.toLowerCase()) ||
+                acc.homeOwnerAddress.toLowerCase().includes(search.toLowerCase()) ||
+                acc.purpose.toLowerCase().includes(search.toLowerCase())
+            );
+          }
         setTotalItems(visitor.length);
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
-            visitor = visitor.sort((a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field]));
+            visitor = visitor.sort(
+                (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+              );
         }
         return visitor.slice(
             (currentPage - 1) * item_per_page,
@@ -158,45 +124,6 @@ function Visitor() {
     else {
         return (
             <div className="accounts-container">
-                <div className="card-header">
-                    <h3>Pending Visitors</h3>
-                </div>
-                <div className="vis_inputs">
-                    <Search
-                        onSearch={(val) => {
-                            setSearchP(val);
-                            setCurrentPagePending(1);
-                        }}
-                    />
-
-                </div>
-                <form>
-                    <Table striped bordered hover responsive className="accounts_table">
-                        <TableHeader
-                    headers={pheaders}
-                    onSorting={(field, order) => setSortingPending({ field, order })}
-                  />
-                        <tbody>
-                            {/* {preserveD.map((res) => (
-                      <Fragment key={res?._id}>
-                        <ReservationPending
-                          key={res._id}
-                          res={res}
-                          handleAcceptDecline={handleAcceptDecline}
-                        />
-                      </Fragment>
-                    ))} */}
-                        </tbody>
-                    </Table>
-                    <div className="acc_paginationBtns">
-                        {/* <Pagination
-                    total={totalItemsPending}
-                    itemsPerPage={item_per_page}
-                    currentPage={currentPagePending}
-                    onPageChange={(page) => setCurrentPagePending(page)}
-                  /> */}
-                    </div>
-                </form>
                 <div className="card-header">
                     <h3>Visitor History</h3>
                 </div>

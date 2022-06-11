@@ -151,30 +151,16 @@ export default class NavbarApp extends Component {
             }
             else if (decodedToken.role === "security") {
                 return (
-                    <nav className="user_nav">
-                        <div className="n_wrapper">
-                            <div className="n_logo">
-                                <img className="logo_pic" src={logo} alt='logo' />
-                                <a href="#">VILLBOARD</a>
-                            </div>
-                            <input type="radio" name="slider" id="menu-btn" />
-                            <input type="radio" name="slider" id="close-btn" />
-                            <ul className="nav-links">
-                                <label for="close-btn" className="btn close-btn"><i className="fas fa-times"></i></label>
-                                <li><a href="/">Home</a></li>
-                                <li>
-                                    <a href="#" className="n_desktop-item">Hello, {decodedToken.firstName}</a>
-                                    <input type="checkbox" id="showDrop" />
-                                    <label for="showDrop" className="n_mobile-item">Hello, {decodedToken.firstName}</label>
-                                    <ul className="n_drop-menu">
-                                        <li><a href="/Profile">Profile</a></li>
-                                        <li><Link to="/" onClick={this.logout} className="btn_logout">Logout</Link></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <label for="menu-btn" className="btn menu-btn"><i className="fas fa-bars"></i></label>
-                        </div>
-                    </nav>
+                    <Navbar collapseOnSelect expand="lg" className='color-navAdmin' variant="dark">
+
+                        <Navbar.Brand href="#home" className='brand'><img src={logo} alt='logo' /></Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="justify-content-end" style={{ width: "95%" }}>
+                                <Nav.Link className="nav-links1" href="/" onClick={this.logout}><p>Logout</p></Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
                 )
             }
         }

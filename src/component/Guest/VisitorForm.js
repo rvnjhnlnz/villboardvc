@@ -86,11 +86,11 @@ function VisitorForm() {
             emailV: vEmail,
             address: vAddress,
             personVisit: vHomeowner,
-            vHPhoneNumber: vHPhoneNumber,
-            vHEmail: vHEmail,
+            contactHomeOwner: vHPhoneNumber,
+            emailHomeOwner: vHEmail,
             homeOwnerAddress: vHaddress,
             purpose: vPurpose,
-            refNumber: referenceNumber,
+            referenceNumber: referenceNumber,
         };
         console.log(data);
         const isValid = validate();
@@ -118,8 +118,20 @@ function VisitorForm() {
                 console.log(err);
             });
         }
+                
     }
-
+    function thankyou(){
+        Swal.fire({
+            icon: 'success',
+            title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                history.push("/");
+            }
+        })
+    }
     //
     const validate = () => {
         let isValid = true;
@@ -330,7 +342,7 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value.replace(/[^A-Za-z\s]+/gi, ""))} />
+                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value.replace(/[^A-Za-z0-9\s]+/gi, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHomeowner_errormessage}
                             </div>
@@ -461,21 +473,19 @@ function VisitorForm() {
                         <input type="submit" value='SUBMIT' className="visitor_submitBtn" onClick={toQrCode} />
                         <CModal scrollable visible={visible2} onClose={() => setVisible2(false)}>
                             <CModalHeader>
-                                <CModalTitle>Terms and Conditions</CModalTitle>
+                                <CModalTitle>Visitors Digital Pass</CModalTitle>
                             </CModalHeader>
                             <CModalBody>
-                                <h2>Visitors Digital Pass</h2>
                                 <div className="output-box">
                                     <img src={qrCode} alt="" />
                                     <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
                                     <a href={qrCode} download="QRCode">
                                         <button type="button">Download</button>
-                                        <button type="button" >Ok</button>
                                     </a>
                                 </div>
                             </CModalBody>
                             <CModalFooter>
-                                <CButton color="success" onClick={close}>Agree</CButton>
+                                <CButton color="success" onClick={thankyou}>Agree</CButton>
                             </CModalFooter>
                         </CModal>
                         {/*testing */}

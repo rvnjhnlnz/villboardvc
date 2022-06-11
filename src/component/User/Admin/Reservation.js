@@ -169,7 +169,7 @@ function Reservation() {
     return reserve.slice(
       (currentPage - 1) * item_per_page,
       (currentPage - 1) * item_per_page + item_per_page
-    ).reverse();
+    );
   }, [reservation, currentPage, search, sorting]);
 
   const handleAcceptDecline = (res, header, reason) => {

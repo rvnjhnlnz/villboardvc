@@ -10,10 +10,44 @@ import TableHeader from '../Header'
 // import Modal from 'react-modal'
 import Table from 'react-bootstrap/Table'
 import TransactionPending from './TransactionPending';
+import ReactExport from 'react-data-export'
+import moment from 'moment'
 
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 function Transactions() {
     const [transactionData, setTransactionData] = useState([]);
     const [pendingTrans, setPendingTrans] = useState([])
+
+    const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+    const Dataset = [{
+        columns: [
+            { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Reference Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Type of Transaction", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Proof of Payment", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+        ],
+        data: transactionData.map((data) => [
+            {value: data.pPending, style: {font: {sz: "14"}}},
+            {value: data.uLastName, style: {font: {sz: "14"}}},
+            {value: data.uFirstName, style: {font: {sz: "14"}}},
+            {value: data.uAddress, style: {font: {sz: "14"}}},
+            {value: data.uPhoneNumber, style: {font: {sz: "14"}}},
+            {value: data.refNumber, style: {font: {sz: "14"}}},
+            {value: data.typeTransaction, style: {font: {sz: "14"}}},
+            {value: data.photoUrl, style: {font: {sz: "14"}}},
+            {value: moment(data.updatedAt).format('lll'), style: {font: {sz: "14"}}},
+        ])
+    }
+    ]
+
     useEffect(() => {
         const headers = {
             'Content-Type': 'application/json',
@@ -32,12 +66,10 @@ function Transactions() {
                         (acc) => acc.pPending.toLowerCase() !== "pending"
                     );
                     setTransactionData(notpending);
-                    console.log(notpending);
                     const pending = res.data.filter(
                         (acc) => acc.pPending.toLowerCase() === "pending"
                     );
                     setPendingTrans(pending);
-                    
                 })
                 .catch((err) => {
                     console.log("AXIOS ERROR: ", err);
@@ -48,6 +80,7 @@ function Transactions() {
 
     // const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [totalItems, setTotalItems] = useState(0);
+    const [totalItemsPending, setTotalItemsPending] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPagePending, setCurrentPagePending] = useState(1)
     const [search, setSearch] = useState("");
@@ -56,7 +89,7 @@ function Transactions() {
     // const approve = "APPROVED"
     const [sorting, setSorting] = useState({ field: "", order: "" });
     // const [pictureModal, setpictureModal] = useState(false);
-    const item_per_page = 10;
+    const item_per_page = 6;
     const pheaders = [
         { name: "Status", field: "pPending", sortable: true },
         { name: "Last Name", field: "uLastName", sortable: true },
@@ -66,6 +99,7 @@ function Transactions() {
         { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
+        { name: "Timestamp", field: "updatedAt", sortable: false },
         { name: "Actions", field: "", sortable: false },
     ];
     const headers = [
@@ -77,6 +111,7 @@ function Transactions() {
         { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: true },
         { name: "Proof of Payment", field: "photoUrl", sortable: false },
+        { name: "Timestamp", field: "updatedAt", sortable: false },
     ];
     const transactionDataDisc = useMemo(() => {
         let computedTr = transactionData;
@@ -131,7 +166,7 @@ function Transactions() {
                     tr.typeTransaction.toLowerCase().includes(searchP.toLowerCase())
             )
         }
-        setTotalItems(computedTr.length);
+        setTotalItemsPending(computedTr.length);
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
             computedTr = computedTr.sort((a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field]));
@@ -200,12 +235,13 @@ function Transactions() {
                     </Table>
                     <div className="acc_paginationBtns">
                         <PaginationCom
-                            total={totalItems}
+                            total={totalItemsPending}
                             itemsPerPage={item_per_page}
-                            currentPage={currentPage}
-                            onPageChange={page => setCurrentPage(page)}
+                            currentPage={currentPagePending}
+                            onPageChange={page => setCurrentPagePending(page)}
                         />
-                    </div>
+                    </div>   
+                      
                 </form>
                 <div className="card-header">
                     <h3>Transactions History</h3>
@@ -215,7 +251,9 @@ function Transactions() {
                         setSearch(val);
                         setCurrentPage(1);
                     }} />
+                    
                 </div>
+                
                 <form>
 
                     <Table striped bordered hover responsive className='accounts_table'>
@@ -230,13 +268,20 @@ function Transactions() {
                                     <td>{tr.uPhoneNumber}</td>
                                     <td>{tr.refNumber}</td>
                                     <td>{tr.typeTransaction}</td>
-                                    <td><a href={tr.photoUrl}>Click to Download</a>
-                                    </td>
+                                    <td><a href={tr.photoUrl}>Click to Download</a></td>
+                                    <td>{moment(tr.updatedAt).format('lll')}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
-
+                    <div className="acc_paginationBtns">
+                        <PaginationCom
+                            total={totalItems}
+                            itemsPerPage={item_per_page}
+                            currentPage={currentPage}
+                            onPageChange={page => setCurrentPage(page)}
+                        />
+                    </div>               
                 </form>
             </div>
         );

@@ -61,7 +61,7 @@ function Register() {
             console.log('MI');
         }
         else if (typeof middleInitial !== "undefined") {
-            var pattern = new RegExp(/^[a-zA-Z]{0,3}$/);
+            var pattern = new RegExp(/^[a-zA-Z0-9]{0,3}$/);
             if (!pattern.test(middleInitial)) {
                 mnError = "Please enter your first letter of your middle name (Maximum 2 letters)"
                 isValid = false;

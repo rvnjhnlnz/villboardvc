@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-
+import moment from 'moment'
 const TransactionPending = ({ tr, handleAcceptDecline }) => {
 
     const [visible, setVisible] = useState(false);
@@ -18,6 +18,7 @@ const TransactionPending = ({ tr, handleAcceptDecline }) => {
             <td>{tr.uPhoneNumber}</td>
             <td>{tr.refNumber}</td>
             <td>{tr.typeTransaction}</td>
+            <td>{moment(tr.updatedAt).format('lll')}</td>
             <td><a href={tr.photoUrl}>Click to Download</a>
             </td>
             <td>
@@ -35,7 +36,7 @@ const TransactionPending = ({ tr, handleAcceptDecline }) => {
                     </CModalHeader>
                     <CModalBody>{deets.content}</CModalBody>
                     <CModalFooter>
-                        <CButton color="secondary" onClick={() => handleAcceptDecline(tr, deets.header)}>
+                        <CButton color="secondary" onClick={() => setVisible(false)}>
                             No
                         </CButton>
                         <CButton style={{ backgroundColor: '#04AA6D', borderColor: '#04AA6D' }} onClick={(e) => { handleAcceptDecline(tr, deets.header) }}>Yes</CButton>

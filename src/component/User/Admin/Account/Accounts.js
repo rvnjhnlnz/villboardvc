@@ -10,10 +10,12 @@ import AccountEditable from "./AccountEditable";
 import Pagination from "../PaginationCom";
 import Search from "../Search";
 import ReactExport from 'react-data-export'
+import { decodeToken } from "react-jwt";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const Accounts = () => {
+  const decodedToken = decodeToken(localStorage.getItem('token'));
   const [usersList, setUsersList] = useState([]);
   const [usersListP, setUsersListP] = useState([]);
   const [editContactId, setEditContactId] = useState(null);
@@ -27,28 +29,28 @@ const Accounts = () => {
     address: "",
   });
   const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
   const Dataset = [{
     columns: [
-        { title: "Role", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Middle Initial", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Email", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Role", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Middle Initial", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Email", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+      { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
     ],
     data: usersList.map((data) => [
-        {value: data.role, style: {font: {sz: "14"}}},
-        {value: data.lastName, style: {font: {sz: "14"}}},
-        {value: data.firstName, style: {font: {sz: "14"}}},
-        {value: data.middleInitial, style: {font: {sz: "14"}}},
-        {value: data.email, style: {font: {sz: "14"}}},
-        {value: data.phoneNumber, style: {font: {sz: "14"}}},
-        {value: data.address, style: {font: {sz: "14"}}},
+      { value: data.role, style: { font: { sz: "14" } } },
+      { value: data.lastName, style: { font: { sz: "14" } } },
+      { value: data.firstName, style: { font: { sz: "14" } } },
+      { value: data.middleInitial, style: { font: { sz: "14" } } },
+      { value: data.email, style: { font: { sz: "14" } } },
+      { value: data.phoneNumber, style: { font: { sz: "14" } } },
+      { value: data.address, style: { font: { sz: "14" } } },
     ])
-}
-]
+  }
+  ]
 
   useEffect(() => {
     const headers = {
@@ -120,11 +122,17 @@ const Accounts = () => {
       email: editUserdata.email,
       phoneNumber: editUserdata.phoneNumber,
       address: editUserdata.address,
+      passowrd: editUserdata.password
     };
 
     const newEditUser = [...usersList];
     const index = usersList.findIndex((acc) => acc._id === editContactId);
     newEditUser[index] = editedUser;
+
+    var UpdateRole = {
+      email: editUserdata.email,
+      newrole: editUserdata.role,
+    };
 
     var UpdateFn = {
       email: editUserdata.email,
@@ -146,6 +154,16 @@ const Accounts = () => {
       email: editUserdata.email,
       newphonenumber: editUserdata.phoneNumber,
     };
+    console.log(UpdateRole)
+    axios
+      .post("changeRole", UpdateRole)
+      .then((res) => {
+        console.log(res);
+        setUsersList(newEditUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios
       .post("changeFirstname", UpdateFn)
       .then((res) => {
@@ -265,6 +283,7 @@ const Accounts = () => {
     { name: "First Name", field: "firstName", sortable: true },
     { name: "Middle Initial", field: "middleInitial", sortable: true },
     { name: "Email", field: "email", sortable: true },
+    //{ name: "Password", field: "password", sortable: false },
     { name: "Phone Number", field: "phoneNumber", sortable: true },
     { name: "Address", field: "address", sortable: true },
     { name: "Actions", sortable: false },
@@ -349,13 +368,13 @@ const Accounts = () => {
             setCurrentPage(1);
           }}
         />
-                {usersList.length !== 0 ? (
-                         <ExcelFile 
-                         filename= {"Accounts(" +date+")"}
-                         element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
-                             <ExcelSheet dataSet={Dataset} name="Homeowner Accounts"/>
-                         </ExcelFile>
-                    ): null}   
+        {usersList.length !== 0 ? (
+          <ExcelFile
+            filename={"Accounts(" + date + ")"}
+            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+            <ExcelSheet dataSet={Dataset} name="Homeowner Accounts" />
+          </ExcelFile>
+        ) : null}
       </div>
       <form>
         <Table striped bordered hover responsive className="accounts_table">

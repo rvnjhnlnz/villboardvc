@@ -1,4 +1,4 @@
-import React, {   useState, useEffect,useMemo } from 'react'
+import React, {   useState, useEffect,useMemo,Fragment } from 'react'
 import './Vehicle.css'
 import { decodeToken, useJwt } from "react-jwt";
 import {Redirect } from 'react-router-dom';
@@ -6,11 +6,15 @@ import TableHeader from './Header'
 import Pagination from './PaginationCom';
 import Search from './Search';
 import axios from 'axios'
-import useFullPageLoader from "../../../reducers/useFullPageLoader";
+import Table from "react-bootstrap/Table";
+import ReactExport from 'react-data-export'
+import moment from 'moment'
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 function Vehicle() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [carData, setCarData] = useState([]);
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
@@ -22,15 +26,39 @@ function Vehicle() {
         { name: "First Name", field: "cFirstName", sortable: true },
         { name: "Address", field: "cAddress", sortable: true },
         { name: "Phone Number", field: "cPhoneNumber", sortable: true },
-        { name: "Vehicle Model", field: "vehicleModel", sortable: false },
-        { name: "Plate Number", field: "plateNumber", sortable: false },
+        { name: "Vehicle Model", field: "vehicleModel", sortable: true },
+        { name: "Plate Number", field: "plateNumber", sortable: true },
+        { name: "Timestamp", field: "Timestamp", sortable: false },
     ];
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+
+    const Dataset = [{
+        columns: [
+            { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Vehicle Model", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Plate Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+        ],
+        data: carData.map((data) => [
+            { value: data.cLastName, style: { font: { sz: "14" } } },
+            { value: data.cFirstName, style: { font: { sz: "14" } } },
+            { value: data.cAddress, style: { font: { sz: "14" } } },
+            { value: data.cPhoneNumber, style: { font: { sz: "14" } } },
+            { value: data.vehicleModel, style: { font: { sz: "14" } } },
+            { value: data.plateNumber, style: { font: { sz: "14" } } },
+            { value: moment(data.updatedAt).format('lll'), style: { font: { sz: "14" } } },
+        ])
+    }
+    ];
+
     useEffect(() => {
         const fetchPets = async () => {
-            showLoader();
             axios.post('postCar')
                 .then(res => {
-                    hideLoader();
                     console.log(res);
                     setCarData(res.data);
                 }).catch(err => {
@@ -69,49 +97,56 @@ function Vehicle() {
     }
     else{
         return (
-            <div class="vehicle_main">
-                <div class="admin_recent-grid">
-                    <div class="vehicle_slots">
-                        <div class="admin_card">
-                            <div class="card-header">
-                                <h3>Vehicle Users</h3>
-                            </div>
-                            <div className="car_inputs">
-                                <Search onSearch={(val) => {
-                                    setSearch(val);
-                                    setCurrentPage(1);
-                                }} />
-                            </div>
-                            <div class="card-body">
-                                <div class="admin_table-responsive">
-                                    <table width="100%" class="vehicle_table">
-                                    <TableHeader headers={headers} onSorting={(field, order) => setSorting({ field, order })} />
-                                        <tbody>
-                                        {carD.map(car => (
-                                                <tr> 
-                                                <td>{car.cLastName}</td>
-                                                <td>{car.cFirstName}</td>
-                                                <td>{car.cAddress}</td>
-                                                <td>{car.cPhoneNumber}</td>
-                                                <td>{car.vehicleModel}</td>
-                                                <td>{car.plateNumber}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                    <div className="car_paginationBtns">
-                                        <Pagination
-                                            total={totalItems}
-                                            itemsPerPage={item_per_page}
-                                            currentPage={currentPage}
-                                            onPageChange={page => setCurrentPage(page)}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="accounts-container">
+                <div class="card-header">
+                    <h3>Car Owners</h3>
                 </div>
+                <form>
+                    <div className="vis_inputs">
+                        <Search
+                            onSearch={(val) => {
+                                setSearch(val);
+                                setCurrentPage(1);
+                            }}
+                        />
+                        {carData.length !== 0 ? (
+                            <ExcelFile
+                                filename={"Cars(" + date + ")"}
+                                element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
+                                <ExcelSheet dataSet={Dataset} name="Homeowner Cars" />
+                            </ExcelFile>
+                        ) : null}
+                    </div>
+                    <Table striped bordered hover responsive className="accounts_table">
+                        <TableHeader
+                            headers={headers}
+                            onSorting={(field, order) => setSorting({ field, order })}
+                        />
+                        <tbody>
+                            {carD.map((res) => (
+                                <Fragment key={res?._id}>
+                                    <tr>
+                                        <td>{res.cLastName}</td>
+                                        <td>{res.cFirstName}</td>
+                                        <td>{res.cAddress}</td>
+                                        <td>{res.cPhoneNumber}</td>
+                                        <td>{res.vehicleModel}</td>
+                                        <td>{res.plateNumber.toUpperCase()}</td>
+                                        <td>{moment(res.updatedAt).format('lll')}</td>
+                                    </tr>
+                                </Fragment>
+                            ))}
+                        </tbody>
+                    </Table>
+                    <div className="acc_paginationBtns">
+                        <Pagination
+                            total={totalItems}
+                            itemsPerPage={item_per_page}
+                            currentPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
+                    </div>
+                </form>
             </div>
         )
     }

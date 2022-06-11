@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Accounts.css'
+import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick, handleEditFormSubmit }) => {
-    const options = [
-        {
-          label: "Admin",
-          value: "admin",
-        },
-        {
-          label: "Homeowners",
-          value: "homeowners",
-        },
-      ];
+    const [visible, setVisible] = useState(false);
+
     return (
         <tr>
             <td>
-                {/*<select name="role" id="role" onChange={handleEditUserChange} value = {editUserData.role}>
-                    <option value="Admin">Admin</option>
+                <select name="role" id="role" onChange={handleEditUserChange} value={editUserData.role}>
+                    <option value="admin">Admin</option>
                     <option value="homeowners">Homeowner</option>
-                    <option value="Security">Security</option>
-                </select>*/}
-                <select value={editUserData.role}>
-                    {options.map((option) => (
-                        <option value={option.value}>{option.label}</option>
-                    ))}
+                    <option value="security">Security</option>
                 </select>
             </td>
             <td>
@@ -69,6 +57,39 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                 >
                 </input>
             </td>
+            {/*<td>
+                <button type='button' className='genButton' onClick={(e) => {
+                    e.preventDefault(); setVisible(true);
+                }}>Edit</button>
+                <CModal scrollable visible={visible} onClose={() => setVisible(false)}>
+                    <CModalHeader>
+                        <CModalTitle>New Password</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>
+                    <div className='output-box'>
+                        <input
+                            type="text"
+                            required="required"
+                            placeholder="Enter your current password"
+                            name="email"
+                            onChange={handleEditUserChange}
+                            value={editUserData.password}>
+                        </input>
+                        <input
+                            type="text"
+                            required="required"
+                            placeholder="Enter your new password"
+                            name="email"
+                            onChange={handleEditUserChange}
+                            value={editUserData.newPass}>
+                        </input>
+                    </div>
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton color="success" >Agree</CButton>
+                    </CModalFooter>
+                </CModal>
+            </td>*/}
             <td>
                 <input
                     type="number"

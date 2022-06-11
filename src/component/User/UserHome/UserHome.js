@@ -252,9 +252,8 @@ function UserHome() {
     }
     else if (decodedToken.role === "security") {
         return (
-            <div className="admin_home">
+            <div className="admin_home1">
                 <div>
-
                     <Suggestion />
                     <Visitor />
                 </div>

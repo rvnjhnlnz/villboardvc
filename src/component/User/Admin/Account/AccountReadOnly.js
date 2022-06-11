@@ -8,7 +8,7 @@ const AccountReadOnly = ({acc,handleEditClick,handleDeleteClick}) => {
         <td>{acc.lastName}</td>
         <td>{acc.firstName}</td>
         <td>{acc.middleInitial}</td>
-        <td>{acc.email}</td>
+        <td>{acc.email}</td> 
         <td>{acc.phoneNumber}</td>
         <td>{acc.address}</td>
         <td>

@@ -7,7 +7,7 @@
   align-items: center;
   font-family: sans-serif;
   justify-content: center;
-  background-image: linear-gradient(rgba(193, 243, 206, 0.7), rgba(169, 252, 190, 0.8)),url("../../images/background1.jpg");
+  background-image: url("../../images/background1.jpg");
   background-position: center;
   background-size: cover;
   
@@ -294,6 +294,12 @@
   margin-top: 30px;
   display: flex;
   justify-content: center;
+}
+.thankyou_c div{
+  justify-content: center;
+}
+.thankyou_c h5{
+  text-align: center;
 }
 @media only screen and (max-width: 950px) {
   .v_form {

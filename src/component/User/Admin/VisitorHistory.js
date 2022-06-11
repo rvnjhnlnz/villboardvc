@@ -8,9 +8,12 @@ const VisitorHistory = ({res}) => {
             <td>{res.emailV}</td>
             <td>{res.address}</td>
             <td>{res.personVisit}</td>
+            <td>{res.contactHomeOwner}</td>
+            <td>{res.emailHomeOwner}</td>
             <td>{res.homeOwnerAddress}</td>
             <td>{res.purpose}</td>
             <td>{moment(res.updatedAt).format('lll')}</td>
+            <td>{res.referenceNumber}</td>
         </tr>
     )
 }
