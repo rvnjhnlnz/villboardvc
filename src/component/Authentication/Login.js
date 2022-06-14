@@ -4,6 +4,7 @@ import axios from 'axios'
 import {  Redirect } from 'react-router-dom';
 import Logo from '../../images/background.png'
 import { decodeToken } from "react-jwt";
+import {Helmet} from "react-helmet";
 
 
 export default class Login extends Component {
@@ -103,6 +104,10 @@ export default class Login extends Component {
         return (
             <div>
                 <div className="l_wrapper">
+                <Helmet>
+                <meta charSet="utf-8" />
+                <title>Login | Villboard</title>
+            </Helmet>
                     <div class="l_container">
                         {error}
                         <header className = "l_logo"><img src = {Logo} alt={'logo'}/></header>

@@ -9,7 +9,7 @@ import { Redirect, Link, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { saveAs } from 'file-saver'
-
+import {Helmet} from "react-helmet";
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
 function VisitorForm() {
     /*const [temp, setTemp] = useState("");
@@ -318,6 +318,10 @@ function VisitorForm() {
     else {
         return (
             <div class="v_container">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Visitor | Villboard</title>
+            </Helmet>
                 <div>
                     <form className="v_form">
                         <header className="visitor_logo"><img src={Logo} /></header>

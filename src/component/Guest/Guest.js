@@ -8,11 +8,16 @@ import picture2 from '../../images/playground.jpg'
 import picture3 from '../../images/swimming.jpg'
 import one from '../../images/4.jpg'
 import two from '../../images/2.jpg'
+import {Helmet} from "react-helmet";
 
 function Guest() {
 
     return (
         <div class="guest_page">
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Villboard</title>
+            </Helmet>
             <header class="villa_header">
                 <div class="header-content">
                     <h3>Welcome to </h3>

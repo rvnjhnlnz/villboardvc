@@ -11,6 +11,7 @@ import Table from "react-bootstrap/Table";
 import VisitorHistory from './VisitorHistory'
 import ReactExport from 'react-data-export'
 import moment from 'moment'
+import {Helmet} from "react-helmet";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -124,6 +125,10 @@ function Visitor() {
     else {
         return (
             <div className="accounts-container">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Visitor | Villboard</title>
+            </Helmet>
                 <div className="card-header">
                     <h3>Visitor History</h3>
                 </div>

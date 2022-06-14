@@ -13,6 +13,7 @@ import ReactExport from 'react-data-export'
 import { decodeToken } from "react-jwt";
 import { CChart } from '@coreui/react-chartjs';
 import moment from 'moment'
+import {Helmet} from "react-helmet";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -415,6 +416,11 @@ const Accounts = () => {
 
   return (
     <div className="accounts-container">
+   
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Accounts | Villboard</title>
+            </Helmet>
       <div className="accounts-charts">
         <CChart
           className="chartMenu"

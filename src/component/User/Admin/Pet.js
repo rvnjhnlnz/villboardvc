@@ -11,6 +11,7 @@ import Table from "react-bootstrap/Table";
 import ReactExport from 'react-data-export'
 import moment from 'moment'
 import { CChart } from '@coreui/react-chartjs';
+import {Helmet} from "react-helmet";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -138,6 +139,10 @@ function Pet() {
     else {
         return (
             <div className="accounts-container">
+                        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Pet | Villboard</title>
+            </Helmet>
                 <div className="accounts-charts">
                     <CChart
                         className="chartMenu"

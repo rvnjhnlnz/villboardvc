@@ -10,6 +10,8 @@ import Logo from '../../images/background.png'
 import eye from '../../images/eye.png'
 import Swal from 'sweetalert2'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import {Helmet} from "react-helmet";
+        
 function Register() {
 
     const [firstName, setFirstName] = useState('');
@@ -236,6 +238,10 @@ function Register() {
     return (
         <div>
             <div className="r_wrapper">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Register | Villboard</title>
+            </Helmet>
                 <div class="r_container">
                     <header className="r_logo"><img src={Logo} /></header>
                     <form>

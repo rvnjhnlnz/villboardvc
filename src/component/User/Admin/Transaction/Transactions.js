@@ -13,6 +13,7 @@ import TransactionPending from './TransactionPending';
 import ReactExport from 'react-data-export'
 import moment from 'moment'
 import { CChart } from '@coreui/react-chartjs';
+import {Helmet} from "react-helmet";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -266,6 +267,10 @@ function Transactions() {
     else {
         return (
             <div className='accounts-container'>
+                        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Transactions | Villboard</title>
+            </Helmet>
                 <div className="accounts-charts">
                     <CChart
                         className="chartMenu"

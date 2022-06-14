@@ -73,7 +73,7 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-      <HttpsRedirect>
+       <HttpsRedirect>
         <Navbar user={this.state.user} setUser={this.setUser} />
         <Switch>
           <Route path='/' exact component={() => <Home user={this.state.user} />} />

@@ -17,7 +17,7 @@ import ReservationHistory from "./ReservationHistory";
 
 import { CChart } from '@coreui/react-chartjs';
 import ReactExport from 'react-data-export'
-
+import {Helmet} from "react-helmet";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -266,6 +266,11 @@ function Reservation() {
   } else {
     return (
       <div className="accounts-container">
+
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Reservation | Villboard</title>
+            </Helmet>
       <div className="accounts-charts">
         <CChart
           className="chartMenu"

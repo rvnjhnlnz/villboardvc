@@ -14,6 +14,7 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CForm, CFormTextarea, CFormInput } from '@coreui/react';
 import { useHistory } from "react-router-dom";
+import {Helmet} from "react-helmet";
 function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
@@ -186,6 +187,10 @@ function UserHome() {
     if (decodedToken.role === "admin") {
         return (
             <div className="admin_home">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Admin | Villboard</title>
+            </Helmet>
                 <div className="home_feed">
                     <div className="home_fHeader">
                         <select className="form-control1" onChange={(e) => handleFilter(e)}>
@@ -245,9 +250,14 @@ function UserHome() {
     else if (decodedToken.role === "homeowners") {
         return (
             <div className='v_container'>
+            
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Homeowner | Villboard</title>
+            </Helmet>
             <CModal size="lg" alignment="center" visible={visible1}>
                 <CModalHeader closeButton = {false}>
-                    <CModalTitle>Visitors</CModalTitle>
+                    <CModalTitle>Homeowner</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
                     <div>
@@ -265,6 +275,10 @@ function UserHome() {
     else if (decodedToken.role === "security") {
         return (
             <div className="admin_home1">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Security | Villboard</title>
+            </Helmet>
                 <div>
                     <Suggestion />
                     <Visitor />
