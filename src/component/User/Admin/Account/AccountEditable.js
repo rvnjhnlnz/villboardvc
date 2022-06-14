@@ -112,6 +112,7 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                 >
                 </input>
             </td>
+            <td>-</td>
             <td>
                 <button type="submit" className='genButton' onClick={handleEditFormSubmit}>Save</button>
                 <button type="submit" className='genButton' onClick={handleCancelClick}>Cancel</button>

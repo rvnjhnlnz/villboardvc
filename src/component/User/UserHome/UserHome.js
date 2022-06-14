@@ -13,6 +13,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CForm, CFormTextarea, CFormInput } from '@coreui/react';
+import { useHistory } from "react-router-dom";
 function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
@@ -25,7 +26,7 @@ function UserHome() {
     // const [email, setEmail] = useState(decodedToken.email);
 
     const [visible, setVisible] = useState(false)
-
+    
     const email = decodedToken.email;
 
     const [postFilter, setPostFilter] = useState('');
@@ -103,12 +104,12 @@ function UserHome() {
         fd.append('postPicture', photoUrl);
         fd.append('email', email)
 
-        
+
         const isValid = validate();
-        
+
         if (isValid) {
             setVisible(false);
-            
+
             axios.post('addPost', fd).then(res => {
                 console.log('successfull');
                 console.log(res);
@@ -117,27 +118,35 @@ function UserHome() {
                     title: 'Your post is been saved',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
             }).catch(err => {
                 console.log(err);
             });
             setCaption('');
             setphotoUrl(null);
             caption_Seterrormessage('');
-            
+
         }
-        
+
     }
-    function close(){
+    function close() {
         setCaption('');
-            setphotoUrl(null);
-            caption_Seterrormessage('');
-            photoUrl_Seterrormessage('');
-            setVisible(false);
+        setphotoUrl(null);
+        caption_Seterrormessage('');
+        photoUrl_Seterrormessage('');
+        setVisible(false);
     }
     function handleFilter(e) {
         console.log(e.target.value);
         setPostFilter(e.target.value);
+    }
+
+    const [visible1, setVisible1] = useState(true);
+    let history = useHistory();
+    function thankyou(){
+        setVisible1(false);
+        localStorage.clear();
+        history.push("/");
     }
     const displayPosts = posts.filter((val) => {
 
@@ -149,7 +158,7 @@ function UserHome() {
     }).reverse().map((obj) => {
         return <div className="home_post" key={obj._id}>
             <div className="home_avatar">
-                <img src={avatar} alt='Avatar' />
+                <img src={decodedToken.photoUrlProfile} alt='Avatar' />
             </div>
             <div className="home_pbody">
                 <div className="home_pheader">
@@ -208,7 +217,7 @@ function UserHome() {
                                                 <option value="Events">Events</option>
                                                 <option value="Announcement">Announcement</option>
                                             </select>
-                                            
+
                                             <label className="upload_label">Category</label>
                                         </div>
                                         Upload Image:
@@ -235,18 +244,21 @@ function UserHome() {
     }
     else if (decodedToken.role === "homeowners") {
         return (
-            <div className="admin_home">
-                <div className="home_feed">
-                    <div className="home_fHeader">
-                        <select className="form-control1" onChange={(e) => handleFilter(e)}>
-                            <option value="">All Posts</option>
-                            <option value="Events">Events</option>
-                            <option value="Annoucements">Announcements</option>
-                        </select>
+            <div className='v_container'>
+            <CModal size="lg" alignment="center" visible={visible1}>
+                <CModalHeader closeButton = {false}>
+                    <CModalTitle>Visitors</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <div>
+                        <h2>Hi {decodedToken.firstName}, Please install the application  to use it's features. Thank you.</h2>
                     </div>
-                    {displayPosts}
-                </div>
-                <WhatsHappening />
+
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="success" onClick={thankyou} >Close</CButton>
+                </CModalFooter>
+            </CModal>
             </div>
         )
     }

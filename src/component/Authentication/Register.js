@@ -21,7 +21,7 @@ function Register() {
     const [address, setaddress] = useState('');
     const [aError, setaError] = useState('');
     const [phoneNumber, setphoneNumber] = useState('');
-    const [pnError, setpnError] = useState('');
+    const [pnError, setpnError] = useState('Enter a phone starts with 09');
     const [email, setemail] = useState('');
     const [eError, seteError] = useState('');
     const [password, setpassword] = useState('');
@@ -29,7 +29,7 @@ function Register() {
     const [confirmPass, setconfirmPass] = useState('');
     const [cpError, setcpError] = useState('');
     const [photo, setPhoto] = useState(null);
-    const [photoError, setphotoError] = useState('');
+    const [photoError, setphotoError] = useState('Upload a file type(.jpg, .png, .jpeg)');
     const [checkedError, setcheckedError] = useState('');
     const [checked, setchecked] = useState(false);
     const [rModal, setrModal] = useState(false);
@@ -45,105 +45,89 @@ function Register() {
         if (!firstName) {
             fnError = "Please enter your First Name"
             isValid = false;
-            console.log('FN');
         }
         else if (typeof firstName !== "undefined") {
             var pattern = new RegExp(/[A-Za-z]+/);
             if (!pattern.test(firstName)) {
                 fnError = "Please enter valid first name"
                 isValid = false;
-                console.log('fn1')
             }
         }
         if (!middleInitial) {
             mnError = "Please enter your Middle Initial"
             isValid = false;
-            console.log('MI');
         }
         else if (typeof middleInitial !== "undefined") {
             var pattern = new RegExp(/^[a-zA-Z0-9]{0,3}$/);
             if (!pattern.test(middleInitial)) {
                 mnError = "Please enter your first letter of your middle name (Maximum 2 letters)"
                 isValid = false;
-                console.log('mn1')
             }
         }
         if (!lastName) {
             lnError = "Please enter your Last Name"
             isValid = false;
-            console.log('LN');
         }
         else if (typeof lastName !== "undefined") {
             var pattern = new RegExp(/[A-Za-z]+/);
             if (!pattern.test(lastName)) {
                 lnError = "Please enter valid last name"
                 isValid = false;
-                console.log('ln1')
             }
         }
         if (!address) {
             aError = "Please enter your Home Address"
             isValid = false;
-            console.log('HA');
         }
         else if (typeof address !== "undefined") {
             var pattern = new RegExp(/^[A-Za-z0-9,. _]*[A-Za-z0-9,.][A-Za-z0-9,. _]*$/);
             if (!pattern.test(address)) {
                 aError = "Please enter valid address"
                 isValid = false;
-                console.log('ha1')
             }
         }
         if (!phoneNumber) {
-            pnError = "Please enter your Phone Number (Starts with 09 or +639)"
+            pnError = "Please enter your Phone Number (Starts with 09)"
             isValid = false;
-            console.log('PN');
         }
         else if (typeof phoneNumber !== "undefined") {
-            var pattern = new RegExp(/^(09|\+639)\d{9}$/);
+            var pattern = new RegExp(/^(09)\d{9}$/);
             if (!pattern.test(phoneNumber)) {
-                pnError = "Please enter valid phone number consists of 11 digits (Starts with 09 or +639)"
+                pnError = "Please enter valid phone number consists of 11 digits (Starts with 09)"
                 isValid = false;
-                console.log('pn1')
             }
         }
         if (!email) {
             eError = "Please enter your email Address"
             isValid = false;
-            console.log('E')
         }
         else if (typeof email !== "undefined") {
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(email)) {
                 eError = "Please enter valid email address."
                 isValid = false;
-                console.log('e1')
             }
         }
         if (!password) {
             pError = "Please enter your password"
             isValid = false;
-            console.log('P')
         }
         else if (typeof password !== "undefined") {
             var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
             if (!pattern.test(password)) {
                 pError = "Minimum 8 characters, at least 1 letter, and 1 number:"
                 isValid = false;
-                console.log('e1')
             }
         }
         if (!confirmPass) {
             cpError = "Please enter your password"
             isValid = false;
-            console.log('P')
         }
         else if (typeof password !== "undefined") {
             var pattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/);
             if (!pattern.test(password)) {
                 cpError = "Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number:"
                 isValid = false;
-                console.log('e1')
             }
         }
         if (password !== confirmPass) {
@@ -151,7 +135,7 @@ function Register() {
             isValid = false;
         }
         if(photo === null){
-            photoerror = "Please upload image file. "
+            photoerror = "Please upload image file. ex: .jpeg .png .jpg"
             isValid = false;
         }
         if (!checked) {
@@ -185,16 +169,21 @@ function Register() {
         settermsChecked(false);
     }
     function handleFile(e) {
-        const filename = e.target.files[0].name;
-        var pattern = new RegExp(/(\.[^.]*)$/);
-        const extension = filename.split(pattern);
-        console.log(extension)
-        if (extension[1] == ".jpg" || extension[1] == ".png" || extension[1] == ".jpeg") {
-            setPhoto(e.target.files[0]);
-            setphotoError('');
-        }
-        else {
+        if(e.target.files[0] == null){
             setphotoError("Please upload image file. ex: .jpeg .png .jpg ")
+        }
+        else if(e.target.files[0] !== null){
+            const filename = e.target.files[0].name;
+            var pattern = new RegExp(/(\.[^.]*)$/);
+            const extension = filename.split(pattern);
+            console.log(extension)
+            if (extension[1] == ".jpg" || extension[1] == ".png" || extension[1] == ".jpeg") {
+                setPhoto(e.target.files[0]);
+                setphotoError('');
+            }
+            else {
+                setphotoError("Please upload image file. ex: .jpeg .png .jpg ")
+            }
         }
     }
     const togglePasswordVisiblity = () => {
@@ -225,7 +214,6 @@ function Register() {
         fd.append('password', password);
         if (isValid) {
             axios.post('addUser', fd).then(res => {
-                console.log(res.data);
                 Swal.fire({
                     icon: 'success',
                     title: "Register Successful! \n Please wait for the admin's approval",
@@ -243,7 +231,7 @@ function Register() {
         
     }
     const isChecked = () => {
-        setchecked(true);
+        setchecked(!checked);
     }
     return (
         <div>

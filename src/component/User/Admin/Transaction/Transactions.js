@@ -12,6 +12,7 @@ import Table from 'react-bootstrap/Table'
 import TransactionPending from './TransactionPending';
 import ReactExport from 'react-data-export'
 import moment from 'moment'
+import { CChart } from '@coreui/react-chartjs';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -20,7 +21,7 @@ function Transactions() {
     const [pendingTrans, setPendingTrans] = useState([])
 
     const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
 
     const Dataset = [{
         columns: [
@@ -35,15 +36,15 @@ function Transactions() {
             { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
         ],
         data: transactionData.map((data) => [
-            {value: data.pPending, style: {font: {sz: "14"}}},
-            {value: data.uLastName, style: {font: {sz: "14"}}},
-            {value: data.uFirstName, style: {font: {sz: "14"}}},
-            {value: data.uAddress, style: {font: {sz: "14"}}},
-            {value: data.uPhoneNumber, style: {font: {sz: "14"}}},
-            {value: data.refNumber, style: {font: {sz: "14"}}},
-            {value: data.typeTransaction, style: {font: {sz: "14"}}},
-            {value: data.photoUrl, style: {font: {sz: "14"}}},
-            {value: moment(data.updatedAt).format('lll'), style: {font: {sz: "14"}}},
+            { value: data.pPending, style: { font: { sz: "14" } } },
+            { value: data.uLastName, style: { font: { sz: "14" } } },
+            { value: data.uFirstName, style: { font: { sz: "14" } } },
+            { value: data.uAddress, style: { font: { sz: "14" } } },
+            { value: data.uPhoneNumber, style: { font: { sz: "14" } } },
+            { value: data.refNumber, style: { font: { sz: "14" } } },
+            { value: data.typeTransaction, style: { font: { sz: "14" } } },
+            { value: data.photoUrl, style: { font: { sz: "14" } } },
+            { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
         ])
     }
     ]
@@ -76,6 +77,7 @@ function Transactions() {
                 })
         }
         fetchTrans();
+        chart();
     }, []);
 
     // const [loader, showLoader, hideLoader] = useFullPageLoader();
@@ -98,8 +100,8 @@ function Transactions() {
         { name: "Phone Number", field: "uPhoneNumber", sortable: true },
         { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: false },
-        { name: "Proof of Payment", field: "photoUrl", sortable: false },
         { name: "Timestamp", field: "updatedAt", sortable: false },
+        { name: "Proof of Payment", field: "photoUrl", sortable: false },
         { name: "Actions", field: "", sortable: false },
     ];
     const headers = [
@@ -110,8 +112,9 @@ function Transactions() {
         { name: "Phone Number", field: "uPhoneNumber", sortable: true },
         { name: "Reference Number", field: "refNumber", sortable: false },
         { name: "Type of Transaction", field: "typeTransaction", sortable: true },
-        { name: "Proof of Payment", field: "photoUrl", sortable: false },
+        { name: "Reason", field: "reasonNote", sortable: false },
         { name: "Timestamp", field: "updatedAt", sortable: false },
+        { name: "Proof of Payment", field: "photoUrl", sortable: false },
     ];
     const transactionDataDisc = useMemo(() => {
         let computedTr = transactionData;
@@ -180,31 +183,79 @@ function Transactions() {
     const handleAcceptDecline = (res, header, reason) => {
         // event.preventDefault();
         const transPending = [...pendingTrans]; //pedning
-    
+
         const index = pendingTrans.findIndex((ac) => ac._id === res._id);
         var verdict = "declined";
-    
+
         if (header === "Confirm Accept") verdict = "approved";
         else verdict = "declined";
-    
-        axios
-          .post("approveDeclineTransaction", {
-            transItem: res,
-            verdict,
-            reason: ""
-          })
-          .then((res) => {
-            transPending.splice(index, 1);
-            setPendingTrans(transPending);
-            console.log(res.data);
-            //   if (verdict === 'approved') {
-            const transL = [...transactionData, res.data]; // existing
-            setTransactionData(transL);
-            //   }
-          })
-          .catch((err) => console.log(err));
-      };
 
+        axios
+            .post("approveDeclineTransaction", {
+                transItem: res,
+                verdict,
+                reason: reason
+            })
+            .then((res) => {
+                transPending.splice(index, 1);
+                setPendingTrans(transPending);
+                console.log(res.data);
+                //   if (verdict === 'approved') {
+                const transL = [...transactionData, res.data]; // existing
+                setTransactionData(transL);
+                //   }
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const [chartData, setChartData] = useState({});
+    const chart = () => {
+        let approveData = [];
+        let declineData = [];
+        axios
+            .post("postPayment")
+            .then(res => {
+                console.log(res);
+                for (const dataObj of res.data) {
+                    if (dataObj.pPending === 'approved') {
+                        approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                    else if (dataObj.pPending === 'declined') {
+                        declineData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                }
+                const counts1 = {};
+                approveData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                const counts2 = {};
+                declineData.forEach((x) => {
+                    counts2[x] = (counts2[x] || 0) + 1;
+                });
+                console.log(counts1);
+                console.log(counts2);
+                setChartData(
+                    {
+                        labels: Object.keys(counts1),
+                        datasets: [
+                            {
+                                label: 'Total number of Transactions Approved',
+                                backgroundColor: '#f87979',
+                                data: Object.values(counts1),
+                            },
+                            {
+                                label: 'Total number of Transactions Decline',
+                                backgroundColor: '#f5312f',
+                                data: Object.values(counts2),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        console.log(approveData, declineData);
+    };
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
@@ -215,6 +266,15 @@ function Transactions() {
     else {
         return (
             <div className='accounts-container'>
+                <div className="accounts-charts">
+                    <CChart
+                        className="chartMenu"
+                        type="bar"
+                        data={chartData}
+                        labels="months"
+                        height={80}
+                    />
+                </div>
                 <div className="card-header">
                     <h3>Pending Transactions</h3>
                 </div>
@@ -229,7 +289,7 @@ function Transactions() {
                         <TableHeader headers={pheaders} onSorting={(field, order) => setSorting({ field, order })} />
                         <tbody>
                             {pendingTransaction.map(tr => (
-                                <TransactionPending key={tr._id} tr={tr} handleAcceptDecline={handleAcceptDecline}/>
+                                <TransactionPending key={tr._id} tr={tr} handleAcceptDecline={handleAcceptDecline} />
                             ))}
                         </tbody>
                     </Table>
@@ -240,8 +300,8 @@ function Transactions() {
                             currentPage={currentPagePending}
                             onPageChange={page => setCurrentPagePending(page)}
                         />
-                    </div>   
-                      
+                    </div>
+
                 </form>
                 <div className="card-header">
                     <h3>Transactions History</h3>
@@ -251,9 +311,15 @@ function Transactions() {
                         setSearch(val);
                         setCurrentPage(1);
                     }} />
-                    
+                    {transactionData.length !== 0 ? (
+                        <ExcelFile
+                            filename={"Transaction(" + date + ")"}
+                            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+                            <ExcelSheet dataSet={Dataset} name="Homeowner Transactions" />
+                        </ExcelFile>
+                    ) : null}
                 </div>
-                
+
                 <form>
 
                     <Table striped bordered hover responsive className='accounts_table'>
@@ -268,8 +334,9 @@ function Transactions() {
                                     <td>{tr.uPhoneNumber}</td>
                                     <td>{tr.refNumber}</td>
                                     <td>{tr.typeTransaction}</td>
+                                    <td>{tr.reasonNote}</td>
+                                    <td>{moment(tr.createdAt).format('lll')}</td>
                                     <td><a href={tr.photoUrl}>Click to Download</a></td>
-                                    <td>{moment(tr.updatedAt).format('lll')}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -281,7 +348,7 @@ function Transactions() {
                             currentPage={currentPage}
                             onPageChange={page => setCurrentPage(page)}
                         />
-                    </div>               
+                    </div>
                 </form>
             </div>
         );

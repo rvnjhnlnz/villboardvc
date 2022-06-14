@@ -10,6 +10,7 @@ import useFullPageLoader from "../../../reducers/useFullPageLoader";
 import Table from "react-bootstrap/Table";
 import ReactExport from 'react-data-export'
 import moment from 'moment'
+import { CChart } from '@coreui/react-chartjs';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -44,7 +45,7 @@ function Pet() {
             { value: data.pPhoneNumber, style: { font: { sz: "14" } } },
             { value: data.petName, style: { font: { sz: "14" } } },
             { value: data.petBreed, style: { font: { sz: "14" } } },
-            { value: moment(data.updatedAt).format('lll'), style: { font: { sz: "14" } } },
+            { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
         ])
     }
     ];
@@ -71,6 +72,7 @@ function Pet() {
                 })
         };
         fetchPets();
+        chart();
     }, []);
     const petD = useMemo(() => {
         let pet = petData;
@@ -95,6 +97,38 @@ function Pet() {
             (currentPage - 1) * item_per_page + item_per_page
         );
     }, [petData, currentPage, search, sorting]);
+
+    const [chartData, setChartData] = useState({});
+    const chart = () => {
+        let petData = [];
+        axios
+            .post("postPet")
+            .then(res => {
+                console.log(res);
+                for (const dataObj of res.data) {
+                    petData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                }
+                const counts1 = {};
+                petData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                setChartData(
+                    {
+                        labels: Object.keys(counts1),
+                        datasets: [
+                            {
+                                label: 'Total number of Pets',
+                                backgroundColor: '#f87979',
+                                data: Object.values(counts1),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -104,6 +138,15 @@ function Pet() {
     else {
         return (
             <div className="accounts-container">
+                <div className="accounts-charts">
+                    <CChart
+                        className="chartMenu"
+                        type="bar"
+                        data={chartData}
+                        labels="months"
+                        height={80}
+                    />
+                </div>
                 <div class="card-header">
                     <h3>Pet Owners</h3>
                 </div>
@@ -138,7 +181,7 @@ function Pet() {
                                         <td>{res.pPhoneNumber}</td>
                                         <td>{res.petName}</td>
                                         <td>{res.petBreed}</td>
-                                        <td>{moment(res.updatedAt).format('lll')}</td>
+                                        <td>{moment(res.createdAt).format('lll')}</td>
                                     </tr>
                                 </Fragment>
                             ))}

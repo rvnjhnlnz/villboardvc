@@ -11,6 +11,8 @@ import Pagination from "../PaginationCom";
 import Search from "../Search";
 import ReactExport from 'react-data-export'
 import { decodeToken } from "react-jwt";
+import { CChart } from '@coreui/react-chartjs';
+import moment from 'moment'
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -52,34 +54,6 @@ const Accounts = () => {
   }
   ]
 
-  useEffect(() => {
-    const headers = {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,",
-      "Access-Control-Allow-Headers":
-        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-    };
-    const fetchPosts = async () => {
-      axios
-        .post("postUserinfo", {
-          headers: headers,
-        })
-        .then((res) => {
-          console.log("RESPONSE RECEIVED: ", res);
-          const existing = res.data.filter((acc) => acc.status !== "Pending");
-          setUsersList(existing);
-          const pending = res.data.filter((acc) => acc.status === "Pending");
-          setUsersListP(pending);
-          console.log(pending);
-        })
-        .catch((err) => {
-          console.log("AXIOS ERROR: ", err);
-        });
-    };
-    fetchPosts();
-  }, []);
 
   const handleEditClick = (event, acc) => {
     event.preventDefault();
@@ -286,6 +260,7 @@ const Accounts = () => {
     //{ name: "Password", field: "password", sortable: false },
     { name: "Phone Number", field: "phoneNumber", sortable: true },
     { name: "Address", field: "address", sortable: true },
+    { name: "Timestamp", sortable: false },
     { name: "Actions", sortable: false },
   ];
 
@@ -355,66 +330,100 @@ const Accounts = () => {
     { name: "Address", field: "address", sortable: true },
     { name: "Actions", sortable: false },
   ];
+  const [chartData, setChartData] = useState({});
+  const chart = () => {
+    let approveData = [];
+    let declineData = [];
+    axios
+      .post("postUserinfo")
+      .then(res => {
+        console.log(res);
+        for (const dataObj of res.data) {
+          if (dataObj.status === 'approved') {
+            approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+          }
+          else if (dataObj.status === 'declined') {
+            declineData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+          }
+        }
+        const counts1 = {};
+        approveData.forEach((x) => {
+          counts1[x] = (counts1[x] || 0) + 1;
+        });
+        const counts2 = {};
+        declineData.forEach((x) => {
+          counts2[x] = (counts2[x] || 0) + 1;
+        });
+        setChartData(
+          {
+            labels: Object.keys(counts1),
+            datasets: [
+              {
+                label: 'Total number of Accounts',
+                backgroundColor: '#f87979',
+                data: Object.values(counts1),
+              },
+            ],
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    console.log(approveData, declineData);
+  };
+
+  useEffect(() => {
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,",
+      "Access-Control-Allow-Headers":
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    };
+    function uniqueArrays(array) {
+      var uniqueArray = [];
+
+      for (var i = 0; i < array.length; i++) {
+        if (uniqueArray.indexOf(array[i]) === -1) {
+          uniqueArray.push(array[i]);
+        }
+      }
+      return uniqueArray;
+    }
+    const fetchPosts = async () => {
+      axios
+        .post("postUserinfo", {
+          headers: headers,
+        })
+        .then((res) => {
+          console.log("RESPONSE RECEIVED: ", res);
+          const existing = res.data.filter((acc) => acc.status !== "Pending");
+          setUsersList(existing);
+          const pending = res.data.filter((acc) => acc.status === "Pending");
+          setUsersListP(pending);
+        })
+        .catch((err) => {
+          console.log("AXIOS ERROR: ", err);
+        });
+    };
+    fetchPosts();
+    chart();
+  }, []);
+
 
   return (
     <div className="accounts-container">
-      <div className="card-header">
-        <h3>Existing Accounts</h3>
-      </div>
-      <div className="vis_inputs">
-        <Search
-          onSearch={(val) => {
-            setSearch(val);
-            setCurrentPage(1);
-          }}
+      <div className="accounts-charts">
+        <CChart
+          className="chartMenu"
+          type="bar"
+          data={chartData}
+          labels="months"
+          height={80}
         />
-        {usersList.length !== 0 ? (
-          <ExcelFile
-            filename={"Accounts(" + date + ")"}
-            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
-            <ExcelSheet dataSet={Dataset} name="Homeowner Accounts" />
-          </ExcelFile>
-        ) : null}
       </div>
-      <form>
-        <Table striped bordered hover responsive className="accounts_table">
-          <TableHeader
-            headers={headers}
-            onSorting={(field, order) => setSorting({ field, order })}
-          />
-          <tbody>
-            {accountD.map((acc) => (
-              <Fragment key={acc._id}>
-                {editContactId === acc._id ? (
-                  <AccountEditable
-                    key={acc._id}
-                    editUserData={editUserdata}
-                    handleEditUserChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                    handleEditFormSubmit={handleEditFormSubmit}
-                  />
-                ) : (
-                  <AccountReadOnly
-                    key={acc._id}
-                    acc={acc}
-                    usersList={usersList}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                )}
-              </Fragment>
-            ))}
-          </tbody>
-        </Table>
-        <div className="acc_paginationBtns">
-          <Pagination
-            total={totalItems}
-            itemsPerPage={item_per_page}
-            currentPage={currentPage}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        </div>
-      </form>
       <div className="card-header">
         <h3>Pending Accounts</h3>
       </div>
@@ -468,6 +477,64 @@ const Accounts = () => {
             itemsPerPage={item_per_page}
             currentPage={currentPagePending}
             onPageChange={(page) => setCurrentPagePending(page)}
+          />
+        </div>
+      </form>
+      <div className="card-header">
+        <h3>Existing Accounts</h3>
+      </div>
+      <div className="vis_inputs">
+        <Search
+          onSearch={(val) => {
+            setSearch(val);
+            setCurrentPage(1);
+          }}
+        />
+        {usersList.length !== 0 ? (
+          <ExcelFile
+            filename={"Accounts(" + date + ")"}
+            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+            <ExcelSheet dataSet={Dataset} name="Homeowner Accounts" />
+          </ExcelFile>
+        ) : null}
+      </div>
+      <form>
+        <Table striped bordered hover responsive className="accounts_table">
+          <TableHeader
+            headers={headers}
+            onSorting={(field, order) => setSorting({ field, order })}
+          />
+          <tbody>
+            {accountD.map((acc) => (
+              <Fragment key={acc._id}>
+                {editContactId === acc._id ? (
+                  <AccountEditable
+                    key={acc._id}
+                    acc={acc}
+                    editUserData={editUserdata}
+                    handleEditUserChange={handleEditFormChange}
+                    handleCancelClick={handleCancelClick}
+                    handleEditFormSubmit={handleEditFormSubmit}
+                  />
+                ) : (
+                  <AccountReadOnly
+                    key={acc._id}
+                    acc={acc}
+                    usersList={usersList}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </Table>
+        <div className="acc_paginationBtns">
+          <Pagination
+            total={totalItems}
+            itemsPerPage={item_per_page}
+            currentPage={currentPage}
+            onPageChange={(page) => setCurrentPage(page)}
           />
         </div>
       </form>

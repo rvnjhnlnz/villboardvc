@@ -28,7 +28,8 @@ import {
         <td>{res?.rPhoneNumber}</td>
         <td>{res?.venue}</td>
         <td>{res?.reservationTime}</td>
-        <td>{moment(res?.reservationDate).format("ll")}</td>
+        <td>{moment(res?.reservationDate).format("lll")}</td>
+        <td>{moment(res?.createdAt).format("lll")}</td>
         <td>
           <button
             type="button"
@@ -62,7 +63,6 @@ import {
             alignment="center"
             visible={visible}
             onClose={() => setVisible(false)}
-            
           >
             <CModalHeader onClose={() => setVisible(false)}>
               <CModalTitle>{deets.header}</CModalTitle>

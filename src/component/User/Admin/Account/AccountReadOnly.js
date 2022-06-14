@@ -11,6 +11,8 @@ const AccountReadOnly = ({acc,handleEditClick,handleDeleteClick}) => {
         <td>{acc.email}</td> 
         <td>{acc.phoneNumber}</td>
         <td>{acc.address}</td>
+        {/* <td>{moment(acc.updatedAt).format('MM-YYYY')}</td> */}
+        <td>{moment(acc.createdAt).format('lll')}</td>
         <td>
             <button type='button' className='genButton' onClick={(event) => handleEditClick(event,acc)}>Edit</button>
             <button type='button' className='genButton' onClick={(event) => handleDeleteClick(acc._id,acc.email)}>Delete</button>

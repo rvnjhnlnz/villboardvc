@@ -11,6 +11,7 @@ const ReservationHistory = ({res}) => {
             <td>{res.venue}</td>
             <td>{res.reservationTime}</td>
             <td>{moment(res.reservationDate).format('ll')}</td>
+            <td>{moment(res.createdAt).format('lll')}</td>
             <td>{moment(res.updatedAt).format('lll')}</td>
             <td>{res.reason}</td>
         </tr>

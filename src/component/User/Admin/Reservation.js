@@ -6,7 +6,7 @@ import TableHeader from "./Header";
 import Pagination from "./PaginationCom";
 import Search from "./Search";
 import axios from "axios";
-import ReactExport from 'react-data-export'
+
 import moment from 'moment'
 // import useFullPageLoader from "../../../reducers/useFullPageLoader";
 // import PaginationCom from './PaginationCom';
@@ -14,6 +14,10 @@ import moment from 'moment'
 import Table from "react-bootstrap/Table";
 import ReservationPending from "./ReservationPending";
 import ReservationHistory from "./ReservationHistory";
+
+import { CChart } from '@coreui/react-chartjs';
+import ReactExport from 'react-data-export'
+
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -33,7 +37,8 @@ function Reservation() {
         { title: "Venue", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
         { title: "Reservation Time", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
         { title: "Reservation Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-        { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+        { title: "Booking Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+        { title: "Acceptance of Reservation", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
         { title: "Reason", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
     ],
     data: reservation.map((data) => [
@@ -44,6 +49,7 @@ function Reservation() {
         {value: data.venue, style: {font: {sz: "14"}}},
         {value: data.reservationTime, style: {font: {sz: "14"}}},
         {value: moment(data.reservationDate).format('ll'), style: {font: {sz: "14"}}},
+        {value: moment(data.createdAt).format('lll'), style: {font: {sz: "14"}}},
         {value: moment(data.updatedAt).format('lll'), style: {font: {sz: "14"}}},
         {value: data.reason, style: {font: {sz: "14"}}},
     ])
@@ -70,6 +76,7 @@ function Reservation() {
         });
     };
     fetchPosts();
+    chart();
   }, []);
   // const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [totalItems, setTotalItems] = useState(0);
@@ -84,7 +91,7 @@ function Reservation() {
     order: "",
   });
 
-  const item_per_page = 10;
+  const item_per_page = 7;
   //   const approve = "APPROVED";
   const headers = [
     { name: "Status", field: "rPending", sortable: true },
@@ -94,7 +101,8 @@ function Reservation() {
     { name: "Venue", field: "venue", sortable: true },
     { name: "Reservation\nTime", field: "reservationTime", sortable: true },
     { name: "Reservation\nDate", field: "reservationDate", sortable: true },
-    { name: "Timestamp", field: "timestamp", sortable: false },
+    { name: "Booking Date", field: "timestamp", sortable: false },
+    { name: "Acceptance of Reservation", field: "updatedAt", sortable: false },
     { name: "Reason", field: "reason", sortable: true },
   ];
   const pheaders = [
@@ -105,6 +113,7 @@ function Reservation() {
     { name: "Venue", field: "venue", sortable: true },
     { name: "Reservation\nTime", field: "reservationTime", sortable: true },
     { name: "Reservation\nDate", field: "reservationDate", sortable: true },
+    { name: "Booking Date", field: "reservationDate", sortable: true },
     { name: "Actions", field: "", sortable: false },
   ];
   const preserveD = useMemo(() => {
@@ -182,6 +191,9 @@ function Reservation() {
     if (header === "Confirm Accept") verdict = "approved";
     else verdict = "declined";
 
+    if(reason === " " || reason === "" ){
+      reason = "-"
+    }
     axios
       .post("approveDeclineReservation", {
         reserveItem: res,
@@ -199,6 +211,54 @@ function Reservation() {
       })
       .catch((err) => console.log(err));
   };
+  const [chartData, setChartData] = useState({});
+    const chart = () => {
+        let approveData = [];
+        let declineData = [];
+        axios
+            .post("postReservation")
+            .then(res => {
+                console.log(res);
+                for (const dataObj of res.data) {
+                    if (dataObj.rPending === 'approved') {
+                        approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                    else if (dataObj.rPending === 'declined') {
+                        declineData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                }
+                const counts1 = {};
+                approveData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                const counts2 = {};
+                declineData.forEach((x) => {
+                    counts2[x] = (counts2[x] || 0) + 1;
+                });
+                console.log(counts1);
+                console.log(counts2);
+                setChartData(
+                    {
+                        labels: Object.keys(counts1),
+                        datasets: [
+                            {
+                                label: 'Total number of Reservations Approved',
+                                backgroundColor: '#f87979',
+                                data: Object.values(counts1),
+                            },
+                            {
+                                label: 'Total number of Reservations Decline',
+                                backgroundColor: '#f5312f',
+                                data: Object.values(counts2),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        console.log(approveData, declineData);
+    };
 
   const decodedToken = decodeToken(localStorage.getItem("token"));
   if (!decodedToken || decodedToken.role === "homeowners") {
@@ -206,6 +266,15 @@ function Reservation() {
   } else {
     return (
       <div className="accounts-container">
+      <div className="accounts-charts">
+        <CChart
+          className="chartMenu"
+          type="bar"
+          data={chartData}
+          labels="months"
+          height={80}
+        />
+      </div>
         <div className="card-header">
           <h3>Pending Reservations</h3>
         </div>
@@ -258,12 +327,12 @@ function Reservation() {
               }}
             />
             {reservation.length !== 0 ? (
-                         <ExcelFile 
-                         filename= {"Reservations(" +date+")"}
-                         element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
-                             <ExcelSheet dataSet={Dataset} name="Homeowner Reservations"/>
-                         </ExcelFile>
-                    ): null}  
+                        <ExcelFile
+                            filename={"Reservations(" + date + ")"}
+                            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+                            <ExcelSheet dataSet={Dataset} name="Homeowner Reservation" />
+                        </ExcelFile>
+                    ) : null}
           </div>
           <Table striped bordered hover responsive className="accounts_table">
             <TableHeader

@@ -15,22 +15,29 @@ function WhatsHappening() {
     // const item_per_page = 10;
     useEffect(() => {
         const cleanup = () => {
-            axios.get('getPendingAccounts')
+            axios.post('postUserinfo')
                 .then(res => {
                     console.log(res);
-                    setAccountData(res.data)
+                    const pending = res.data.filter((acc) => acc.status === "Pending");
+                    setAccountData(pending);
                 }).catch(err => {
                     console.log(err);
                 })
-            axios.get('getPendingReservations')
+            axios.post('postReservation')
                 .then(res => {
-                    setReservationData(res.data);
+                    const pending = res.data.filter(
+                        (acc) => acc.rPending.toLowerCase() === "pending"
+                      );
+                    setReservationData(pending);
                 }).catch(err => {
                     console.log(err);
                 })
             axios.post('postPayment')
                 .then(res => {
-                    setPaymentData(res.data);
+                    const pending = res.data.filter(
+                        (acc) => acc.pPending.toLowerCase() === "pending"
+                    );
+                    setPaymentData(pending);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -82,7 +89,7 @@ function WhatsHappening() {
                                     {payment !== null ? payment?.length : <CSpinner/>}
                                 </Card.Text>
                                 <div className='grid-button'>
-                                    <Button variant="primary" className="grid-cardButton">Transactions Dashboard</Button>
+                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/AdminTransaction" >Transactions Dashboard</Button>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -95,7 +102,7 @@ function WhatsHappening() {
                                     {/*total number of accounts palang ito*/accountNum !== null ? accountNum.length : <CSpinner/>}
                                 </Card.Text>
                                 <div className='grid-button'>
-                                    <Button variant="primary" className="grid-cardButton">Accounts <br /> Dashboard</Button>
+                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/Accounts" >Accounts <br /> Dashboard</Button>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -108,7 +115,7 @@ function WhatsHappening() {
                                     {reservation !== null ? reservation.length : <CSpinner/>}
                                 </Card.Text>
                                 <div className='grid-button'>
-                                    <Button variant="primary" className="grid-cardButton">Reservations Dashboard</Button>
+                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/Reservation">Reservations Dashboard</Button>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -116,12 +123,12 @@ function WhatsHappening() {
                     <div className="grid-item">
                         <Card  className="grid-card">
                             <Card.Body>
-                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br /> Visitors</Card.Title>
+                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Total <br /> Visitors</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
                                     {/*total number of visitor pa lang*/visitorData !== null ? visitorData.length : <CSpinner/>}
                                 </Card.Text>
                                 <div className='grid-button'>
-                                    <Button variant="primary" className="grid-cardButton">Visitors <br /> Dashboard</Button>
+                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/Visitor">Visitors <br /> Dashboard</Button>
                                 </div>
                             </Card.Body>
                         </Card>

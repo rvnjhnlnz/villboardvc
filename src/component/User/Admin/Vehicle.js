@@ -9,6 +9,7 @@ import axios from 'axios'
 import Table from "react-bootstrap/Table";
 import ReactExport from 'react-data-export'
 import moment from 'moment'
+import { CChart } from '@coreui/react-chartjs';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -66,6 +67,7 @@ function Vehicle() {
                 })
         };
         fetchPets();
+        chart();
     }, []);
     const carD = useMemo(() => {
         let car = carData;
@@ -90,6 +92,38 @@ function Vehicle() {
             (currentPage - 1) * item_per_page + item_per_page
         );
     }, [carData, currentPage, search, sorting]);
+
+    const [chartData, setChartData] = useState({});
+    const chart = () => {
+        let carData = [];
+        axios
+            .post("postCar")
+            .then(res => {
+                console.log(res);
+                for (const dataObj of res.data) {
+                    carData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                }
+                const counts1 = {};
+                carData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                setChartData(
+                    {
+                        labels: Object.keys(counts1),
+                        datasets: [
+                            {
+                                label: 'Total number of Cars',
+                                backgroundColor: '#f87979',
+                                data: Object.values(counts1),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     if(!decodedToken||decodedToken.role === "homeowners"){
         return(
             <Redirect to={'/'}/>
@@ -98,6 +132,15 @@ function Vehicle() {
     else{
         return (
             <div className="accounts-container">
+            <div className="accounts-charts">
+                    <CChart
+                        className="chartMenu"
+                        type="bar"
+                        data={chartData}
+                        labels="months"
+                        height={80}
+                    />
+                </div>
                 <div class="card-header">
                     <h3>Car Owners</h3>
                 </div>

@@ -8,7 +8,7 @@ import { decodeToken, useJwt } from "react-jwt";
 import { Redirect, Link, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-
+import { saveAs } from 'file-saver'
 
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
 function VisitorForm() {
@@ -81,6 +81,7 @@ function VisitorForm() {
     };
 
     function toQrCode(){
+        vTerms_Seterrormessage('');
         const data = {
             fullName: vName,
             emailV: vEmail,
@@ -99,7 +100,7 @@ function VisitorForm() {
         console.log(referenceNumber);
         let encoded = base64_encode(`${referenceNumber}`);
         console.log(encoded)
-        setWord(`http://localhost:3000/Thankyou/?refNum=${encoded}`);
+        setWord(`https://villboardvc.herokuapp.com/Thankyou/?refNum=${encoded}`);
             axios.post('addVisitor', data).then(res => {
                 console.log(res);
                 console.log(word);
@@ -118,19 +119,19 @@ function VisitorForm() {
                 console.log(err);
             });
         }
-                
     }
+
     function thankyou(){
         Swal.fire({
-            icon: 'success',
-            title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
-            confirmButtonText: 'Ok',
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                history.push("/");
-            }
-        })
+                    icon: 'success',
+                    title: "Successful! \n Please wait and check your email for admin's approval to visit. Thank you!",
+                    confirmButtonText: 'Ok',
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        history.push("/");
+                    }
+                })
     }
     //
     const validate = () => {
@@ -247,10 +248,13 @@ function VisitorForm() {
             }
         }
 
-        if (!checked) {
+        if (checked == false) {
             checkedError = "Please read the terms and conditions to enable and check the checkbox"
             isValid = false;
             console.log('C')
+        }
+        else if(checked == true){
+            checkedError = ""
         }
 
         if (nError || eError || aError || hError || vaError || vheError || vhpError || pError || checkedError) {
@@ -281,12 +285,13 @@ function VisitorForm() {
             })
     }
     const isChecked = () => {
-        setChecked(true);
+        setChecked(!checked);
+        console.log(checked);
     }
     function close(e) {
         e.preventDefault()
         setVisible(false);
-        settermsChecked(false);
+        settermsChecked(!termsChecked);
     }
     function openModal() {
 
@@ -394,7 +399,7 @@ function VisitorForm() {
                                     </CModalHeader>
                                     <CModalBody>
                                         <p>Please read the terms and conditions before using our mobile application which is
-                                            Villboard app and our website <a href="">www.villboardapp.com</a> the application is operated by the
+                                            Villboard app and our website <a href="">www.villboardvc.herokuapp.com</a> the application is operated by the
                                             Villa Cares – sta. rosa laguna your access to and
                                             use of the service is conditioned on your acceptance and compliance with these terms.
                                             These terms apply to all visitors, homeowners who access our mobile and web application.
@@ -471,21 +476,20 @@ function VisitorForm() {
                     <div className="visitor_input-field">
                         {/*testing */}
                         <input type="submit" value='SUBMIT' className="visitor_submitBtn" onClick={toQrCode} />
-                        <CModal scrollable visible={visible2} onClose={() => setVisible2(false)}>
-                            <CModalHeader>
+                        <CModal alignment="center" scrollable visible={visible2} onClose={() => setVisible2(false)}>
+                            <CModalHeader closeButton = {false}>
                                 <CModalTitle>Visitors Digital Pass</CModalTitle>
                             </CModalHeader>
                             <CModalBody>
                                 <div className="output-box">
                                     <img src={qrCode} alt="" />
                                     <h2>You may show your QR Code to the guard to identify your identity and for contact tracing</h2>
-                                    <a href={qrCode} download="QRCode">
-                                        <button type="button">Download</button>
-                                    </a>
+                                    <a href={qrCode}  download/>
+                                        <button type="button"onClick={() =>  saveAs(qrCode, 'image.jpg')}>Download</button>
                                 </div>
                             </CModalBody>
                             <CModalFooter>
-                                <CButton color="success" onClick={thankyou}>Agree</CButton>
+                                <CButton color="success" onClick={thankyou}>Okay</CButton>
                             </CModalFooter>
                         </CModal>
                         {/*testing */}

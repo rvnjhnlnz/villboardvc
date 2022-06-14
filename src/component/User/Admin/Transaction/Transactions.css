@@ -51,3 +51,21 @@
     flex-direction: row;
     margin: 15px;
   }
+  .accounts-charts .chartMenu {
+    width: 88vw;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media only screen and (max-width: 950px) {
+    .accounts_table{
+      overflow-x: auto;
+    }
+    .accounts-charts .chartMenu {
+      width: 95vw;
+    }
+  }
+  @media only screen and (max-width: 700px) {
+  }
+  

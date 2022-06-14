@@ -42,7 +42,7 @@ const AccountPending = ({ acc, handleAcceptDecline }) => {
                 </CModalHeader>
                 <CModalBody>{deets.content}</CModalBody>
                 <CModalFooter>
-                    <CButton color="secondary" onClick={() =>  handleAcceptDecline(acc, deets.header)}>
+                    <CButton color="secondary" onClick={() => setVisible(false)}>
                         No
                     </CButton>
                     <CButton style={{ backgroundColor: '#04AA6D', borderColor: '#04AA6D' }} onClick={(e) => { handleAcceptDecline(acc, deets.header) }}>Yes</CButton>
