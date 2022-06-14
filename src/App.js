@@ -36,7 +36,6 @@ import AdminVisitor from './component/User/Admin/Visitor'
 import AdminVehicle from './component/User/Admin/Vehicle'
 import AdminTransaction from './component/User/Admin/Transaction/Transactions'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HttpsRedirect from 'react-https-redirect';
 export default class App extends Component {
   state = {};
 
@@ -73,7 +72,6 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-      <HttpsRedirect>
         <Navbar user={this.state.user} setUser={this.setUser} />
         <Switch>
           <Route path='/' exact component={() => <Home user={this.state.user} />} />
@@ -105,7 +103,6 @@ export default class App extends Component {
           <Route path='/Dashboard/Visitor' exact component={AdminVisitor} />
           <Route path='/Dashboard/Vehicle' exact component={AdminVehicle} />
         </Switch>
-        </HttpsRedirect>
       </Router>
     )
   }
