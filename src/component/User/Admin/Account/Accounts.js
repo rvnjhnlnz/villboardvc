@@ -416,7 +416,6 @@ const Accounts = () => {
 
   return (
     <div className="accounts-container">
-   
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Accounts | Villboard</title>
@@ -427,7 +426,7 @@ const Accounts = () => {
           type="bar"
           data={chartData}
           labels="months"
-          height={80}
+          height={70}
         />
       </div>
       <div className="card-header">

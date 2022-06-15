@@ -149,7 +149,7 @@ function Pet() {
                         type="bar"
                         data={chartData}
                         labels="months"
-                        height={80}
+                        height={70}
                     />
                 </div>
                 <div class="card-header">

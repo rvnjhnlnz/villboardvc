@@ -339,70 +339,31 @@ function Register() {
                                         <CModalTitle>Terms and Conditions</CModalTitle>
                                     </CModalHeader>
                                     <CModalBody>
-                                    <p>Please read the terms and conditions before using our mobile application which is
-                                        Villboard app and our website <a href="">www.villboardapp.com</a> the application is operated by the
-                                        Villa Cares – sta. rosa laguna your access to and
-                                        use of the service is conditioned on your acceptance and compliance with these terms.
-                                        These terms apply to all visitors, homeowners who access our mobile and web application.
-                                    </p>
-                                    <p>By accessing or using the service you agree to be bound by these terms.
-                                        If you disagree with any part of the terms, you may not access the service.</p>
-                                    <h4>Privacy Policy</h4>
-                                    <p>Villboard app understands that the security of your personal information is extremely important, and it is committed to respecting your privacy and safeguarding your personal data.</p>
-                                    <p>The Villboard collect your personal information to upon registration so you can have access to the application “Personal Information” may include the following:</p>
-                                    <p>1. Your [including family members, friends, beneficiaries, attorneys, attorneys-in-fact,
-                                        shareholders, beneficial owners, members, representatives who contact the Company or may be
-                                        contacted by the Company, whenever applicable and relevant (collectively, the “Related Person/s”]
-                                        name, gender, birthday, marital status, nature of work, employment status/employer, social security/tax
-                                        identification number, home address, e-mail address, contact information and other information
-                                        from which your identity is apparent or can be reasonably and directly ascertained;</p>
-                                    <p>2. Certain technical information, such us, but not limited to, IP addresses, internet
-                                        browser used, and web pages accessed, your login information and Information about your
-                                        visit to our websites including the full Uniform Resource Locators (URL) clickstream to, t
-                                        hrough and from our websites (including date and time), products you viewed or searched for,
-                                        pages you accessed, page response times, download errors, lengths of visits to certain pages,
-                                        page interaction information (such as scrolling, clicks and mouse-overs), and methods used to
-                                        browse away from the page.</p>
-                                    <p>3. Information collected about your participation in our promotions and competitions or attendance
-                                        at our events as provided in your application forms, recordings you or we have made, details of your
-                                        guests in connection with any promotions and competitions you have entered or won, or other information
-                                        related to your attendance at events, including any access assistance requirements you may have.</p>
-                                    <p>4. Information about your use of our chat rooms, message boards, social media pages or other
-                                        interactive forums including any comments, photos, videos or other information that you post online.</p>
-                                    <p>5. Correspondence with you including any feedback, complaints and comments from you via telephone,
-                                        email or records of any online, paper or in-person correspondence and interactions between us.
-                                        If you have communicated with us by phone, we will collect details of the phone number you used to
-                                        call us, and any information collected via a call recording; and</p>
-                                    <p>6. Anti-fraud information relating to your situation, your creditworthiness or any criminal or
-                                        fraudulent activities, provided to us by you or third parties.</p>
-                                    <h4>Your Concent</h4>
-                                    <p>By using the Company website, mobile applications, and other online services, you are consenting to the
-                                        collection, generation, use, processing, storage, retention and disclosure of your Personal Information
-                                        by the Company. </p>
-                                    <p>In addition, there to, and with respect to Personal Information you disclosed or supplied about/from Related</p>
-                                    <p>Person/s, it shall be your duty and responsibility to:</p>
-                                    <p>1. To inform said Related Person/s of the purpose/s for which his/her/their
-                                        Personal Information have been disclosed or supplied to the Company for collection and processing ;</p>
-                                    <p>2. Obtain the necessary consent of said Related Person/s for the disclosure,
-                                        collection and processing of his/her/their Personal Information.</p>
-                                    <p>3. To inform the that such consent from said Related Person/s have been obtained</p>
-                                    <h4>Use of Personal Information</h4>
-                                    <p>The Company shall use your Personal Information for the following purposes: to provide you with
-                                        details and information regarding our products and services; to process your availment/purchase of
-                                        our products and/or services,  to conduct billing processing and other business transactions; to
-                                        provide and manage products and services you have requested; to communicate effectively with you;
-                                        to monitor activities and record our correspondence with you; to provide you with marketing materials;
-                                        to understand our customers, and to develop and tailor our products and services; to run our promotions
-                                        and competitions and our events; to prevent fraud; to conduct certain checks on you, such as KYC and
-                                        credit checks; to improve and administer our websites, and to ensure that content is relevant; to
-                                        reorganize or make changes to our business and to comply with legal and regulatory obligations.</p>
-                                    <p>The Company may disclose your Personal Information to affiliates which means our third party partners,
-                                        their subsidiaries, its ultimate holding company and its subsidiaries who may use it in connection with any
-                                        of the purposes set out above. We will also share your personal data with third party service providers (such
-                                        as providers of marketing, IT or administrative services) who may process it on our behalf for any of the
-                                        purposes set out above. The Company may also disclose your Personal Information under any of the following
-                                        circumstances: (i) required by law or by court decisions/processes; (ii) for information, update and marketing
-                                        purposes; and (iii) for research purposes.</p>
+                                    <p>Please read these Terms and Conditions of Use carefully. <br></br>
+                                        </p>
+                                        <p>Villboard application and our website <a href="https://villboard-23c49.web.app/">https://villboard-23c49.web.app/</a>
+                                        the application is operated by the Villa Cares – sta. rosa laguna your access to and use of the service 
+                                        is conditioned on your acceptance and compliance with these terms. 
+                                        These terms apply to all visitors, homeowners who access our mobile and web application.</p>
+                                        <h4>Privacy Policy</h4>
+                                        <p>Villboard app understands that the security of your personal information is extremely important, and it is committed to respecting your privacy and safeguarding your personal data.</p>
+                                        <p>Your Name, Home address, e-mail address, contact information and other information from which your identity is apparent or can be reasonably and directly ascertained.
+                                         Personal data collected shall be used by the company and only within the mobile application, and web server. By default, user’s </p>
+                                        <p>personal information is only shown for the user itself. It will be discretion of the user to make personal information visible to other user as well within the application.
+                                         Only the person in charge in handling the admin side of the Application and Web will be the one who can be able to see your personal information.
+                                         But in QR code you get when you registered your PET and/or VEHICLE, your information will be seen by someone who scanned the QR Code. </p>
+                                        <p>They govern and apply to your access and use of the services offered through the VillBoard Application. 
+                                        By accessing or using the VillBoard Application or the Village website, you agree to comply with and be bound by all the Terms and Conditions described below. 
+                                        If you do not agree to these Terms and Conditions, you are not authorized to use the VillBoard Application.
+                                        Your right to use the VillBoard Application will need to be approved by the Company and the Company may remove your right to use the 
+                                        VillBoard Application at any time by revoking your Validly Issued Login. </p>
+                                        <h4>Data Privacy</h4>
+                                        <p>VillBoard is committed to protecting your right to privacy. 
+                                        We give utmost importance to data protection wherein all personal information shall be handled with confidentiality and security. Thus,
+                                         VillBoard commits to ensure that all personal data obtained either manually or electronically. 
+                                         The Information Collected will be stored in remote third-party database (MongoDB) which is securely stored as per their privacy policy
+                                        MongoDB., Inc. is committed in protecting your privacy. We only collect your personal information with your knowledge and permission
+                                        . All data gathered will be used for the purpose of sending information, updates. </p>
                                     </CModalBody>
                                     <CModalFooter>
                                         <CButton color="success" onClick={close}>Agree</CButton>

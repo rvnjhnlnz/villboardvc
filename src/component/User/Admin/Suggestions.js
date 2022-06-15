@@ -1,5 +1,5 @@
 import './Suggestions.css'
-import React, { useState, useEffect, useMemo , Fragment} from 'react'
+import React, { useState, useEffect, useMemo, Fragment } from 'react'
 import axios from 'axios'
 import { decodeToken, useJwt } from "react-jwt";
 import { Redirect } from 'react-router-dom';
@@ -11,6 +11,9 @@ import moment from 'moment'
 import ReactExport from 'react-data-export'
 import Pagination from './PaginationCom';
 import Table from "react-bootstrap/Table";
+
+import { Helmet } from "react-helmet";
+import { CChart } from '@coreui/react-chartjs';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -56,6 +59,7 @@ function Suggestions() {
                 })
         };
         fetchSuggestions();
+        chart();
     }, []);
     const SuggestionD = useMemo(() => {
         let suggest = suggestionsData;
@@ -74,6 +78,48 @@ function Suggestions() {
             (currentPage - 1) * item_per_page + item_per_page
         );
     }, [suggestionsData, currentPage, search, sorting]);
+    const [chartData, setChartData] = useState({});
+
+    const chart = () => {
+        let approveData = [];
+        let declineData = [];
+        axios
+            .post("postSuggestion")
+            .then(res => {
+                console.log(res);
+                for (const dataObj of res.data) {
+                    if (dataObj.status === 'approved') {
+                        approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                    else if (dataObj.status === 'declined') {
+                        declineData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                }
+                const counts1 = {};
+                approveData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                const counts2 = {};
+                declineData.forEach((x) => {
+                    counts2[x] = (counts2[x] || 0) + 1;
+                });
+                setChartData(
+                    {
+                        labels: Object.keys(counts1),
+                        datasets: [
+                            {
+                                label: 'Total number of Suggestions',
+                                backgroundColor: '#f87979',
+                                data: Object.values(counts1),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        console.log(approveData, declineData);
+    };
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
@@ -84,6 +130,19 @@ function Suggestions() {
     else {
         return (
             <div className="accounts-container">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Suggestions | Villboard</title>
+                </Helmet>
+                <div className="accounts-charts">
+                    <CChart
+                        className="chartMenu"
+                        type="bar"
+                        data={chartData}
+                        labels="months"
+                        height={70}
+                    />
+                </div>
                 <div className="card-header">
                     <h3>Suggestion Box</h3>
                 </div>
@@ -114,7 +173,7 @@ function Suggestions() {
                                     <tr>
                                         <td>{res.aName}</td>
                                         <td>{res.suggestions}</td>
-                                        <td>{moment(res.updatedAt).format('lll')}</td>
+                                        <td>{moment(res.createdAt).format('lll')}</td>
                                     </tr>
                                 </Fragment>
                             ))}
