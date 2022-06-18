@@ -2,7 +2,7 @@
 
 .v_container{
   height: 100%;
-  min-height: 92vh;
+  min-height: 96vh;
   display: flex;
   align-items: center;
   font-family: sans-serif;
@@ -343,7 +343,10 @@
   .v_form img{
     width: 60px;
   }
-
+  .visitor_input-field input:focus ~ .visit_label,
+.visitor_input-field input:valid ~ .visit_label{
+  font-size: 12px;
+}
   .vForm_modal{
     max-width: 320px;
     max-height: 350px;

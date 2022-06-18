@@ -11,7 +11,8 @@ import moment from 'moment'
 import ReactExport from 'react-data-export'
 import Pagination from './PaginationCom';
 import Table from "react-bootstrap/Table";
-
+import DatePicker from "react-datepicker";
+import { CFormSelect } from '@coreui/react';
 import { Helmet } from "react-helmet";
 import { CChart } from '@coreui/react-chartjs';
 
@@ -28,7 +29,8 @@ function Suggestions() {
     const headers = [
         { name: "Name", field: "aName", sortable: true },
         { name: "Suggestions/Complaint", field: "suggestions", sortable: true },
-        { name: "Timestamp", field: "Timestamp", sortable: false },
+        { name: "Accomplished", field: "", sortable: true },
+        { name: "Registered Date", field: "createdAt", sortable: true },
     ];
 
     const current = new Date();
@@ -37,12 +39,12 @@ function Suggestions() {
         columns: [
             { title: "Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
             { title: "Email", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
-            { title: "Timestamp", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+            { title: "Registered Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
         ],
         data: suggestionsData.map((data) => [
             { value: data.aName, style: { font: { sz: "14" } } },
             { value: data.suggestions, style: { font: { sz: "14" } } },
-            { value: moment(data.updatedAt).format('lll'), style: { font: { sz: "14" } } },
+            { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
         ])
     }
     ];
@@ -61,56 +63,96 @@ function Suggestions() {
         fetchSuggestions();
         chart();
     }, []);
+    const [category, setCategory] = useState("Name");
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setendDate] = useState(null);
+    function petC(e) {
+        setCategory(e.target.value);
+        setStartDate(null);
+        setendDate(null)
+    }
     const SuggestionD = useMemo(() => {
         let suggest = suggestionsData;
-        if (search) {
-            suggest = suggest.filter(
-                sg => sg.aName.toLowerCase().includes(search.toLowerCase())
-            )
+
+        if (category == "Name") {
+            if (search) {
+                suggest = suggest.filter((acc) => acc.aName.toLowerCase().includes(search.toLowerCase()))
+            }
+        }
+        else if (category == "Suggestions") {
+            if (search) {
+                suggest = suggest.filter((acc) => acc.suggestions.toLowerCase().includes(search.toLowerCase()))
+            }
+        }
+        // else if (category == "Address") {
+        //     if (search) {
+        //         pet = pet.filter((acc) => acc.pAddress.toLowerCase().includes(search.toLowerCase()))
+        //     }
+        // }
+        else if (category == "Registered Date") {
+            if (startDate) {
+                suggest = suggest.filter((acc) => moment(acc.createdAt).isSameOrAfter(startDate));
+            }
+            if (endDate) {
+                suggest = suggest.filter((acc) => moment(acc.createdAt).isSameOrBefore(moment(endDate), 'day'));
+            }
         }
         setTotalItems(suggest.length);
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
-            suggest = suggest.sort((a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field]));
+            suggest = suggest.sort(
+                (a, b) => reversed * a[sorting.field].localeCompare(b[sorting.field])
+            );
         }
-        return suggest.slice(
-            (currentPage - 1) * item_per_page,
-            (currentPage - 1) * item_per_page + item_per_page
-        );
-    }, [suggestionsData, currentPage, search, sorting]);
+        return suggest.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
+    }, [suggestionsData, currentPage, search, startDate, endDate, sorting]);
+
     const [chartData, setChartData] = useState({});
 
     const chart = () => {
         let approveData = [];
-        let declineData = [];
+        const myArray = [{
+            date: "2022-02-01",
+
+            total: 0
+        }, {
+            date: "2022-03-01",
+
+            total: 0
+        }, {
+            date: "2022-04-01",
+
+            total: 0
+        }, {
+            date: "2022-05-01",
+
+            total: 0
+        }, {
+            date: "2022-6-01",
+
+            total: 0
+        }]
+
         axios
             .post("postSuggestion")
             .then(res => {
-                console.log(res);
                 for (const dataObj of res.data) {
-                    if (dataObj.status === 'approved') {
-                        approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
-                    }
-                    else if (dataObj.status === 'declined') {
-                        declineData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    if (moment(dataObj.createdAt).isSameOrAfter("2022-02-01", 'month')) {
+                        //if(moment(myArray[dataObj]).format('MMMM-YYYY') === moment(dataObj.createdAt).format('MMMM-YYYY')){
+                        const index = myArray.findIndex(acc => moment(acc.date).format("MMMM-YYYY") === moment(dataObj.createdAt).format("MMMM-YYYY"));
+                        myArray[index].total += 1;
+                        //const index = myArray.findIndex(acc => acc.id === employee.id);
+                        //approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
                     }
                 }
-                const counts1 = {};
-                approveData.forEach((x) => {
-                    counts1[x] = (counts1[x] || 0) + 1;
-                });
-                const counts2 = {};
-                declineData.forEach((x) => {
-                    counts2[x] = (counts2[x] || 0) + 1;
-                });
                 setChartData(
                     {
-                        labels: Object.keys(counts1),
+                        labels: myArray.map((x) => moment(x.date).format('MMMM-YYYY')),
                         datasets: [
                             {
                                 label: 'Total number of Suggestions',
-                                backgroundColor: '#f87979',
-                                data: Object.values(counts1),
+                                backgroundColor: 'green',
+                                data: myArray.map((x) => x.total),
                             },
                         ],
                     });
@@ -118,7 +160,6 @@ function Suggestions() {
             .catch(err => {
                 console.log(err);
             });
-        console.log(approveData, declineData);
     };
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
@@ -147,32 +188,66 @@ function Suggestions() {
                     <h3>Suggestion Box</h3>
                 </div>
                 <form>
-                    <div className="vis_inputs">
-                        <Search
-                            onSearch={(val) => {
-                                setSearch(val);
-                                setCurrentPage(1);
-                            }}
-                        />
-                        {suggestionsData.length !== 0 ? (
-                            <ExcelFile
-                                filename={"Suggestions(" + date + ")"}
-                                element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
-                                <ExcelSheet dataSet={Dataset} name="Homeowner Suggestions" />
-                            </ExcelFile>
-                        ) : null}
-                    </div>
+                        <div className="account_inputs">
+                            {category === 'Registered Date' ? (
+                                <div className="accI_horizontal">
+                                    <h4>From: </h4>
+                                    <DatePicker maxDate={moment().toDate()} selected={startDate} className="datePicker" onChange={(date) => {
+                                        setStartDate(date);
+                                        setCurrentPage(1);
+                                    }} />
+                                    <h4>To: </h4>
+                                    <DatePicker maxDate={moment().toDate()} minDate={moment(startDate).toDate()} selected={endDate} className="datePicker" onChange={(date) => {
+                                        setendDate(date);
+                                        setCurrentPage(1);
+                                    }} />
+                                </div>
+                            ) : <Search
+                                onSearch={(val) => {
+                                    setSearch(val);
+                                    setCurrentPage(1);
+                                }}
+                            />}
+                            <CFormSelect size="lg" className="cat_select" aria-label="Large select example" onChange={(e) => { petC(e) }}>
+                                <option value="Name">Name</option>
+                                <option value="Suggestions">Suggestions</option>
+                                <option value="Registered Date">Registered Date</option>
+                            </CFormSelect>
+                            {SuggestionD.length !== 0 ? (
+                                <ExcelFile
+                                    filename={"Suggestions(" + date + ")"}
+                                    element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
+                                    <ExcelSheet dataSet={[{
+                                        columns: [
+                                            { title: "Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                            { title: "Email", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                            { title: "Registered Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        ],
+                                        data: suggestionsData.map((data) => [
+                                            { value: data.aName, style: { font: { sz: "14" } } },
+                                            { value: data.suggestions, style: { font: { sz: "14" } } },
+                                            { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
+                                        ])
+                                    }
+                                    ]} name="Homeowner Pet" />
+                                </ExcelFile>
+                            ) : null}
+                        </div>
                     <Table striped bordered hover responsive className="accounts_table">
                         <TableHeader
                             headers={headers}
                             onSorting={(field, order) => setSorting({ field, order })}
                         />
                         <tbody>
-                            {suggestionsData.map((res) => (
+                            {SuggestionD.slice(
+                                (currentPage - 1) * item_per_page,
+                                (currentPage - 1) * item_per_page + item_per_page
+                            ).map((res) => (
                                 <Fragment key={res?._id}>
                                     <tr>
                                         <td>{res.aName}</td>
                                         <td>{res.suggestions}</td>
+                                        <td>sample</td>
                                         <td>{moment(res.createdAt).format('lll')}</td>
                                     </tr>
                                 </Fragment>

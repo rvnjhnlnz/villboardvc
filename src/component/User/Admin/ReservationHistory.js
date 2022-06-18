@@ -4,7 +4,7 @@ import React from 'react'
 const ReservationHistory = ({res}) => {
     return (
         <tr>
-            <td>{res.rPending.toUpperCase()}</td>
+            {/* <td>{res.rPending.toUpperCase()}</td> */}
             <td>{res.rFirstName}</td>
             <td>{res.rLastName}</td>
             <td>{res.rPhoneNumber}</td>
@@ -13,7 +13,9 @@ const ReservationHistory = ({res}) => {
             <td>{moment(res.reservationDate).format('ll')}</td>
             <td>{moment(res.createdAt).format('lll')}</td>
             <td>{moment(res.updatedAt).format('lll')}</td>
-            <td>{res.reason}</td>
+            {res.rPending !== "approved" ? (
+                <td>{res.reason}</td>
+        ) : null}
         </tr>
     )
 }

@@ -17,7 +17,6 @@ const TransactionPending = ({ tr, handleAcceptDecline }) => {
     }
     return (
         <tr>
-            <td>{tr.pPending.toUpperCase()}</td>
             <td>{tr.uLastName}</td>
             <td>{tr.uFirstName}</td>
             <td>{tr.uAddress}</td>
@@ -27,45 +26,66 @@ const TransactionPending = ({ tr, handleAcceptDecline }) => {
             <td>{moment(tr.createdAt).format('lll')}</td>
             <td><a href={tr.photoUrl}>Click to Download</a></td>
             <td>
-                <button type='button' className='genButton' onClick={(e) => {
-                    e.preventDefault();
-                    setDeets({ header: 'Confirm Accept', content: 'Are you sure you want to accept this payment details?' }); setVisible(true);
-                }}>Accept</button>
-                <button type='button' className='genButton' onClick={(e) => {
-                    e.preventDefault();
-                    setDeets({ header: 'Confirm Decline', content: 'Are you sure you want to decline this payment details?' }); {setVisible(true)};
-                }}>Decline</button>
-                <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
-                    <CModalHeader onClose={() => setVisible(false)}>
-                        <CModalTitle>{deets.header}</CModalTitle>
-                    </CModalHeader>
-                    <CModalBody>{deets.content}</CModalBody>
-                    <CModalFooter>
-                        <CButton color="secondary" onClick={() => setVisible(false)}>
-                            No
-                        </CButton>
-                        <CButton style={{ backgroundColor: '#04AA6D', borderColor: '#04AA6D' }} onClick={opendeclinereason}>Yes</CButton>
-                    </CModalFooter>
-                </CModal>
-                <CModal alignment="center" visible={visible1} onClose={() => setVisible1(false)}>
-                    <CModalHeader onClose={() => setVisible1(false)}>
-                        <CModalTitle>{deets.header}</CModalTitle>
-                    </CModalHeader>
-                    <CModalBody>
-                        <p>Please enter reason of decline</p>
-                        <div className="login_input-field">
-                            <textarea style={{ width: '100%' }} rows='3' value={reason} onChange={e => setReason(e.target.value)} />
-                            <label className="l_label">Reason</label>
-                        </div>
-                    </CModalBody>
-                    <CModalFooter>
-                        <CButton color="secondary" onClick={() => setVisible1(false)}>
-                            No
-                        </CButton>
-                        <CButton style={{ backgroundColor: '#04AA6D', borderColor: '#04AA6D' }} onClick={(e) => { handleAcceptDecline(tr, deets.header, reason) }}>Yes</CButton>
-                    </CModalFooter>
-                </CModal>
-            </td>
+          <button
+            type="button"
+            className="genButton"
+            onClick={(e) => {
+              e.preventDefault();
+              setDeets({
+                header: "Confirm Accept",
+                content: 'Are you sure you want to accept this payment details?',
+              });
+              setVisible(true);
+            }}
+          >
+            Accept
+          </button>
+          <button
+            type="button"
+            className="genButton"
+            onClick={(e) => {
+              e.preventDefault();
+              setDeets({
+                header: "Confirm Decline",
+                content: "Are you sure you want to decline this reservation?",
+              });
+              setVisible(true);
+            }}
+          >
+            Decline
+          </button>
+          <CModal 
+            alignment="center"
+            visible={visible}
+            onClose={() => setVisible(false)}
+          >
+            <CModalHeader onClose={() => setVisible(false)}>
+              <CModalTitle>{deets.header}</CModalTitle>
+            </CModalHeader>
+            <CModalBody style={deets.header === "Confirm Decline" ? {height: '200px'} : {height: '80px'}}>
+              {deets.header === "Confirm Decline" ? <>
+                <p>Please enter reason of decline</p>
+                <div className="login_input-field">
+                  <textarea style={{width: '100%'}} rows='3' value={reason} onChange={e => setReason(e.target.value)} />
+                  <label className="l_label">Reason</label>
+                </div>
+              </> : <p>{deets.content}</p>}
+            </CModalBody>
+            <CModalFooter>
+              <CButton color="secondary" onClick={() => setVisible(false)}>
+                No
+              </CButton>
+              <CButton
+                style={{ backgroundColor: "#04AA6D", borderColor: "#04AA6D" }}
+                onClick={(e) => {
+                  handleAcceptDecline(tr, deets.header, reason);
+                }}
+              >
+                Yes
+              </CButton>
+            </CModalFooter>
+          </CModal>
+        </td>
         </tr>
     )
 }

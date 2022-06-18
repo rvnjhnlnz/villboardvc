@@ -257,3 +257,26 @@
     display: none;
   }
 }
+.cat_select{
+  max-width: 300px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 50px;
+}.datePicker{
+  height: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.account_inputs{
+  display: flex;
+    margin: 15px;
+}
+.accI_horizontal{
+  display: flex;
+}
+.account_inputs h4{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}

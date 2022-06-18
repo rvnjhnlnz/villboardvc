@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Accounts.css'
+import moment from 'moment'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick, handleEditFormSubmit }) => {
+const AccountEditable = ({acc, editUserData, handleEditUserChange, handleCancelClick, handleEditFormSubmit }) => {
     const [visible, setVisible] = useState(false);
 
     return (
@@ -48,6 +49,7 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
             </td>
             <td>
                 <input
+                disabled
                     type="text"
                     required="required"
                     placeholder="Enter your email"
@@ -112,7 +114,7 @@ const AccountEditable = ({ editUserData, handleEditUserChange, handleCancelClick
                 >
                 </input>
             </td>
-            <td>-</td>
+            <td>{moment(acc.createdAt).format('lll')}</td>
             <td>
                 <button type="submit" className='genButton' onClick={handleEditFormSubmit}>Save</button>
                 <button type="submit" className='genButton' onClick={handleCancelClick}>Cancel</button>

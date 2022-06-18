@@ -100,7 +100,7 @@ function VisitorForm() {
         console.log(referenceNumber);
         let encoded = base64_encode(`${referenceNumber}`);
         console.log(encoded)
-        setWord(`https://villboardvc.herokuapp.com/Thankyou/?refNum=${encoded}`);
+        setWord(`https://villboard-23c49.web.app/Thankyou/?refNum=${encoded}`);
             axios.post('addVisitor', data).then(res => {
                 console.log(res);
                 console.log(word);
@@ -189,20 +189,6 @@ function VisitorForm() {
                 hError = "Please Enter the valid Homeowner's name"
                 isValid = false;
                 console.log("Homeowner's name");
-            }
-        }
-
-        if (!vHEmail) {
-            vheError = "Please Enter the existing Homeowner's Email"
-            isValid = false;
-            console.log('5')
-        }
-        else if (typeof vHEmail !== "undefined") {
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            if (!pattern.test(vHEmail)) {
-                vheError = "Please Enter the valid Homeowner's Email"
-                isValid = false;
-                console.log("Homeowner's email");
             }
         }
         if (!vHPhoneNumber) {
@@ -355,7 +341,7 @@ function VisitorForm() {
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHomeowner_errormessage}
                             </div>
-                            <label className="visit_label">Person to visit: (Homeowner's Full Name) </label>
+                            <label className="visit_label">Homeowner's Full name: </label>
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
@@ -367,11 +353,11 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vHEmail} onChange={(e) => setvHEmail(e.target.value.replace(/[^A-Z-a-z0-9_.@-]+/, ""))} />
+                                /* value={vHEmail} onChange={(e) => (e.target.value.replace(/[^A-Z-a-z0-9_.@-]+/, ""))} */ />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHEmail_errormessage}
                             </div>
-                            <label className="visit_label">Homeowner's Email:</label>
+                            <label className="visit_label">Homeowner's Landline:</label>
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"

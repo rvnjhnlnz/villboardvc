@@ -22,7 +22,6 @@ import {
   
     return (
       <tr>
-        <td>{res?.rPending.toUpperCase()}</td>
         <td>{res?.rFirstName}</td>
         <td>{res?.rLastName}</td>
         <td>{res?.rPhoneNumber}</td>
