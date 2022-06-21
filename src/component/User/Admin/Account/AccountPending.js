@@ -1,4 +1,5 @@
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import moment from 'moment';
 import React, { useState } from 'react';
 import './Accounts.css'
 const AccountPending = ({ acc, handleAcceptDecline }) => {
@@ -24,7 +25,7 @@ const AccountPending = ({ acc, handleAcceptDecline }) => {
         <td>{acc.firstName}</td>
         <td>{acc.middleInitial.toUpperCase()}</td>
         <td>{acc.email}</td>
-        <td>{acc.phoneNumber}</td>
+        <td>{acc.phoneNumber.replace(/^0+/, "+63")}</td>
         <td>{acc.address}</td>
         <td>
             <button type='button' className='genButton' onClick={(e) => {

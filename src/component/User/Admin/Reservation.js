@@ -63,7 +63,7 @@ function Reservation() {
         .post("postReservation")
         .then((res) => {
           console.log(res);
-          const notpending = res.data.filter(
+          const notpending = res.data.reverse().filter(
             (acc) => acc.rPending.toLowerCase() !== "pending"
           );
           setReservationData(notpending);
@@ -440,7 +440,9 @@ function Reservation() {
 
       });
   };
-
+  const options = {
+    maintainAspectRatio: false
+  }
 
   const decodedToken = decodeToken(localStorage.getItem("token"));
   if (!decodedToken || decodedToken.role === "homeowners") {
@@ -448,7 +450,6 @@ function Reservation() {
   } else {
     return (
       <div className="accounts-container">
-
         <Helmet>
           <meta charSet="utf-8" />
           <title>Reservation | Villboard</title>
@@ -459,7 +460,8 @@ function Reservation() {
             type="bar"
             data={chartData}
             labels="months"
-            height={80}
+            height={70}
+            options={options}
           />
         </div>
         <div className="card-header">
@@ -530,7 +532,6 @@ function Reservation() {
         </div>
         <form>
           <div className="account_inputs">
-
             {category === 'Reservation Date' || category === 'Booking Date' || category === 'Acceptance of Reservation' ? (
             <div className="accI_horizontal">
               <h4>From: </h4>
@@ -564,7 +565,7 @@ function Reservation() {
             {reserveD.length !== 0 ? (
               <ExcelFile
                 filename={"Reservations(" + date + ")"}
-                element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+                element={<button type="button" className="excelBtn">Export Data</button>}>
                 <ExcelSheet dataSet={[{
               columns: [
                 { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
@@ -656,8 +657,32 @@ function Reservation() {
             {reservation.length !== 0 ? (
               <ExcelFile
                 filename={"Reservations(" + date + ")"}
-                element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
-                <ExcelSheet dataSet={Dataset} name="Homeowner Reservation" />
+                element={<button type="button" className="excelBtn">Export Data</button>}>
+                <ExcelSheet dataSet={[{
+              columns: [
+                { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Venue", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Reservation Time", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Registration Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Booking Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                { title: "Acceptance of Reservation", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+              ],
+              data: declinedR.map((data) => [
+                { value: data.rPending, style: { font: { sz: "14" } } },
+                { value: data.rFirstName, style: { font: { sz: "14" } } },
+                { value: data.rLastName, style: { font: { sz: "14" } } },
+                { value: data.rPhoneNumber.toUpperCase(), style: { font: { sz: "14" } } },
+                { value: data.venue, style: { font: { sz: "14" } } },
+                { value: data.reservationTime, style: { font: { sz: "14" } } },
+                { value: moment(data.reservationDate).format('lll'), style: { font: { sz: "14" } } },
+                { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
+                { value: moment(data.updatedAt).format('lll'), style: { font: { sz: "14" } } },
+              ])
+            }
+            ]} name="Homeowner Reservation" />
               </ExcelFile>
             ) : null}
           </div>

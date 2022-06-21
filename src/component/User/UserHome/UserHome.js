@@ -14,12 +14,12 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CForm, CFormTextarea, CFormInput } from '@coreui/react';
 import { useHistory } from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 function UserHome() {
     const decodedToken = decodeToken(localStorage.getItem('token'));
     const [openModal, setOpenmodal] = useState(false);
     const [caption, setCaption] = useState('');
-    const [postCategory, setpostCategory] = useState('Events');
+    const [postCategory, setpostCategory] = useState('');
     const [photoUrl, setphotoUrl] = useState(null);
 
     const [caption_errormessage, caption_Seterrormessage] = useState('');
@@ -27,7 +27,7 @@ function UserHome() {
     // const [email, setEmail] = useState(decodedToken.email);
 
     const [visible, setVisible] = useState(false)
-    
+
     const email = decodedToken.email;
 
     const [postFilter, setPostFilter] = useState('');
@@ -47,7 +47,6 @@ function UserHome() {
         fetchData();
     }, []);
     function handleSelect(e) {
-        console.log(e.target.value);
         setpostCategory(e.target.value);
     }
     function handleFile(e) {
@@ -97,6 +96,19 @@ function UserHome() {
         }
         return isValid;
     }
+    const convertToBase64 = (file) =>{
+        return new Promise((resolve,reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) =>{
+                reject(error)
+            }
+        }
+        )
+    }
     function handleSubmit(event) {
         event.preventDefault();
         const fd = new FormData();
@@ -104,8 +116,14 @@ function UserHome() {
         fd.append('postCategory', postCategory);
         fd.append('postPicture', photoUrl);
         fd.append('email', email)
-
-
+        const base64 = convertToBase64(photoUrl);
+        const data = {
+            postCaption: caption,
+            postCategory: postCategory,
+            photoUrl: URL.createObjectURL(photoUrl),
+            email: email
+        }
+        const addData = [...posts, data];
         const isValid = validate();
 
         if (isValid) {
@@ -120,15 +138,17 @@ function UserHome() {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                console.log(photoUrl);
+                console.log(data.photoUrl);
+                setPosts(addData);
+                
             }).catch(err => {
                 console.log(err);
             });
             setCaption('');
             setphotoUrl(null);
             caption_Seterrormessage('');
-
         }
-
     }
     function close() {
         setCaption('');
@@ -144,12 +164,32 @@ function UserHome() {
 
     const [visible1, setVisible1] = useState(true);
     let history = useHistory();
-    function thankyou(){
+    function thankyou(e) {
+        e.preventDefault();
+        const data = {
+            email: decodedToken.email,
+        };
+        axios.post('logout', data).then(res => {
+            console.log(res);
+            localStorage.clear();
+            history.push("/");
+        }).catch(err => {
+            console.log(err);
+        });
         setVisible1(false);
-        localStorage.clear();
-        history.push("/");
     }
-    const displayPosts = posts.filter((val) => {
+    const displayPosts = useMemo(() => {
+        let master = posts;
+        if (postFilter == "Events") {
+            master = master.filter((acc) => acc.postCategory.toLowerCase().includes(postFilter.toLowerCase()))
+        }
+        else if (postFilter == "Announcement") {
+            master = master.filter((acc) => acc.postCategory.toLowerCase().includes(postFilter.toLowerCase()))
+        }
+        return master.reverse();
+    }, [posts]);
+
+    const displayPostss = posts.filter((val) => {
 
         if (postFilter === "") {
             return val
@@ -187,10 +227,10 @@ function UserHome() {
     if (decodedToken.role === "admin") {
         return (
             <div className="admin_home">
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Admin | Villboard</title>
-            </Helmet>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Admin | Villboard</title>
+                </Helmet>
                 <div className="home_feed">
                     <div className="home_fHeader">
                         <select className="form-control1" onChange={(e) => handleFilter(e)}>
@@ -241,7 +281,7 @@ function UserHome() {
                             </CModal>
                         </>
                     </div>
-                    {displayPosts}
+                    {displayPostss}
                 </div>
                 <WhatsHappening />
             </div>
@@ -250,37 +290,37 @@ function UserHome() {
     else if (decodedToken.role === "homeowners") {
         return (
             <div className='v_container'>
-            
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Homeowner | Villboard</title>
-            </Helmet>
-            <CModal size="lg" alignment="center" visible={visible1}>
-                <CModalHeader closeButton = {false}>
-                    <CModalTitle>Homeowner</CModalTitle>
-                </CModalHeader>
-                <CModalBody>
-                    <div>
-                        <h2>Hi {decodedToken.firstName}, Please install the application  to use it's features. Thank you.</h2>
-                    </div>
 
-                </CModalBody>
-                <CModalFooter>
-                    <CButton color="success" onClick={thankyou} >Close</CButton>
-                </CModalFooter>
-            </CModal>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Homeowner | Villboard</title>
+                </Helmet>
+                <CModal size="lg" alignment="center" visible={visible1}>
+                    <CModalHeader closeButton={false}>
+                        <CModalTitle>Homeowner</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>
+                        <div>
+                            <h2>Hi {decodedToken.firstName}, Please install the application  to use it's features. Thank you.</h2>
+                        </div>
+
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton color="success" onClick={(e) => { thankyou(e) }}>Close</CButton>
+                    </CModalFooter>
+                </CModal>
             </div>
         )
     }
     else if (decodedToken.role === "security") {
         return (
             <div className="admin_home1">
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Security | Villboard</title>
-            </Helmet>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Security | Villboard</title>
+                </Helmet>
                 <div>
-                    <Suggestion />
+                    {/* <Suggestion /> */}
                     <Visitor />
                 </div>
             </div>

@@ -420,6 +420,13 @@
   color: white; /*will change color of text within the element */
   margin-right: 30px;
   border-radius: 5px;
+  font-size: 18px;
+}
+.admin_dropdown{
+  font-size: 18px;
+}
+.logoutbtn{
+  color: white;
 }
 .nav-links1 p{
   color: white;

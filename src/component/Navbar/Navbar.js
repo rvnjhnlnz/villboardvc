@@ -13,34 +13,31 @@ import styled from 'styled-components';
 // import { IconContext } from 'react-icons/lib'
 // import noimage from '../../images/noimage.png'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import axios from 'axios'
+import { useHistory } from "react-router-dom";
 /*Sample */
 export default class NavbarApp extends Component {
     state = {
         sidebar: false,
     };
-    logout = () => {
-        localStorage.clear();
-        this.props.setUser(null);
+    logout = (e) => {
+        e.preventDefault()
+        const data = {
+            email: decodeToken(localStorage.getItem('token')).email,
+        };
+        console.log(data);
+        axios.post('logout', data).then(res => {
+            console.log(res);
+            localStorage.clear();
+            this.props.setUser(null);
+            useHistory().push("/");
+        }).catch(err => {
+            console.log(err);
+        });
     }
-    showSidebar = () => {
-        this.setState({
-            sidebar: !this.state.sidebar
-        })
-    }
-    SidebarNav = styled.nav`
-    background: green;
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
-    transition: 350ms;
-    z-index: 10;
-    `;
     render() {
-        const decodedToken = decodeToken(localStorage.getItem('token'))
+        const decodedToken = decodeToken(localStorage.getItem('token'));
+
         if (localStorage.getItem("token") === null || decodedToken.role === "homeowners") {
             return (
                 <nav className="user_nav">
@@ -85,8 +82,8 @@ export default class NavbarApp extends Component {
 
                             <Nav className="justify-content-end" style={{ width: "95%" }}>
                                 <Nav.Link className="nav-links1" href="/"><p>Home</p></Nav.Link>
-                                <Nav.Link className="nav-links1" href="/" onClick={this.logout}><p>Logout</p></Nav.Link>
-                                <NavDropdown className="nav-links1" title="Dashboard" id="basic-nav-dropdown">
+                                <Nav.Link className="nav-links1" href="/" onClick={(e) => {this.logout(e)}}><p>Logout</p></Nav.Link>
+                                <NavDropdown  className="admin_dropdown" title="Dashboard" id="basic-nav-dropdown">
                                     <NavDropdown.Item href="/Dashboard/Accounts">Accounts</NavDropdown.Item>
                                     <NavDropdown.Item href="/Dashboard/Pet">Pet</NavDropdown.Item>
                                     <NavDropdown.Item href="/Dashboard/Reservation">Reservations</NavDropdown.Item>
@@ -159,7 +156,7 @@ export default class NavbarApp extends Component {
                         <Navbar.Collapse id="responsive-navbar-nav">
 
                             <Nav className="justify-content-end" style={{ width: "95%" }}>
-                                <Nav.Link className="nav-links1" href="/" onClick={this.logout}><p>Logout</p></Nav.Link>
+                                <Nav.Link className="nav-links1" href="/" onClick={(e) => {this.logout(e)}}><p>Logout</p></Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>

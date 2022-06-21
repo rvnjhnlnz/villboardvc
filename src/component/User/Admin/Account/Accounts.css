@@ -192,7 +192,9 @@
 .accounts_table{
   background-color: rgba(169, 252, 190, 0.8);
 }
-
+.accounts_form{
+  
+}
 .acc_paginationBtns{
   margin: 20px;
   display: flex;
@@ -212,6 +214,7 @@
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: .9rem;
 } 
 
 .accounts_table thead tr{
@@ -236,32 +239,22 @@
   padding: .5em;
   margin-right: 10px;
 }
+.accounts-charts{
+  height: 500px;
+}
 .accounts-charts .chartMenu {
   width: 88vw;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
+  height: 400px;
 }
 
-@media only screen and (max-width: 950px) {
-  .accounts_table{
-    overflow-x: auto;
-  }
-  .accounts-charts .chartMenu {
-    width: 95vw;
-  }
-}
-@media only screen and (max-width: 800px) {
-  .accounts-charts .chartMenu{
-    display: none;
-  }
-}
 .cat_select{
-  max-width: 300px;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 240px;
   height: 50px;
+  font-size: 15px
 }.datePicker{
   height: 50px;
   margin-top: auto;
@@ -269,7 +262,26 @@
 }
 .account_inputs{
   display: flex;
-    margin: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.account_inputs .cat_select,
+.account_inputs .searchbar,
+.account_inputs button{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.excelBtn{
+  background-color: green; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 240px;
 }
 .accI_horizontal{
   display: flex;
@@ -279,4 +291,126 @@
   margin-bottom: auto;
   margin-right: 10px;
   margin-left: 10px;
+}
+.searchbar{
+  height: 50px;
+  width: 240px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .genButton{
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .cat_select{
+    width: 200px;
+  }
+  .datePicker{
+    width: 200px;
+  }
+  .excelBtn{
+    width: 200px;
+  }
+  .searchbar{
+    width: 200px;
+  }
+  .account_inputs h4{
+    font-size: 16px;
+  }
+  .accounts_table{
+    overflow-x: auto;
+    height: 80vw;
+  }
+}
+@media only screen and (max-width: 980px) {
+  .accounts_table{
+    overflow-x: auto;
+  }
+  .account_inputs{
+    margin-left: 40px;
+
+    margin-bottom: 20px;
+  }
+  .accounts-charts{
+    height: 400px;
+  }
+  .accounts-charts .chartMenu {
+    width: 95vw;
+    height: 300px;
+
+  }
+  .genButton{
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .account_inputs{
+    width: 70vw;
+    height: 200px;
+    flex-direction: column;
+  }
+  .cat_select{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;    
+  }
+  .excelBtn{
+    width: 100%; 
+  }
+  .datePicker{
+    width: 100%;
+  }
+  .searchbar{
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 800px) {
+}
+@media only screen and (max-width: 650px) {
+
+  .account_inputs h4{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 15px;
+  }
+  .datePicker{
+    height: 50px;
+    width: 170px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .cat_select{
+    width: 100%;
+  }
+  .excelBtn{
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .account_inputs{
+    margin-left: 10px;
+  }
+  .datePicker{
+    height: 50px;
+    width: 130px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .cat_select{
+    width: 110%;
+  }
+  .excelBtn{
+    width: 110%;
+  }
+  .searchbar{
+    width: 110%;
+  }
+  .accounts-charts{
+    height: 400px;
+  }
+  .accounts-charts .chartMenu {
+    width: 95vw;
+    height: 300px;
+  }
 }

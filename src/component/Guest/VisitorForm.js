@@ -20,6 +20,7 @@ function VisitorForm() {
     const [vAddress, setvAddress] = useState("");
     const [vHomeowner, setvHomeowner] = useState("");
     const [vHPhoneNumber, setvHPhoneNumber] = useState("");
+    const [vHTelNumber, setvHTelNumber] = useState("");
     const [vHEmail, setvHEmail] = useState("");
     const [vHaddress, setvHaddress] = useState("");
     const [vPurpose, setvPurpose] = useState("");
@@ -34,6 +35,7 @@ function VisitorForm() {
     const [vAddress_errormessage, vAddress_Seterrormessage] = useState('');
     const [vHomeowner_errormessage, vHomeowner_Seterrormessage] = useState('');
     const [vHPhoneNumber_errormessage, setvHPhoneNumber_Seterrormessage] = useState("");
+    const [vHTelNumber_errormessage, setvHTelNumber_Seterrormessage] = useState("");
     const [vHEmail_errormessage, setvHEmail_Seterrormessage] = useState("");
     const [vHaddress_errormessage, vHaddress_Seterrormessage] = useState('');
     const [vPurpose_errormessage, vPurpose_Seterrormessage] = useState('');
@@ -88,6 +90,7 @@ function VisitorForm() {
             address: vAddress,
             personVisit: vHomeowner,
             contactHomeOwner: vHPhoneNumber,
+            telHomeOwner: vHTelNumber,
             emailHomeOwner: vHEmail,
             homeOwnerAddress: vHaddress,
             purpose: vPurpose,
@@ -136,7 +139,7 @@ function VisitorForm() {
     //
     const validate = () => {
         let isValid = true;
-        let nError, eError, aError, hError, vaError, vheError, vhpError, pError, checkedError = "";
+        let nError, eError, aError, hError, vaError, vheError, vhpError,vhtError, pError, checkedError = "";
         if (!vName) {
             nError = 'Please Enter your Full Name'
             isValid = false;
@@ -197,7 +200,7 @@ function VisitorForm() {
             console.log('5')
         }
         else if (typeof vHPhoneNumber !== "undefined") {
-            var pattern = new RegExp(/^(09|\+639)\d{9}$/);
+            var pattern = new RegExp(/^(09)\d{9}$/);
             if (!pattern.test(vHPhoneNumber)) {
                 vhpError = "Please Enter the valid Homeowner's Contact Number"
                 isValid = false;
@@ -205,6 +208,33 @@ function VisitorForm() {
             }
         }
 
+        if (!vHTelNumber) {
+            vhtError = "Please Enter the existing Homeowner's Telephone Number"
+            isValid = false;
+            console.log('5')
+        }
+        else if (typeof vHTelNumber !== "undefined") {
+            var pattern = new RegExp(/^\d{7,8}$/);
+            if (!pattern.test(vHTelNumber)) {
+                vhtError = "Please Enter the valid Homeowner's Telephone Number"
+                isValid = false;
+                console.log("Homeowner's tl");
+            }
+        }
+
+        if (!vHEmail) {
+            vheError = "Please Enter Homeowner's Email Address"
+            isValid = false;
+            console.log('2')
+        }
+        else if (typeof vHEmail !== "undefined") {
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if (!pattern.test(vHEmail)) {
+                vheError = "Please enter Homeowner's valid email address."
+                isValid = false;
+                console.log('Email');
+            }
+        }
 
         if (!vHaddress) {
             vaError = "Please Enter the existing Homeowner's address"
@@ -243,7 +273,7 @@ function VisitorForm() {
             checkedError = ""
         }
 
-        if (nError || eError || aError || hError || vaError || vheError || vhpError || pError || checkedError) {
+        if (nError || eError || aError || hError || vaError || vheError || vhpError || vhtError || pError || checkedError) {
             vName_Seterrormessage(nError);
             vEmail_Seterrormessage(eError);
             vAddress_Seterrormessage(aError);
@@ -252,6 +282,7 @@ function VisitorForm() {
             vPurpose_Seterrormessage(pError);
             vTerms_Seterrormessage(checkedError);
             setvHPhoneNumber_Seterrormessage(vhpError)
+            setvHTelNumber_Seterrormessage(vhtError);
             setvHEmail_Seterrormessage(vheError)
             return isValid;
         }
@@ -329,7 +360,7 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vAddress} onChange={(e) => setvAddress(e.target.value.replace(/[^A-Z-a-z0-9!@#_.,\s]+/, ""))} />
+                                value={vAddress} onChange={(e) => setvAddress(e.target.value.replace(/[^A-Z-a-z0-9#.,\s]+/, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vAddress_errormessage}
                             </div>
@@ -337,7 +368,7 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
-                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value.replace(/[^A-Za-z0-9\s]+/gi, ""))} />
+                                value={vHomeowner} onChange={(e) => setvHomeowner(e.target.value.replace(/[^A-Za-z.\s]+/gi, ""))} />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHomeowner_errormessage}
                             </div>
@@ -353,11 +384,19 @@ function VisitorForm() {
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"
+                                value={vHTelNumber} onChange={(e) => setvHTelNumber(e.target.value.replace(/[^0-9+]+/, ""))} />
+                            <div style={{ fontSize: 12, color: "red" }}>
+                                {vHTelNumber_errormessage}
+                            </div>
+                            <label className="visit_label">Homeowner's Telephone Number:</label>
+                        </div>
+                        <div className="visitor_input-field">
+                            <input type="text" className="form-control" onChange={(e) => setvHEmail(e.target.value.replace(/[^A-Z-a-z0-9_.@-\s]+/, ""))}
                                 /* value={vHEmail} onChange={(e) => (e.target.value.replace(/[^A-Z-a-z0-9_.@-]+/, ""))} */ />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {vHEmail_errormessage}
                             </div>
-                            <label className="visit_label">Homeowner's Landline:</label>
+                            <label className="visit_label">Homeowner's Email:</label>
                         </div>
                         <div className="visitor_input-field">
                             <input type="text" className="form-control"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "./Account/Accounts.css";
 const Search = ({onSearch}) => {
     const [search, setSearch] = useState('');
 
@@ -10,8 +10,7 @@ const Search = ({onSearch}) => {
     return(
         <input
         type = "text"
-        className = "form-control"
-        style={{width: "240px"}}
+        className = "searchbar"
         placeholder = "Search any Data"
         value={search}
         onChange={(e) => onInputChange(e.target.value)}

@@ -134,9 +134,9 @@ export default class Login extends Component {
                                 <input type="submit" value='LOGIN' className="login_submitBtn" />
                             </div>
                         </form>
-                        <div className="signup">
+                        {/* <div className="signup">
                             Not a member? <a href="/Register">Signup now</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

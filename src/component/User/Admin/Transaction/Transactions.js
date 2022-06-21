@@ -67,7 +67,7 @@ function Transactions() {
             })
                 .then((res) => {
                     console.log("RESPONSE RECEIVED: ", res);
-                    const notpending = res.data.filter(
+                    const notpending = res.data.reverse().filter(
                         (acc) => acc.pPending.toLowerCase() !== "pending"
                     );
                     setTransactionData(notpending);
@@ -151,7 +151,7 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
     }
 
     const transactionDataDisc = useMemo(() => {
-        let computedTr = transactionData.filter((acc) => acc.pPending === "approved");
+        let computedTr = transactionData.filter((acc) => acc.pPending === "approved").reverse();
         if (category == "Last Name") {
             if (search) {
                 computedTr = computedTr.filter((acc) => acc.uLastName.toLowerCase().includes(search.toLowerCase()))
@@ -424,7 +424,9 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
     
           });
       };
-
+      const options = {
+        maintainAspectRatio: false
+      }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -445,6 +447,7 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
                         data={chartData}
                         labels="months"
                         height={80}
+                        options={options}
                     />
                 </div>
                 <div className="card-header">
@@ -505,7 +508,7 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
                 <div className="card-header">
                     <h3>Accepted Transactions</h3>
                 </div>
-                <div className="vis_inputs">
+                <div className="account_inputs">
                     {category === 'Transaction Date' || category === 'Acceptance of Transaction' ? (
                         <div className="accI_horizontal">
                             <h4>From: </h4>
@@ -541,7 +544,7 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
                     {transactionDataDisc.length !== 0 ? (
                         <ExcelFile
                             filename={"Transaction(" + date + ")"}
-                            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+                            element={<button type="button" className="excelBtn">Export Data</button>}>
                             <ExcelSheet dataSet={[{
                                 columns: [
                                     { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
@@ -645,7 +648,7 @@ const [sortingD, setSortingD] = useState({ field: "", order: "" });
                     {declineD.length !== 0 ? (
                         <ExcelFile
                             filename={"Transaction(" + date + ")"}
-                            element={<button type="button" className="btn btn-success float-right m-1">Export Data</button>}>
+                            element={<button type="button" className="excelBtn">Export Data</button>}>
                             <ExcelSheet dataSet={[{
                                 columns: [
                                     { title: "Status", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },

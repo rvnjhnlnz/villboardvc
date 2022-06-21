@@ -20,6 +20,12 @@ function WhatsHappening() {
                     console.log(res);
                     const pending = res.data.filter((acc) => acc.status === "Pending");
                     setAccountData(pending);
+                    if(pending.length === 0){
+                        setColorA("green"); 
+                    }
+                    else if(pending.length !== 0){
+                        setColorA("red"); 
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
@@ -29,6 +35,12 @@ function WhatsHappening() {
                         (acc) => acc.rPending.toLowerCase() === "pending"
                       );
                     setReservationData(pending);
+                    if(pending.length === 0){
+                        setColorR("green"); 
+                    }
+                    else if(pending.length !== 0){
+                        setColorR("red"); 
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
@@ -38,12 +50,27 @@ function WhatsHappening() {
                         (acc) => acc.pPending.toLowerCase() === "pending"
                     );
                     setPaymentData(pending);
+                    if(pending.length === 0){
+                        setColorP("green"); 
+                    }
+                    else if(pending.length !== 0){
+                        setColorP("red"); 
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
             axios.post('postVisitor')
                 .then(res => {
-                    setVisitorData(res.data);
+                    const ivvisitor = res.data.filter(
+                        (acc) => acc.timeOut === "inVillage"
+                    );
+                    setVisitorData(ivvisitor);
+                    if(ivvisitor.length === 0){
+                        setColorV("green"); 
+                    }
+                    else if(ivvisitor.length !== 0){
+                        setColorV("red"); 
+                    }
                 }).catch(err => {
                     console.log(err);
                 })
@@ -72,30 +99,34 @@ function WhatsHappening() {
     //     return pay
     // }, [payment]);
 
+    const [colorA, setColorA] = useState("green");
+    const [colorP, setColorP] = useState("green");
+    const [colorR, setColorR] = useState("green");
+    const [colorV, setColorV] = useState("green");
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (decodedToken)
         return (
             <div className="home_news">
                 <div className="home_fHeader">
-                    <h3>Pendings</h3>
+                    <h3>Pending Transactions</h3>
                 </div>
                 <div className="admin_gridContainer">
                     <div className="grid-item">
-                        <Card className="grid-card">
-                            <Card.Body>
-                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br/> Transactions</Card.Title>
+                        <Card className="grid-card"  >
+                            <Card.Body style={{ textAlign: 'center' ,backgroundColor: `${colorP}` }}>
+                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br/> Payments</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
                                     {payment !== null ? payment?.length : <CSpinner/>}
                                 </Card.Text>
                                 <div className='grid-button'>
-                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/AdminTransaction" >Transactions Dashboard</Button>
+                                    <Button variant="primary" className="grid-cardButton" href="/Dashboard/AdminTransaction" >Payments <br /> Dashboard</Button>
                                 </div>
                             </Card.Body>
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card className="grid-card">
+                        <Card className="grid-card"  style={{ textAlign: 'center' ,backgroundColor: `${colorA}` }}>
                             <Card.Body>
                                 <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br />Accounts</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
@@ -108,7 +139,7 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card  className="grid-card">
+                        <Card  className="grid-card" style={{ textAlign: 'center' ,backgroundColor: `${colorR}` }}>
                             <Card.Body>
                                 <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Pending <br/>  Reservations</Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
@@ -121,9 +152,9 @@ function WhatsHappening() {
                         </Card>
                     </div>
                     <div className="grid-item">
-                        <Card  className="grid-card">
+                        <Card  className="grid-card" style={{ textAlign: 'center' ,backgroundColor: `${colorV}` }}>
                             <Card.Body>
-                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Total <br /> Visitors</Card.Title>
+                                <Card.Title style={{ textAlign: 'center' }} className="grid-cardHeader">Visitors <br /> in village </Card.Title>
                                 <Card.Text style={{ textAlign: 'center' }} className="grid-cardNumber">
                                     {/*total number of visitor pa lang*/visitorData !== null ? visitorData.length : <CSpinner/>}
                                 </Card.Text>

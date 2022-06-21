@@ -301,6 +301,17 @@
 .thankyou_c h5{
   text-align: center;
 }
+
+.showHide{
+  width: 100%;
+  
+}
+.showHide span {
+  text-align: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 @media only screen and (max-width: 950px) {
   .v_form {
     width: 650px;

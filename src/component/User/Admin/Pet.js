@@ -80,7 +80,7 @@ function Pet() {
                 .then(res => {
                     hideLoader();
                     console.log(res);
-                    setPetData(res.data);
+                    setPetData(res.data.reverse());
                 }).catch(err => {
                     console.log(err);
                 })
@@ -220,6 +220,9 @@ function Pet() {
             console.log(err);
           });
       };
+      const options = {
+        maintainAspectRatio: false
+      }
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
         return (
@@ -240,6 +243,7 @@ function Pet() {
                         data={chartData}
                         labels="months"
                         height={70}
+                        options={options}
                     />
                 </div>
                 <div class="card-header">
@@ -277,7 +281,7 @@ function Pet() {
                         {petData.length !== 0 ? (
                             <ExcelFile
                                 filename={"Pets(" + date + ")"}
-                                element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
+                                element={<button type="button" className="excelBtn">Export to Excel</button>}>
                                 <ExcelSheet dataSet={[{
                                     columns: [
                                         { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },

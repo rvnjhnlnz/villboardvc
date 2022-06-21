@@ -29,7 +29,6 @@ function Suggestions() {
     const headers = [
         { name: "Name", field: "aName", sortable: true },
         { name: "Suggestions/Complaint", field: "suggestions", sortable: true },
-        { name: "Accomplished", field: "", sortable: true },
         { name: "Registered Date", field: "createdAt", sortable: true },
     ];
 
@@ -161,6 +160,9 @@ function Suggestions() {
                 console.log(err);
             });
     };
+    const options = {
+        maintainAspectRatio: false
+      }
 
     const decodedToken = decodeToken(localStorage.getItem('token'));
     if (!decodedToken || decodedToken.role === "homeowners") {
@@ -175,15 +177,18 @@ function Suggestions() {
                     <meta charSet="utf-8" />
                     <title>Suggestions | Villboard</title>
                 </Helmet>
-                <div className="accounts-charts">
+                {decodedToken.role === "admin" ? (
+                    <div className="accounts-charts">
                     <CChart
                         className="chartMenu"
                         type="bar"
                         data={chartData}
                         labels="months"
                         height={70}
+                        options={options}
                     />
                 </div>
+                ): null}
                 <div className="card-header">
                     <h3>Suggestion Box</h3>
                 </div>
@@ -216,14 +221,14 @@ function Suggestions() {
                             {SuggestionD.length !== 0 ? (
                                 <ExcelFile
                                     filename={"Suggestions(" + date + ")"}
-                                    element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
+                                    element={<button type="button" className="excelBtn">Export to Excel</button>}>
                                     <ExcelSheet dataSet={[{
                                         columns: [
                                             { title: "Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
                                             { title: "Email", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
                                             { title: "Registered Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
                                         ],
-                                        data: suggestionsData.map((data) => [
+                                        data: SuggestionD.map((data) => [
                                             { value: data.aName, style: { font: { sz: "14" } } },
                                             { value: data.suggestions, style: { font: { sz: "14" } } },
                                             { value: moment(data.createdAt).format('lll'), style: { font: { sz: "14" } } },
@@ -247,7 +252,6 @@ function Suggestions() {
                                     <tr>
                                         <td>{res.aName}</td>
                                         <td>{res.suggestions}</td>
-                                        <td>sample</td>
                                         <td>{moment(res.createdAt).format('lll')}</td>
                                     </tr>
                                 </Fragment>

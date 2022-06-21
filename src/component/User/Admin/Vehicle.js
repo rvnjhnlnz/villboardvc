@@ -1,7 +1,7 @@
-import React, {   useState, useEffect,useMemo,Fragment } from 'react'
+import React, { useState, useEffect, useMemo, Fragment } from 'react'
 import './Vehicle.css'
 import { decodeToken, useJwt } from "react-jwt";
-import {Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import TableHeader from './Header'
 import Pagination from './PaginationCom';
 import Search from './Search';
@@ -10,7 +10,7 @@ import Table from "react-bootstrap/Table";
 import ReactExport from 'react-data-export'
 import moment from 'moment'
 import { CChart } from '@coreui/react-chartjs';
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import DatePicker from "react-datepicker";
 import { CFormSelect } from '@coreui/react';
 
@@ -64,7 +64,7 @@ function Vehicle() {
             axios.post('postCar')
                 .then(res => {
                     console.log(res);
-                    setCarData(res.data);
+                    setCarData(res.data.reverse());
                 }).catch(err => {
                     console.log(err);
                 })
@@ -163,79 +163,82 @@ function Vehicle() {
     const chart = () => {
         let approveData = [];
         const myArray = [{
-          date: "2022-02-01",
-          
-          total: 0
-        }, {
-          date: "2022-03-01",
-          
-          total: 0
-        }, {
-          date: "2022-04-01",
-          
-          total: 0
-        },{
-          date: "2022-05-01",
-          
-          total: 0
-        },{
-          date: "2022-6-01",
-         
-          total: 0
-        }]
-        
-        axios
-          .post("postCar")
-          .then(res => {
-            for (const dataObj of res.data) {
-              if (moment(dataObj.createdAt).isSameOrAfter("2022-02-01",'month')) {
-                //if(moment(myArray[dataObj]).format('MMMM-YYYY') === moment(dataObj.createdAt).format('MMMM-YYYY')){
-                  const index = myArray.findIndex(acc => moment(acc.date).format("MMMM-YYYY") === moment(dataObj.createdAt).format("MMMM-YYYY"));
-                  myArray[index].total += 1;
-                  //const index = myArray.findIndex(acc => acc.id === employee.id);
-                //approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
-              }
-            }
-            const counts1 = {};
-            approveData.forEach((x) => {
-              counts1[x] = (counts1[x] || 0) + 1;
-            });
-            setChartData(
-              {
-                labels: myArray.map((x) => moment(x.date).format('MMMM-YYYY')),
-                datasets: [
-                  {
-                    label: 'Total number of Vehicles',
-                    backgroundColor: 'green',
-                    data: myArray.map((x) => x.total),
-                  },
-                ],
-              });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
+            date: "2022-02-01",
 
-    if(!decodedToken||decodedToken.role === "homeowners"){
-        return(
-            <Redirect to={'/'}/>
+            total: 0
+        }, {
+            date: "2022-03-01",
+
+            total: 0
+        }, {
+            date: "2022-04-01",
+
+            total: 0
+        }, {
+            date: "2022-05-01",
+
+            total: 0
+        }, {
+            date: "2022-6-01",
+
+            total: 0
+        }]
+
+        axios
+            .post("postCar")
+            .then(res => {
+                for (const dataObj of res.data) {
+                    if (moment(dataObj.createdAt).isSameOrAfter("2022-02-01", 'month')) {
+                        //if(moment(myArray[dataObj]).format('MMMM-YYYY') === moment(dataObj.createdAt).format('MMMM-YYYY')){
+                        const index = myArray.findIndex(acc => moment(acc.date).format("MMMM-YYYY") === moment(dataObj.createdAt).format("MMMM-YYYY"));
+                        myArray[index].total += 1;
+                        //const index = myArray.findIndex(acc => acc.id === employee.id);
+                        //approveData.push(moment(dataObj.createdAt).format('MMMM-YYYY'));
+                    }
+                }
+                const counts1 = {};
+                approveData.forEach((x) => {
+                    counts1[x] = (counts1[x] || 0) + 1;
+                });
+                setChartData(
+                    {
+                        labels: myArray.map((x) => moment(x.date).format('MMMM-YYYY')),
+                        datasets: [
+                            {
+                                label: 'Total number of Vehicles',
+                                backgroundColor: 'green',
+                                data: myArray.map((x) => x.total),
+                            },
+                        ],
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+    const options = {
+        maintainAspectRatio: false
+    }
+    if (!decodedToken || decodedToken.role === "homeowners") {
+        return (
+            <Redirect to={'/'} />
         );
     }
-    else{
+    else {
         return (
             <div className="accounts-container">
-                        <Helmet>
-                <meta charSet="utf-8" />
-                <title>Vehicle | Villboard</title>
-            </Helmet>
-            <div className="accounts-charts">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Vehicle | Villboard</title>
+                </Helmet>
+                <div className="accounts-charts">
                     <CChart
                         className="chartMenu"
                         type="bar"
                         data={chartData}
                         labels="months"
                         height={80}
+                        options={options}
                     />
                 </div>
                 <div class="card-header">
@@ -274,8 +277,28 @@ function Vehicle() {
                         {carD.length !== 0 ? (
                             <ExcelFile
                                 filename={"Cars(" + date + ")"}
-                                element={<button type="button" className="btn btn-success float-right m-1">Export to Excel</button>}>
-                                <ExcelSheet dataSet={Dataset} name="Homeowner Cars" />
+                                element={<button type="button" className="excelBtn">Export to Excel</button>}>
+                                <ExcelSheet dataSet={[{
+                                    columns: [
+                                        { title: "Last Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "First Name", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "Address", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "Phone Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "Vehicle Model", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "Plate Number", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                        { title: "Registered Date", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } },
+                                    ],
+                                    data: carD.map((data) => [
+                                        { value: data.cLastName, style: { font: { sz: "14" } } },
+                                        { value: data.cFirstName, style: { font: { sz: "14" } } },
+                                        { value: data.cAddress, style: { font: { sz: "14" } } },
+                                        { value: data.cPhoneNumber, style: { font: { sz: "14" } } },
+                                        { value: data.vehicleModel, style: { font: { sz: "14" } } },
+                                        { value: data.plateNumber, style: { font: { sz: "14" } } },
+                                        { value: moment(data.updatedAt).format('lll'), style: { font: { sz: "14" } } },
+                                    ])
+                                }
+                                ]} name="Homeowner Cars" />
                             </ExcelFile>
                         ) : null}
                     </div>

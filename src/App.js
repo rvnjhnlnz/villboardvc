@@ -35,6 +35,8 @@ import AdminSuggestion from './component/User/Admin/Suggestions'
 import AdminVisitor from './component/User/Admin/Visitor'
 import AdminVehicle from './component/User/Admin/Vehicle'
 import AdminTransaction from './component/User/Admin/Transaction/Transactions'
+import TermsConditions from './component/Guest/TermsConditions'
+import ForgotPassword from './component/Guest/ForgotPassword'
 import 'bootstrap/dist/css/bootstrap.min.css';
 export default class App extends Component {
   state = {};
@@ -92,6 +94,8 @@ export default class App extends Component {
           <Route path='/ContactAdmin' exact component={ContactAdmin} />
           <Route path='/Visitor' exact component={Visitor} />
           <Route path='/Thankyou' exact component={Thankyou} />
+          <Route path='/Terms_Conditions' exact component={TermsConditions} />
+          <Route path='/Forgot_Password' exact component={ForgotPassword} />
           <Route path='/Messages' exact component={Chat} />
 
           <Route path ='/Dashboard/AdminTransaction' exact component={AdminTransaction}/>
